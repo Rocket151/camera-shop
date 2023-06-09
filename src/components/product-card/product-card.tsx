@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
+import { CamerasData } from '../../types/cameras-data';
 
-export default function ProductCard(): JSX.Element {
+type ProductCardProps = {
+  cameraData: CamerasData;
+}
+
+export default function ProductCard({cameraData}: ProductCardProps): JSX.Element {
+  const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount} = cameraData;
   return (
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet="img/content/img5.webp, img/content/img5@2x.webp 2x" /><img src="img/content/img5.jpg" srcSet="img/content/img5@2x.jpg 2x" width="280" height="240" alt="Фотоаппарат Instaprinter P2" />
+          <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`} /><img src={previewImg} srcSet={previewImg2x} width="280" height="240" alt={name} />
         </picture>
       </div>
       <div className="product-card__info">
@@ -26,10 +32,10 @@ export default function ProductCard(): JSX.Element {
             <use xlinkHref="#icon-full-star"></use>
           </svg>
           <p className="visually-hidden">Рейтинг: 5</p>
-          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>849</p>
+          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>
-        <p className="product-card__title">Instaprinter P2</p>
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>8 430 ₽
+        <p className="product-card__title">{name}</p>
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽
         </p>
       </div>
       <div className="product-card__buttons">
