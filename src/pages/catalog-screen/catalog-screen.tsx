@@ -3,8 +3,7 @@ import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import PaginationList from '../../components/pagination-list/pagination-list';
-import ProductCardList from '../../components/product-card-list/product-card-list';
+import ProductAndPaginationList from '../../components/product-and-pagination-list/product-and-pagination-list';
 import Promo from '../../components/promo/promo';
 
 export default function CatalogScreen() {
@@ -24,10 +23,7 @@ export default function CatalogScreen() {
                 </div>
                 <div className="catalog__content">
                   <CatalogSort />
-                  <ProductCardList />
-                  <div className="pagination">
-                    <PaginationList />
-                  </div>
+                  <ProductAndPaginationList />
                 </div>
               </div>
             </div>

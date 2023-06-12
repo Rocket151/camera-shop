@@ -1,7 +1,6 @@
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import ProductCardList from '../../components/product-card-list/product-card-list';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -92,7 +91,7 @@ export default function ProductScreen(): JSX.Element {
                   <h2 className="title title--h3">Похожие товары</h2>
                   <div className="product-similar__slider">
                     <div className="product-similar__slider-list">
-                      <ProductCardList />
+
                       <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled>
                         <svg width="7" height="12" aria-hidden="true">
                           <use xlinkHref="#icon-arrow"></use>

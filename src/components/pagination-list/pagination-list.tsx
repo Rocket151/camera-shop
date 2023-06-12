@@ -1,16 +1,44 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function PaginationList(): JSX.Element {
+type PaginationListProps = {
+  totalPages: number[];
+  setPage: Dispatch<SetStateAction<number>>;
+  currentPage: number;
+}
+
+export default function PaginationList({setPage, totalPages, currentPage}: PaginationListProps): JSX.Element {
+  const handlePageClick = (evt : React.MouseEvent<HTMLAnchorElement>) => {
+    const target = evt.target as HTMLElement;
+    if (target.tagName === 'A') {
+      setPage(+target.id);
+    }
+  };
+
+  const handlePrevPageClick = () => {
+    setPage(currentPage - 1);
+  };
+
+  const handleNextPageClick = () => {
+    setPage(currentPage + 1);
+  };
+
   return (
-    <ul className="pagination__list">
-      <li className="pagination__item"><Link className="pagination__link pagination__link--active" to="#">1</Link>
-      </li>
-      <li className="pagination__item"><Link className="pagination__link" to="#">2</Link>
-      </li>
-      <li className="pagination__item"><Link className="pagination__link" to="#">3</Link>
-      </li>
-      <li className="pagination__item"><Link className="pagination__link pagination__link--text" to="#">Далее</Link>
-      </li>
-    </ul>
+    <div className="pagination">
+      <ul className="pagination__list">
+        {
+          currentPage >= 2 ? <li className="pagination__item"><Link className="pagination__link pagination__link--text" to="#" onClick={handlePrevPageClick}>Назад</Link></li> : null
+        }
+
+        {
+          totalPages.map((page) => (<li className="pagination__item" key={page}><Link className={`pagination__link ${page === currentPage ? 'pagination__link--active' : ''}`} id={page.toString()} onClick={handlePageClick} to="#">{page}</Link></li>)
+          )
+        }
+
+        {
+          currentPage !== totalPages[totalPages.length - 1] ? <li className="pagination__item"><Link className="pagination__link pagination__link--text" onClick={handleNextPageClick} to="#">Далее</Link></li> : null
+        }
+      </ul>
+    </div>
   );
 }

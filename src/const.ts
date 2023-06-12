@@ -15,3 +15,5 @@ export enum APIRoute {
   Cameras = '/cameras/',
   Promo = '/promo',
 }
+
+export const MAX_PRODUCTS_PAGE = 9;

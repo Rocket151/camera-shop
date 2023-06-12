@@ -1,9 +1,11 @@
-import { useAppSelector } from '../../hooks';
-import { getCamerasData } from '../../store/cameras-data/selectors';
+import { CamerasData } from '../../types/cameras-data';
 import ProductCard from '../product-card/product-card';
 
-export default function ProductCardList(): JSX.Element {
-  const camerasData = useAppSelector(getCamerasData);
+type ProductCardListProps = {
+  camerasData: CamerasData[];
+}
+
+export default function ProductCardList({camerasData}: ProductCardListProps): JSX.Element {
 
   return (
     <div className="cards catalog__cards">
