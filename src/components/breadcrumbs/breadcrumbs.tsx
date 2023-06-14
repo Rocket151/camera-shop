@@ -1,11 +1,23 @@
 import { NavLink } from 'react-router-dom';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
+import { useAppSelector } from '../../hooks';
 const routes = [
-  { path: '/product/:id', breadcrumb: DynamicUserBreadcrumb },
-  { path: '/', breadcrumb: 'Каталог' },
+  { path: '/product/:id', breadcrumb: ProductBreadcrumb},
+  { path: '/', breadcrumb: Cata },
 ];
 
-function DynamicUserBreadcrumb(): JSX.Element {
+function ProductBreadcrumb(): JSX.Element {
+  const cameraName = useAppSelector();
+  return (
+    <span>
+      <svg width="5" height="8" aria-hidden="true">
+        <use xlinkHref="#icon-arrow-mini"></use>
+      </svg>
+    </span>
+  );
+}
+
+function CatalogBreadcrumb(): JSX.Element {
   return (
     <svg width="5" height="8" aria-hidden="true">
       <use xlinkHref="#icon-arrow-mini"></use>
