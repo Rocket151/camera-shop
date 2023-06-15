@@ -1,15 +1,12 @@
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import ProductCardList from '../../components/product-card-list/product-card-list';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
-import { getSimilarCamerasData } from '../../store/similar-cameras-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 export default function ProductScreen(): JSX.Element {
   const productData = useAppSelector(getProductData);
-  const camerasData = useAppSelector(getSimilarCamerasData);
 
   if (productData) {
     const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount, category, type, vendorCode, level, description} = productData;
