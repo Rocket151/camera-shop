@@ -5,6 +5,7 @@ import { getProductData } from '../../store/product-data/selectors';
 const routes = [
   { path: '/product/:id', breadcrumb: ProductBreadcrumb},
   { path: '/', breadcrumb: CatalogBreadcrumb },
+  { path: '/basket', breadcrumb: BasketBreadcrumb },
 ];
 
 function ProductBreadcrumb(): JSX.Element {
@@ -12,6 +13,12 @@ function ProductBreadcrumb(): JSX.Element {
 
   return (
     <span className="breadcrumbs__link breadcrumbs__link--active">{productData?.name}</span>
+  );
+}
+
+function BasketBreadcrumb(): JSX.Element {
+  return (
+    <span className="breadcrumbs__link breadcrumbs__link--active">Корзина</span>
   );
 }
 
