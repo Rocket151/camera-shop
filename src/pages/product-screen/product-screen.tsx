@@ -1,6 +1,7 @@
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import SimilarCamerasList from '../../components/similar-camera-list/similar-camera-list';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -86,7 +87,7 @@ export default function ProductScreen(): JSX.Element {
               </section>
             </div>
             <div className="page-content__section">
-
+              <SimilarCamerasList />
             </div>
             <div className="page-content__section">
               <section className="review-block">
