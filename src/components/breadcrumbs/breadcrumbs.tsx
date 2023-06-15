@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
+
 const routes = [
   { path: '/product/:id', breadcrumb: ProductBreadcrumb},
   { path: '/', breadcrumb: CatalogBreadcrumb },

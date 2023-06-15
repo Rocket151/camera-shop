@@ -1,12 +1,15 @@
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import ProductCardList from '../../components/product-card-list/product-card-list';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
+import { getSimilarCamerasData } from '../../store/similar-cameras-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 export default function ProductScreen(): JSX.Element {
   const productData = useAppSelector(getProductData);
+  const camerasData = useAppSelector(getSimilarCamerasData);
 
   if (productData) {
     const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount, category, type, vendorCode, level, description} = productData;
@@ -86,26 +89,7 @@ export default function ProductScreen(): JSX.Element {
               </section>
             </div>
             <div className="page-content__section">
-              <section className="product-similar">
-                <div className="container">
-                  <h2 className="title title--h3">Похожие товары</h2>
-                  <div className="product-similar__slider">
-                    <div className="product-similar__slider-list">
 
-                      <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled>
-                        <svg width="7" height="12" aria-hidden="true">
-                          <use xlinkHref="#icon-arrow"></use>
-                        </svg>
-                      </button>
-                      <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд">
-                        <svg width="7" height="12" aria-hidden="true">
-                          <use xlinkHref="#icon-arrow"></use>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </section>
             </div>
             <div className="page-content__section">
               <section className="review-block">
