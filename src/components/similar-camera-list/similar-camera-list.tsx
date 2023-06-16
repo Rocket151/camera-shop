@@ -3,37 +3,6 @@ import { getSimilarCamerasData } from '../../store/similar-cameras-data/selector
 import Slider from 'react-slick';
 import ProductCard from '../product-card/product-card';
 
-const settings = {
-  dots: false,
-  infinite: false,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />
-};
-
-function SampleNextArrow(props) {
-  const { onClick } = props;
-  return (
-    <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" onClick={onClick}>
-      <svg width="7" height="12" aria-hidden="true">
-        <use xlinkHref="#icon-arrow"></use>
-      </svg>
-    </button>
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { onClick } = props;
-  return (
-    <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" onClick={onClick}>
-      <svg width="7" height="12" aria-hidden="true">
-        <use xlinkHref="#icon-arrow"></use>
-      </svg>
-    </button>
-  );
-}
-
 export default function SimilarCamerasList(): JSX.Element {
   const camerasData = useAppSelector(getSimilarCamerasData);
 
