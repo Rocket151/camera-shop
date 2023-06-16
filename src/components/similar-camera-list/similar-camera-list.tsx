@@ -1,6 +1,5 @@
 import { useAppSelector } from '../../hooks';
 import { getSimilarCamerasData } from '../../store/similar-cameras-data/selectors';
-import Slider from 'react-slick';
 import ProductCard from '../product-card/product-card';
 
 export default function SimilarCamerasList(): JSX.Element {
