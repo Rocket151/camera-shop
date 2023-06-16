@@ -20,4 +20,6 @@ export enum APIRoute {
 
 export const CAROUSEL_VISIBLE_CLASS = 'is-active';
 
+export const MAX_CAROUSEL_ITEMS = 3;
+
 export const MAX_PRODUCTS_PAGE = 9;

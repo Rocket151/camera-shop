@@ -28,7 +28,8 @@ export default function ProductCard({cameraData, carouselClass}: ProductCardProp
       <div className={`product-card ${carouselClass ? carouselClass : ''}`}>
         <div className="product-card__img">
           <picture>
-            <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`} /><img src={previewImg} srcSet={previewImg2x} width="280" height="240" alt={name} />
+            <source type="image/webp" srcSet={`${carouselClass ? `../${previewImgWebp}` : previewImgWebp}, ${carouselClass ? `../${previewImgWebp2x}` : previewImgWebp2x}`} />
+            <img src={carouselClass ? `../${previewImg}` : previewImg} srcSet={carouselClass ? `../${previewImg2x}` : previewImg2x} width="280" height="240" alt={name} />
           </picture>
         </div>
         <div className="product-card__info">
@@ -77,7 +78,8 @@ export default function ProductCard({cameraData, carouselClass}: ProductCardProp
                 <div className="basket-item basket-item--short">
                   <div className="basket-item__img">
                     <picture>
-                      <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`} /><img src={previewImg} srcSet={previewImg2x} width="280" height="240" alt={name} />
+                      <source type="image/webp" srcSet={`${carouselClass ? `../${previewImgWebp}` : previewImgWebp}, ${carouselClass ? `../${previewImgWebp2x}` : previewImgWebp2x}`} />
+                      <img src={carouselClass ? `../${previewImg}` : previewImg} srcSet={carouselClass ? `../${previewImg2x}` : previewImg2x} width="280" height="240" alt={name} />
                     </picture>
                   </div>
                   <div className="basket-item__description">
