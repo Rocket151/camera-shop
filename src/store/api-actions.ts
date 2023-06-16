@@ -37,7 +37,7 @@ export const fetchProductDataAction = createAsyncThunk<CamerasData, string, {
     },
   );
 
-export const fetchSimilarCamerastDataAction = createAsyncThunk<CamerasData[], string, {
+export const fetchSimilarCamerasDataAction = createAsyncThunk<CamerasData[], string, {
     extra: AxiosInstance;
   }>(
     'fetchSimilarCamerasData',

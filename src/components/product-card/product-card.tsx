@@ -2,15 +2,16 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { fetchProductDataAction, fetchSimilarCamerastDataAction } from '../../store/api-actions';
+import { fetchProductDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 import { CamerasData } from '../../types/cameras-data';
 import Modal from '../modal/modal';
 
 type ProductCardProps = {
   cameraData: CamerasData;
+  carouselClass?: string;
 }
 
-export default function ProductCard({cameraData}: ProductCardProps): JSX.Element {
+export default function ProductCard({cameraData, carouselClass}: ProductCardProps): JSX.Element {
   const [isModal, setModel] = useState(false);
   const dispatch = useAppDispatch();
   const {id, name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount, vendorCode, category, level} = cameraData;
@@ -24,7 +25,7 @@ export default function ProductCard({cameraData}: ProductCardProps): JSX.Element
 
   return (
     <>
-      <div className="product-card">
+      <div className={`product-card ${carouselClass ? carouselClass : ''}`}>
         <div className="product-card__img">
           <picture>
             <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`} /><img src={previewImg} srcSet={previewImg2x} width="280" height="240" alt={name} />
@@ -59,7 +60,7 @@ export default function ProductCard({cameraData}: ProductCardProps): JSX.Element
           </button>
           <Link className="btn btn--transparent" onClick={() => {
             dispatch(fetchProductDataAction(id.toString()));
-            dispatch(fetchSimilarCamerastDataAction(id.toString()));
+            dispatch(fetchSimilarCamerasDataAction(id.toString()));
           }} to={AppRoute.Product + id.toString()}
           >Подробнее
           </Link>

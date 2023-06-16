@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SlicesNames } from '../../const';
 import { SimilarCamerasDataState } from '../../types/state';
-import { fetchCamerasDataAction, fetchSimilarCamerastDataAction } from '../api-actions';
+import { fetchSimilarCamerasDataAction } from '../api-actions';
 
 const initialState: SimilarCamerasDataState = {
   isSimilarCamerasDataLoading: false,
@@ -14,10 +14,10 @@ export const similarCamerasData = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchSimilarCamerastDataAction.pending, (state) => {
+      .addCase(fetchSimilarCamerasDataAction.pending, (state) => {
         state.isSimilarCamerasDataLoading = true;
       })
-      .addCase(fetchCamerasDataAction.fulfilled, (state, action) => {
+      .addCase(fetchSimilarCamerasDataAction.fulfilled, (state, action) => {
         state.similarCamerasData = action.payload;
         state.isSimilarCamerasDataLoading = false;
       });
