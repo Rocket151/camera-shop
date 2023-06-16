@@ -13,7 +13,7 @@ export default function SimilarCamerasList(): JSX.Element {
           <div className="product-similar__slider-list">
             {camerasData.map((cameraData, index) => {
               if (index <= 2) {
-                return <ProductCard carouselClass={CARO} cameraData={cameraData} key={cameraData.id}/>
+                return <ProductCard carouselClass={} cameraData={cameraData} key={cameraData.id}/>
               }
               return <ProductCard cameraData={cameraData} key={cameraData.id}/>
               })}
