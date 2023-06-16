@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { fetchProductDataAction } from '../../store/api-actions';
+import { fetchProductDataAction, fetchSimilarCamerastDataAction } from '../../store/api-actions';
 import { CamerasData } from '../../types/cameras-data';
 import Modal from '../modal/modal';
 
@@ -59,6 +59,7 @@ export default function ProductCard({cameraData}: ProductCardProps): JSX.Element
           </button>
           <Link className="btn btn--transparent" onClick={() => {
             dispatch(fetchProductDataAction(id.toString()));
+            dispatch(fetchSimilarCamerastDataAction(id.toString()));
           }} to={AppRoute.Product + id.toString()}
           >Подробнее
           </Link>

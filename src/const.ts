@@ -18,4 +18,6 @@ export enum APIRoute {
   SimilarCameras = '/similar'
 }
 
+export CAROUSEL_VISIBLE_CLASS = 'is-active';
+
 export const MAX_PRODUCTS_PAGE = 9;

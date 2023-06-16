@@ -1,11 +1,11 @@
 import { useAppSelector } from '../../hooks';
 import { getSimilarCamerasData } from '../../store/similar-cameras-data/selectors';
-import ProductCardList from '../product-card-list/product-card-list';
 import Slider from 'react-slick';
+import ProductCard from '../product-card/product-card';
 
 const settings = {
-  dots: true,
-  infinite: true,
+  dots: false,
+  infinite: false,
   slidesToShow: 3,
   slidesToScroll: 1,
   nextArrow: <SampleNextArrow />,
@@ -43,10 +43,23 @@ export default function SimilarCamerasList(): JSX.Element {
         <h2 className="title title--h3">Похожие товары</h2>
         <div className="product-similar__slider">
           <div className="product-similar__slider-list">
-            <Slider {...settings}>
-              <ProductCardList camerasData={camerasData}/>
-            </Slider>
+            {camerasData.map((cameraData, index) => {
+              if (index <= 2) {
+                return <ProductCard carouselClass={CARO} cameraData={cameraData} key={cameraData.id}/>
+              }
+              return <ProductCard cameraData={cameraData} key={cameraData.id}/>
+              })}
           </div>
+          <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд">
+            <svg width="7" height="12" aria-hidden="true">
+              <use xlinkHref="#icon-arrow"></use>
+            </svg>
+          </button>
+          <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд">
+            <svg width="7" height="12" aria-hidden="true">
+              <use xlinkHref="#icon-arrow"></use>
+            </svg>
+          </button>
         </div>
       </div>
     </section>
