@@ -10,7 +10,7 @@ export default function SimilarCamerasList(): JSX.Element {
   const handleButtonClick = () => {
     setSimilarCameraIndex((prev) => prev + MAX_CAROUSEL_ITEMS);
   };
-  console.log(similarCameraIndex);
+
   return (
     <section className="product-similar">
       <div className="container">
