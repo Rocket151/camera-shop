@@ -18,9 +18,10 @@ export default function Modal({
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown);
-    document.body.style.overflowY = 'hidden';
+    document.body.style.position = 'fixed';
+
     return () => {
-      document.body.style.overflowY = '';
+      document.body.style.position = '';
       document.removeEventListener('keydown', onKeydown);
     };
   });
