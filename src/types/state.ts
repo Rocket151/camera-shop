@@ -17,6 +17,10 @@ export type ProductDataState = {
   productData: CamerasData | null;
 }
 
+export type SimilarCamerasDataState = {
+  isSimilarCamerasDataLoading: boolean;
+  similarCamerasData: CamerasData[];
+}
 
 export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,6 +1,7 @@
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import SimilarCamerasList from '../../components/similar-camera-list/similar-camera-list';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -86,26 +87,7 @@ export default function ProductScreen(): JSX.Element {
               </section>
             </div>
             <div className="page-content__section">
-              <section className="product-similar">
-                <div className="container">
-                  <h2 className="title title--h3">Похожие товары</h2>
-                  <div className="product-similar__slider">
-                    <div className="product-similar__slider-list">
-
-                      <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled>
-                        <svg width="7" height="12" aria-hidden="true">
-                          <use xlinkHref="#icon-arrow"></use>
-                        </svg>
-                      </button>
-                      <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд">
-                        <svg width="7" height="12" aria-hidden="true">
-                          <use xlinkHref="#icon-arrow"></use>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </section>
+              <SimilarCamerasList />
             </div>
             <div className="page-content__section">
               <section className="review-block">

@@ -36,3 +36,14 @@ export const fetchProductDataAction = createAsyncThunk<CamerasData, string, {
       return data;
     },
   );
+
+export const fetchSimilarCamerasDataAction = createAsyncThunk<CamerasData[], string, {
+    extra: AxiosInstance;
+  }>(
+    'fetchSimilarCamerasData',
+    async (id, {extra: api}) => {
+      const {data} = await api.get<CamerasData[]>(APIRoute.Cameras + id + APIRoute.SimilarCameras);
+
+      return data;
+    },
+  );
