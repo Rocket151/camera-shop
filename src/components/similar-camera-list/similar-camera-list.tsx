@@ -7,6 +7,7 @@ import { useState } from 'react';
 export default function SimilarCamerasList(): JSX.Element {
   const camerasData = useAppSelector(getSimilarCamerasData);
   const [similarCameraIndex, setSimilarCameraIndex] = useState(MIN_SLIDER_ITEM_INDEX);
+
   const handleNextButtonClick = () => {
     setSimilarCameraIndex((prev) => prev + MAX_CAROUSEL_ITEMS);
   };
