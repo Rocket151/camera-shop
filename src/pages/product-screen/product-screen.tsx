@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import ModalAddItem from '../../components/modal-add-item/modal-add-item';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import SimilarCamerasList from '../../components/similar-camera-list/similar-camera-list';
+import { ScreenNames } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 export default function ProductScreen(): JSX.Element {
   const productData = useAppSelector(getProductData);
+  const [isModalAddItem, setModalAddItem] = useState(false);
 
   if (productData) {
     const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount} = productData;
@@ -63,7 +67,7 @@ export default function ProductScreen(): JSX.Element {
             </div>
             <div className="page-content__section">
 
-              <SimilarCamerasList />
+              <SimilarCamerasList setModalAddItem={setModalAddItem} />
             </div>
             <div className="page-content__section">
               <section className="review-block">
@@ -187,6 +191,7 @@ export default function ProductScreen(): JSX.Element {
               </section>
             </div>
           </div>
+          <ModalAddItem setModalAddItem={setModalAddItem} currentScreenName={ScreenNames.Product} isModalAddItem={isModalAddItem} />
         </main>
         <a className="up-btn" href="#header">
           <svg width="12" height="18" aria-hidden="true">

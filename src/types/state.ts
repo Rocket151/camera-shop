@@ -5,6 +5,7 @@ import { PromoData } from './promo-data';
 export type CamerasDataState = {
   isCamerasDataLoading: boolean;
   camerasData: CamerasData[];
+  selectedCameraData: CamerasData;
 }
 
 export type PromoDataState = {

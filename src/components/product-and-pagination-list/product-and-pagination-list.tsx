@@ -7,7 +7,11 @@ import { getPagesNumber } from '../../utils';
 import PaginationList from '../pagination-list/pagination-list';
 import ProductCardList from '../product-card-list/product-card-list';
 
-export default function ProductAndPaginationList() {
+type ProductAndPaginationListProps = {
+    setModalAddItem: (arg: boolean) => void;
+}
+
+export default function ProductAndPaginationList({setModalAddItem}: ProductAndPaginationListProps) {
   const [page, setPage] = useState(1);
   const [data, setData] = useState<CamerasData[]>([]);
   const camerasData = useAppSelector(getCamerasData);
@@ -18,7 +22,7 @@ export default function ProductAndPaginationList() {
 
   return (
     <>
-      <ProductCardList camerasData={data} />
+      <ProductCardList camerasData={data} setModalAddItem={setModalAddItem}/>
       <PaginationList setPage={setPage} totalPages={totalPages} currentPage={page}/>
     </>
   );

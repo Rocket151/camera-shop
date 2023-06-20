@@ -23,6 +23,11 @@ export enum TabNames {
   Description = 'Описание',
 }
 
+export enum ScreenNames {
+  Catalog = 'Catalog',
+  Product = 'Product',
+}
+
 export const CAROUSEL_VISIBLE_CLASS = 'is-active';
 
 export const MAX_CAROUSEL_ITEMS = 3;
