@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { fetchProductDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
+import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { CamerasData } from '../../types/cameras-data';
 
