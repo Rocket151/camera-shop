@@ -29,6 +29,7 @@ export default function CatalogScreen() {
             </div>
           </section>
         </div>
+        <ModalAddItem />
       </main>
       <Footer />
     </div>

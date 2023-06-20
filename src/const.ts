@@ -18,6 +18,11 @@ export enum APIRoute {
   SimilarCameras = '/similar'
 }
 
+export enum TabNames {
+  Characteristics = 'Характеристики',
+  Description = 'Описание',
+}
+
 export const CAROUSEL_VISIBLE_CLASS = 'is-active';
 
 export const MAX_CAROUSEL_ITEMS = 3;

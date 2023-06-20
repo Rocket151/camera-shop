@@ -1,6 +1,7 @@
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import ProductTabs from '../../components/product-tabs/product-tabs';
 import SimilarCamerasList from '../../components/similar-camera-list/similar-camera-list';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
@@ -10,9 +11,10 @@ export default function ProductScreen(): JSX.Element {
   const productData = useAppSelector(getProductData);
 
   if (productData) {
-    const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount, category, type, vendorCode, level, description} = productData;
+    const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount} = productData;
     return (
       <div className="wrapper">
+
         <Header />
         <main>
           <div className="page-content">
@@ -53,40 +55,14 @@ export default function ProductScreen(): JSX.Element {
                         <use xlinkHref="#icon-add-basket"></use>
                       </svg>Добавить в корзину
                     </button>
-                    <div className="tabs product__tabs">
-                      <div className="tabs__controls product__tabs-controls">
-                        <button className="tabs__control" type="button">Характеристики</button>
-                        <button className="tabs__control is-active" type="button">Описание</button>
-                      </div>
-                      <div className="tabs__content">
-                        <div className="tabs__element">
-                          <ul className="product__tabs-list">
-                            <li className="item-list"><span className="item-list__title">Артикул:</span>
-                              <p className="item-list__text">{vendorCode}</p>
-                            </li>
-                            <li className="item-list"><span className="item-list__title">Категория:</span>
-                              <p className="item-list__text">{category}</p>
-                            </li>
-                            <li className="item-list"><span className="item-list__title">Тип камеры:</span>
-                              <p className="item-list__text">{type}</p>
-                            </li>
-                            <li className="item-list"><span className="item-list__title">Уровень:</span>
-                              <p className="item-list__text">{level}</p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="tabs__element is-active">
-                          <div className="product__tabs-text">
-                            <p>{description}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
+                    <ProductTabs />
                   </div>
                 </div>
               </section>
             </div>
             <div className="page-content__section">
+
               <SimilarCamerasList />
             </div>
             <div className="page-content__section">
