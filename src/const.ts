@@ -10,12 +10,14 @@ export enum SlicesNames {
   PromoData = 'PROMO_DATA',
   ProductData = 'PRODUCT_DATA',
   SimilarCamerasData = 'SIMILAR_CAMERAS_DATA',
+  ReviewsData = 'REVIEWS_DATA',
 }
 
 export enum APIRoute {
   Cameras = '/cameras/',
   Promo = '/promo',
-  SimilarCameras = '/similar'
+  SimilarCameras = '/similar',
+  Reviews = '/reviews'
 }
 
 export enum TabNames {

@@ -59,6 +59,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
         <Link className="btn btn--transparent" onClick={() => {
           dispatch(fetchProductDataAction(id.toString()));
           dispatch(fetchSimilarCamerasDataAction(id.toString()));
+          dispatch(fetchReviewsDataAction(id.toString()));
         }} to={AppRoute.Product + id.toString()}
         >Подробнее
         </Link>
