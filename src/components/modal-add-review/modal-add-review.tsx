@@ -31,15 +31,15 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview}: Mo
                     <div className="rate__bar">
                       <div className="rate__group">
                         <input className="visually-hidden" id="star-5" name="rate" type="radio" value="5" />
-                        <label className="rate__label" for="star-5" title="Отлично"></label>
+                        <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
                         <input className="visually-hidden" id="star-4" name="rate" type="radio" value="4" />
-                        <label className="rate__label" for="star-4" title="Хорошо"></label>
+                        <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
                         <input className="visually-hidden" id="star-3" name="rate" type="radio" value="3" />
-                        <label className="rate__label" for="star-3" title="Нормально"></label>
+                        <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
                         <input className="visually-hidden" id="star-2" name="rate" type="radio" value="2" />
-                        <label className="rate__label" for="star-2" title="Плохо"></label>
+                        <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
                         <input className="visually-hidden" id="star-1" name="rate" type="radio" value="1" />
-                        <label className="rate__label" for="star-1" title="Ужасно"></label>
+                        <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
                       </div>
                       <div className="rate__progress"><span className="rate__stars">0</span> <span>/</span> <span className="rate__all-stars">5</span>
                       </div>
@@ -47,38 +47,46 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview}: Mo
                     <p className="rate__message">Нужно оценить товар</p>
                   </fieldset>
                   <div className="custom-input form-review__item">
-                    <label><span className="custom-input__label">Ваше имя
-                      <svg width="9" height="9" aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake"></use>
-                      </svg></span>
-                    <input type="text" name="user-name" placeholder="Введите ваше имя" required />
+                    <label>
+                      <span className="custom-input__label">Ваше имя
+                        <svg width="9" height="9" aria-hidden="true">
+                          <use xlinkHref="#icon-snowflake"></use>
+                        </svg>
+                      </span>
+                      <input type="text" name="user-name" placeholder="Введите ваше имя" required />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>
                   </div>
                   <div className="custom-input form-review__item">
-                    <label><span className="custom-input__label">Достоинства
-                      <svg width="9" height="9" aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake"></use>
-                      </svg></span>
-                    <input type="text" name="user-plus" placeholder="Основные преимущества товара" required />
+                    <label>
+                      <span className="custom-input__label">Достоинства
+                        <svg width="9" height="9" aria-hidden="true">
+                          <use xlinkHref="#icon-snowflake"></use>
+                        </svg>
+                      </span>
+                      <input type="text" name="user-plus" placeholder="Основные преимущества товара" required />
                     </label>
                     <p className="custom-input__error">Нужно указать достоинства</p>
                   </div>
                   <div className="custom-input form-review__item">
-                    <label><span className="custom-input__label">Недостатки
-                      <svg width="9" height="9" aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake"></use>
-                      </svg></span>
-                    <input type="text" name="user-minus" placeholder="Главные недостатки товара" required />
+                    <label>
+                      <span className="custom-input__label">Недостатки
+                        <svg width="9" height="9" aria-hidden="true">
+                          <use xlinkHref="#icon-snowflake"></use>
+                        </svg>
+                      </span>
+                      <input type="text" name="user-minus" placeholder="Главные недостатки товара" required />
                     </label>
                     <p className="custom-input__error">Нужно указать недостатки</p>
                   </div>
                   <div className="custom-textarea form-review__item">
-                    <label><span className="custom-textarea__label">Комментарий
-                      <svg width="9" height="9" aria-hidden="true">
-                        <use xlinkHref="#icon-snowflake"></use>
-                      </svg></span>
-                    <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки"></textarea>
+                    <label>
+                      <span className="custom-textarea__label">Комментарий
+                        <svg width="9" height="9" aria-hidden="true">
+                          <use xlinkHref="#icon-snowflake"></use>
+                        </svg>
+                      </span>
+                      <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки"></textarea>
                     </label>
                     <div className="custom-textarea__error">Нужно добавить комментарий</div>
                   </div>
