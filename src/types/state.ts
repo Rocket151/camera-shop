@@ -16,11 +16,13 @@ export type PromoDataState = {
 export type ReviewsDataState = {
   isReviewsDataLoading: boolean;
   reviewsData: ReviewData[];
+  isUserReviewDataSending: boolean;
+  userReviewDataSended: boolean;
 }
 
 export type ProductDataState = {
   isProductDataLoading: boolean;
-  productData: CamerasData | null;
+  productData: CamerasData;
 }
 
 export type SimilarCamerasDataState = {

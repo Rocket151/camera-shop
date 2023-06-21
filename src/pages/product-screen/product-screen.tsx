@@ -8,14 +8,21 @@ import ProductTabs from '../../components/product-tabs/product-tabs';
 import Reviews from '../../components/reviews/reviews';
 import SimilarCamerasList from '../../components/similar-camera-list/similar-camera-list';
 import { ScreenNames } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { getProductData } from '../../store/product-data/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 export default function ProductScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
   const productData = useAppSelector(getProductData);
   const [isModalAddItem, setModalAddItem] = useState(false);
   const [isModalAddReview, setModalAddReview] = useState(false);
+  const handleAddToBasketClick = () => {
+    dispatch(selectCameraData(productData));
+    setModalAddItem(true);
+    document.body.style.overflowY = 'hidden';
+  };
 
   if (productData) {
     const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount} = productData;
@@ -57,7 +64,7 @@ export default function ProductScreen(): JSX.Element {
                       <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                     </div>
                     <p className="product__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
-                    <button className="btn btn--purple" type="button">
+                    <button className="btn btn--purple" type="button" onClick={handleAddToBasketClick}>
                       <svg width="24" height="16" aria-hidden="true">
                         <use xlinkHref="#icon-add-basket"></use>
                       </svg>Добавить в корзину
@@ -77,7 +84,7 @@ export default function ProductScreen(): JSX.Element {
 
             </div>
           </div>
-          <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} />
+          <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} productData={productData}/>
           <ModalAddItem setModalAddItem={setModalAddItem} currentScreenName={ScreenNames.Product} isModalAddItem={isModalAddItem} />
         </main>
         <a className="up-btn" href="#header">

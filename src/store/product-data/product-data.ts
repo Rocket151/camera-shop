@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SlicesNames } from '../../const';
+import { CamerasData } from '../../types/cameras-data';
 import { ProductDataState } from '../../types/state';
 import { fetchProductDataAction } from '../api-actions';
 
 
 const initialState: ProductDataState = {
   isProductDataLoading: false,
-  productData: null,
+  productData: {} as CamerasData,
 };
 
 export const productData = createSlice({

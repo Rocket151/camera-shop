@@ -4,6 +4,7 @@ import { APIRoute } from '../const';
 import { CamerasData } from '../types/cameras-data';
 import { PromoData } from '../types/promo-data';
 import { ReviewData } from '../types/review-data';
+import { UserReviewData } from '../types/user-review-data';
 
 export const fetchCamerasDataAction = createAsyncThunk<CamerasData[], undefined, {
     extra: AxiosInstance;
@@ -58,4 +59,16 @@ export const fetchReviewsDataAction = createAsyncThunk<ReviewData[], string, {
 
       return data;
     },
+  );
+
+export const sendUserReviewAction = createAsyncThunk<ReviewData, UserReviewData,
+  {
+    extra: AxiosInstance;
+  }>(
+    'sendUserReview',
+    async(reviewData, {extra: api}) => {
+      const {data} = await api.post<ReviewData>(APIRoute.Reviews, reviewData);
+
+      return data;
+    }
   );

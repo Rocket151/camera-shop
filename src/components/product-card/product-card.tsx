@@ -18,7 +18,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
   const handleModalOpen = () => {
     dispatch(selectCameraData(cameraData));
     setModalAddItem(true);
-    document.body.style.overflowY = 'hidden';
+    document.body.style.overflow = 'hidden';
   };
 
   return (
