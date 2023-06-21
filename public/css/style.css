@@ -384,6 +384,10 @@ template {
   display: none;
 }
 
+.is-hidden {
+  visibility: hidden;
+}
+
 @font-face {
   font-family: "Open Sans";
   font-weight: 400;

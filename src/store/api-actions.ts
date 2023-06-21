@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 import { CamerasData } from '../types/cameras-data';
 import { PromoData } from '../types/promo-data';
+import { ReviewData } from '../types/review-data';
 
 export const fetchCamerasDataAction = createAsyncThunk<CamerasData[], undefined, {
     extra: AxiosInstance;
@@ -43,6 +44,17 @@ export const fetchSimilarCamerasDataAction = createAsyncThunk<CamerasData[], str
     'fetchSimilarCamerasData',
     async (id, {extra: api}) => {
       const {data} = await api.get<CamerasData[]>(APIRoute.Cameras + id + APIRoute.SimilarCameras);
+
+      return data;
+    },
+  );
+
+export const fetchReviewsDataAction = createAsyncThunk<ReviewData[], string, {
+    extra: AxiosInstance;
+  }>(
+    'fetchReviewsData',
+    async (id, {extra: api}) => {
+      const {data} = await api.get<ReviewData[]>(APIRoute.Cameras + id + APIRoute.Reviews);
 
       return data;
     },

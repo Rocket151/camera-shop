@@ -4,7 +4,12 @@ import ProductCard from '../product-card/product-card';
 import { CAROUSEL_VISIBLE_CLASS, MAX_CAROUSEL_ITEMS, MIN_SLIDER_ITEM_INDEX} from '../../const';
 import { useState } from 'react';
 
-export default function SimilarCamerasList(): JSX.Element {
+type SimilarCamerasListProps = {
+    setModalAddItem: (arg: boolean) => void;
+}
+
+
+export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasListProps): JSX.Element {
   const camerasData = useAppSelector(getSimilarCamerasData);
   const [similarCameraIndex, setSimilarCameraIndex] = useState(MIN_SLIDER_ITEM_INDEX);
 
@@ -27,10 +32,10 @@ export default function SimilarCamerasList(): JSX.Element {
             {camerasData.map((cameraData, index) => {
               if (index >= similarCameraIndex && index < similarCameraIndex + MAX_CAROUSEL_ITEMS) {
 
-                return <ProductCard carouselClass={CAROUSEL_VISIBLE_CLASS} cameraData={cameraData} key={cameraData.id}/>;
+                return <ProductCard setModalAddItem={setModalAddItem} carouselClass={CAROUSEL_VISIBLE_CLASS} cameraData={cameraData} key={cameraData.id}/>;
               }
 
-              return <ProductCard cameraData={cameraData} key={cameraData.id}/>;
+              return <ProductCard setModalAddItem={setModalAddItem} cameraData={cameraData} key={cameraData.id}/>;
             })}
           </div>
           <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" disabled={isDisabledNextBtn} onClick={handleNextButtonClick}>

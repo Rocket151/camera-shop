@@ -1,15 +1,21 @@
 import { store } from '../store';
 import { CamerasData } from './cameras-data';
 import { PromoData } from './promo-data';
+import { ReviewData } from './review-data';
 
 export type CamerasDataState = {
   isCamerasDataLoading: boolean;
   camerasData: CamerasData[];
+  selectedCameraData: CamerasData;
 }
 
 export type PromoDataState = {
   isPromoDataLoading: boolean;
   promoData: PromoData | null;
+}
+export type ReviewsDataState = {
+  isReviewsDataLoading: boolean;
+  reviewsData: ReviewData[];
 }
 
 export type ProductDataState = {
