@@ -427,6 +427,7 @@ body {
 }
 
 html {
+  overflow-x: hidden;
   margin-right: calc(-1 * (100vw - 100%));
   font-style: normal;
   font-weight: 400;

@@ -3,6 +3,7 @@ import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ModalAddItem from '../../components/modal-add-item/modal-add-item';
+import ModalAddReview from '../../components/modal-add-review/modal-add-review';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import Reviews from '../../components/reviews/reviews';
 import SimilarCamerasList from '../../components/similar-camera-list/similar-camera-list';
@@ -72,10 +73,11 @@ export default function ProductScreen(): JSX.Element {
               <SimilarCamerasList setModalAddItem={setModalAddItem} />
             </div>
             <div className="page-content__section">
-              <Reviews />
+              <Reviews setModalAddReview={setModalAddReview}/>
 
             </div>
           </div>
+          <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} />
           <ModalAddItem setModalAddItem={setModalAddItem} currentScreenName={ScreenNames.Product} isModalAddItem={isModalAddItem} />
         </main>
         <a className="up-btn" href="#header">

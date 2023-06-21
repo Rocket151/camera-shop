@@ -2,10 +2,18 @@ import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { getReviewsData } from '../../store/reviews-data/selectors';
 
-export default function Reviews(): JSX.Element {
+type ReviewsProps = {
+  setModalAddReview: (arg:boolean) => void;
+}
+
+export default function Reviews({setModalAddReview}: ReviewsProps): JSX.Element {
   const reviewsData = useAppSelector(getReviewsData);
   const [reviews, setReviews] = useState(3);
   const slicedReviewsData = reviewsData.slice(0,reviews);
+  const handleAddReviewBtnClick = () => {
+    setModalAddReview(true);
+    document.body.style.overflowY = 'hidden';
+  };
 
   const handleMoreButtonClick = () => {
     setReviews((prev) => prev + 3);
@@ -16,7 +24,7 @@ export default function Reviews(): JSX.Element {
       <div className="container">
         <div className="page-content__headed">
           <h2 className="title title--h3">Отзывы</h2>
-          <button className="btn" type="button">Оставить свой отзыв</button>
+          <button className="btn" type="button" onClick={handleAddReviewBtnClick}>Оставить свой отзыв</button>
         </div>
         <ul className="review-block__list">
           {slicedReviewsData.map((reviewData) => (
