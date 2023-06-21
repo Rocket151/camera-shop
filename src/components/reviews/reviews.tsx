@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { getReviewsData } from '../../store/reviews-data/selectors';
 
 export default function Reviews(): JSX.Element {
   const reviewsData = useAppSelector(getReviewsData);
+  const [reviews, setReviews] = useState(3);
+  const slicedReviewsData = reviewsData.slice(0,reviews);
+
+  const handleMoreButtonClick = () => {
+    setReviews((prev) => prev + 3);
+  };
 
   return (
     <section className="review-block">
@@ -12,7 +19,7 @@ export default function Reviews(): JSX.Element {
           <button className="btn" type="button">Оставить свой отзыв</button>
         </div>
         <ul className="review-block__list">
-          {reviewsData.map((reviewData) => (
+          {slicedReviewsData.map((reviewData) => (
             <li className="review-card" key={reviewData.id}>
               <div className="review-card__head">
                 <p className="title title--h4">{reviewData.userName}</p>
@@ -50,8 +57,8 @@ export default function Reviews(): JSX.Element {
             </li>
           ))}
         </ul>
-        <div className="review-block__buttons">
-          <button className="btn btn--purple" type="button">Показать больше отзывов
+        <div className={`review-block__buttons ${reviews >= reviewsData.length ? 'is-hidden' : ''}`}>
+          <button className="btn btn--purple" type="button" onClick={handleMoreButtonClick}>Показать больше отзывов
           </button>
         </div>
       </div>

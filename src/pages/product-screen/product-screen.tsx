@@ -14,6 +14,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 export default function ProductScreen(): JSX.Element {
   const productData = useAppSelector(getProductData);
   const [isModalAddItem, setModalAddItem] = useState(false);
+  const [isModalAddReview, setModalAddReview] = useState(false);
 
   if (productData) {
     const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount} = productData;
