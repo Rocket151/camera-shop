@@ -7,17 +7,12 @@ const initialState: ReviewsDataState = {
   isReviewsDataLoading: false,
   reviewsData: [],
   isUserReviewDataSending: false,
-  userReviewDataSended: false,
 };
 
 export const reviewsData = createSlice({
   name: SlicesNames.ReviewsData,
   initialState,
-  reducers: {
-    closeModalUserReviewDataSended: (state) => {
-      state.userReviewDataSended = false;
-    }
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchReviewsDataAction.pending, (state) => {
@@ -33,7 +28,6 @@ export const reviewsData = createSlice({
       .addCase(sendUserReviewAction.fulfilled, (state, action) => {
         state.reviewsData.unshift(action.payload);
         state.isUserReviewDataSending = false;
-        state.userReviewDataSended = true;
       });
   }
 });

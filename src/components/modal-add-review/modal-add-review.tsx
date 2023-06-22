@@ -2,48 +2,64 @@ import { FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { sendUserReviewAction } from '../../store/api-actions';
 import { CamerasData } from '../../types/cameras-data';
-import { UserReviewData } from '../../types/user-review-data';
 import Modal from '../modal/modal';
 
 type ModalAddItemProps = {
   setModalAddReview: (arg:boolean) => void;
   isModalAddReview: boolean;
   productData: CamerasData;
+  setModalAddReviewSuccess: (arg:boolean) => void;
 }
 
-export default function ModalAddReview({setModalAddReview, isModalAddReview, productData}: ModalAddItemProps): JSX.Element {
-  const [formData, setFormData] = useState<UserReviewData>({
-    cameraId: productData.id,
-    userName: '',
-    advantage: '',
-    disadvantage: '',
-    review: '',
-    rating: 0,
-  });
+const initialState = {
+  userName: '',
+  advantage: '',
+  disadvantage: '',
+  review: '',
+  rating: 0,
+  }
+
+export default function ModalAddReview({setModalAddReview, isModalAddReview, productData, setModalAddReviewSuccess}: ModalAddItemProps): JSX.Element {
+  const [formData, setFormData] = useState(initialState);
   const dispatch = useAppDispatch();
 
   const handleFormFieldChange = (evt: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>): void => {
-    console.log(formData);
     const {name, value} = evt.target;
     setFormData({
       ...formData,
       [name]: value
     });
   };
-
+  const resetFormData = (): void => {
+    setFormData(initialState)
+  }
   const handleSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
 
-    dispatch(sendUserReviewAction(formData));
+    dispatch(sendUserReviewAction({
+      resetFormData, 
+      handleModalUserReviewClose, 
+      handleModalUserReviewSuccessOpen,
+      formData:
+      {
+        ...formData,
+        rating: +formData.rating,
+        cameraId: productData.id,
+      }, 
+    
+    }));
   };
-
-  const handleModalClose = () => {
+  const handleModalUserReviewSuccessOpen = () => {
+    setModalAddReviewSuccess(true);
+    document.body.style.overflowY = 'hidden';
+  };
+  const handleModalUserReviewClose = () => {
     setModalAddReview(false);
     document.body.style.overflowY = '';
   };
 
   return (
-    <Modal onClose={handleModalClose}>
+    <Modal onClose={handleModalUserReviewClose}>
       <div className={`modal ${isModalAddReview ? 'is-active' : ''}`}>
         <div className="modal__wrapper">
           <div className="modal__overlay"></div>
@@ -60,18 +76,18 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                     </legend>
                     <div className="rate__bar">
                       <div className="rate__group">
-                        <input className="visually-hidden" id="star-5" name="rating" type="radio" value={5} onChange={handleFormFieldChange} />
+                        <input className="visually-hidden" id="star-5" name="rating" type="radio" value='5' onChange={handleFormFieldChange} />
                         <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
-                        <input className="visually-hidden" id="star-4" name="rating" type="radio" value={4} onChange={handleFormFieldChange} />
+                        <input className="visually-hidden" id="star-4" name="rating" type="radio" value='4' onChange={handleFormFieldChange} />
                         <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
-                        <input className="visually-hidden" id="star-3" name="rating" type="radio" value={3} onChange={handleFormFieldChange} />
+                        <input className="visually-hidden" id="star-3" name="rating" type="radio" value='3' onChange={handleFormFieldChange} />
                         <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
-                        <input className="visually-hidden" id="star-2" name="rating" type="radio" value={2} onChange={handleFormFieldChange} />
+                        <input className="visually-hidden" id="star-2" name="rating" type="radio" value='2' onChange={handleFormFieldChange} />
                         <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
-                        <input className="visually-hidden" id="star-1" name="rating" type="radio" value={1} onChange={handleFormFieldChange} />
+                        <input className="visually-hidden" id="star-1" name="rating" type="radio" value='1' onChange={handleFormFieldChange} />
                         <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
                       </div>
-                      <div className="rate__progress"><span className="rate__stars">0</span> <span>/</span> <span className="rate__all-stars">5</span>
+                      <div className="rate__progress"><span className="rate__stars">{formData.rating}</span> <span>/</span> <span className="rate__all-stars">5</span>
                       </div>
                     </div>
                     <p className="rate__message">Нужно оценить товар</p>
@@ -83,7 +99,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="userName" placeholder="Введите ваше имя" required onChange={handleFormFieldChange} />
+                      <input type="text" name="userName" placeholder="Введите ваше имя" value={formData.userName} required onChange={handleFormFieldChange} />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>
                   </div>
@@ -94,7 +110,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="advantage" placeholder="Основные преимущества товара" required onChange={handleFormFieldChange} />
+                      <input type="text" name="advantage" placeholder="Основные преимущества товара" value={formData.advantage} required onChange={handleFormFieldChange} />
                     </label>
                     <p className="custom-input__error">Нужно указать достоинства</p>
                   </div>
@@ -105,7 +121,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" name="disadvantage" placeholder="Главные недостатки товара" required onChange={handleFormFieldChange} />
+                      <input type="text" name="disadvantage" placeholder="Главные недостатки товара" value={formData.disadvantage} required onChange={handleFormFieldChange} />
                     </label>
                     <p className="custom-input__error">Нужно указать недостатки</p>
                   </div>
@@ -116,7 +132,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <textarea name="review" minLength={5} placeholder="Поделитесь своим опытом покупки" onChange={handleFormFieldChange}></textarea>
+                      <textarea name="review" minLength={5} placeholder="Поделитесь своим опытом покупки" value={formData.review} onChange={handleFormFieldChange}></textarea>
                     </label>
                     <div className="custom-textarea__error">Нужно добавить комментарий</div>
                   </div>
@@ -124,7 +140,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                 <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
               </form>
             </div>
-            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={handleModalClose}>
+            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={handleModalUserReviewClose}>
               <svg width="10" height="10" aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg>

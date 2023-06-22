@@ -4,6 +4,7 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ModalAddItem from '../../components/modal-add-item/modal-add-item';
 import ModalAddReview from '../../components/modal-add-review/modal-add-review';
+import ModalAddReviewSuccess from '../../components/modal-add-review-success/modal-add-review-success';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import Reviews from '../../components/reviews/reviews';
 import SimilarCamerasList from '../../components/similar-camera-list/similar-camera-list';
@@ -18,6 +19,8 @@ export default function ProductScreen(): JSX.Element {
   const productData = useAppSelector(getProductData);
   const [isModalAddItem, setModalAddItem] = useState(false);
   const [isModalAddReview, setModalAddReview] = useState(false);
+  const [isModalAddReviewSuccess, setModalAddReviewSuccess] = useState(false);
+
   const handleAddToBasketClick = () => {
     dispatch(selectCameraData(productData));
     setModalAddItem(true);
@@ -84,8 +87,12 @@ export default function ProductScreen(): JSX.Element {
 
             </div>
           </div>
-          <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} productData={productData}/>
+          <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} productData={productData} setModalAddReviewSuccess={setModalAddReviewSuccess}/>
+          
           <ModalAddItem setModalAddItem={setModalAddItem} currentScreenName={ScreenNames.Product} isModalAddItem={isModalAddItem} />
+          
+          <ModalAddReviewSuccess setModalAddReviewSuccess={setModalAddReviewSuccess} isModalAddReviewSuccess={isModalAddReviewSuccess} />
+
         </main>
         <a className="up-btn" href="#header">
           <svg width="12" height="18" aria-hidden="true">
