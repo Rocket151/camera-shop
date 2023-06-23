@@ -66,7 +66,7 @@ export const sendUserReviewAction = createAsyncThunk<ReviewData, {
   resetFormData: () => void;
   handleModalUserReviewClose: () => void;
   handleModalUserReviewSuccessOpen: () => void;
-  },
+    },
   {
     extra: AxiosInstance;
   }>(
@@ -79,4 +79,4 @@ export const sendUserReviewAction = createAsyncThunk<ReviewData, {
 
       return data;
     }
-  );
+    );

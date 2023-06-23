@@ -6,11 +6,11 @@ type ModalAddReviewSuccessProps = {
 }
 
 export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModalAddReviewSuccess}: ModalAddReviewSuccessProps): JSX.Element {
-    const handleModalClose = () => {
+  const handleModalClose = () => {
     setModalAddReviewSuccess(false);
     document.body.style.overflowY = '';
   };
-  
+
   return (
     <Modal onClose={handleModalClose}>
       <div className={`modal ${isModalAddReviewSuccess ? 'is-active' : ''}`}>
@@ -34,5 +34,5 @@ export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModal
         </div>
       </div>
     </Modal>
-  )
+  );
 }
