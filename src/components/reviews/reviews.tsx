@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { getReviewsData } from '../../store/reviews-data/selectors';
+import { humanizeReviewDate } from '../../utils';
 
 type ReviewsProps = {
   setModalAddReview: (arg:boolean) => void;
@@ -31,7 +32,7 @@ export default function Reviews({setModalAddReview}: ReviewsProps): JSX.Element 
             <li className="review-card" key={reviewData.id}>
               <div className="review-card__head">
                 <p className="title title--h4">{reviewData.userName}</p>
-                <time className="review-card__data" dateTime="2022-04-13">{reviewData.createAt}</time>
+                <time className="review-card__data" dateTime="2022-04-13">{humanizeReviewDate(new Date(reviewData.createAt))}</time>
               </div>
               <div className="rate review-card__rate">
                 <svg width="17" height="16" aria-hidden="true">

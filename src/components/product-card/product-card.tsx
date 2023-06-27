@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../hooks';
 import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { CamerasData } from '../../types/cameras-data';
+import { humanizePrice } from '../../utils';
 
 type ProductCardProps = {
   cameraData: CamerasData;
@@ -50,7 +51,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>
         <p className="product-card__title">{name}</p>
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{`${humanizePrice(price)} ₽`}
         </p>
       </div>
       <div className="product-card__buttons">

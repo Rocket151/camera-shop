@@ -2,6 +2,7 @@ import { ScreenNames } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getSelectedCameraData } from '../../store/cameras-data/selectors';
 import Modal from '../modal/modal';
+import { humanizePrice } from '../../utils';
 
 type ModalAddItemProps = {
   currentScreenName: string;
@@ -41,7 +42,7 @@ export default function ModalAddItem({currentScreenName, setModalAddItem, isModa
                   <li className="basket-item__list-item">{category}</li>
                   <li className="basket-item__list-item">{level} уровень</li>
                 </ul>
-                <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
+                <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{humanizePrice(price)} ₽</p>
               </div>
             </div>
             <div className="modal__buttons">

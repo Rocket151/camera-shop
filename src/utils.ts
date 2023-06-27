@@ -9,3 +9,7 @@ export function getPagesNumber(data: CamerasData[]) {
   }
   return totalPages;
 }
+
+export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;
+
+export const humanizeReviewDate = (date: Date, locales = 'ru-RU') => date.toLocaleString(locales, {day: 'numeric', month: 'long'});
