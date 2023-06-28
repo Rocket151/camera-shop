@@ -4,7 +4,7 @@ import { CamerasData } from '../../types/cameras-data';
 import { CamerasDataState } from '../../types/state';
 import { fetchCamerasDataAction } from '../api-actions';
 
-const initialState: CamerasDataState = {
+export const initialCamerasDataState: CamerasDataState = {
   isCamerasDataLoading: false,
   camerasData: [],
   selectedCameraData: {} as CamerasData,
@@ -12,7 +12,7 @@ const initialState: CamerasDataState = {
 
 export const camerasData = createSlice({
   name: SlicesNames.CamerasData,
-  initialState,
+  initialCamerasDataState,
   reducers: {
     selectCameraData: (state, action: PayloadAction<CamerasData>) => {
       state.selectedCameraData = action.payload;

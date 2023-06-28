@@ -3,7 +3,7 @@ import { SlicesNames } from '../../const';
 import { ReviewsDataState } from '../../types/state';
 import { fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
 
-const initialState: ReviewsDataState = {
+export const initialReviewsDataState: ReviewsDataState = {
   isReviewsDataLoading: false,
   reviewsData: [],
   isUserReviewDataSending: false,
@@ -11,7 +11,7 @@ const initialState: ReviewsDataState = {
 
 export const reviewsData = createSlice({
   name: SlicesNames.ReviewsData,
-  initialState,
+  initialReviewsDataState,
   reducers: {},
   extraReducers(builder) {
     builder

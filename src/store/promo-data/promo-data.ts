@@ -3,14 +3,14 @@ import { SlicesNames } from '../../const';
 import { PromoDataState } from '../../types/state';
 import { fetchPromoDataAction } from '../api-actions';
 
-const initialState: PromoDataState = {
+export const initialPromoDataState: PromoDataState = {
   isPromoDataLoading: false,
   promoData: null,
 };
 
 export const promoData = createSlice({
   name: SlicesNames.PromoData,
-  initialState,
+  initialPromoDataState,
   reducers: {},
   extraReducers(builder) {
     builder
