@@ -11,7 +11,7 @@ export const initialReviewsDataState: ReviewsDataState = {
 
 export const reviewsData = createSlice({
   name: SlicesNames.ReviewsData,
-  initialReviewsDataState,
+  initialState: initialReviewsDataState,
   reducers: {},
   extraReducers(builder) {
     builder

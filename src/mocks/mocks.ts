@@ -1,22 +1,21 @@
-
 import { datatype, commerce, image, internet, lorem } from 'faker';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 
-import { CamerasData } from '../types/camera-data';
+import { CamerasData } from '../types/cameras-data';
 import { PromoData } from '../types/promo-data';
 import { ReviewData } from '../types/review-data';
 import { UserReviewData } from '../types/user-review-data';
-import { createAPI } from '../services/api';
-import { State } from '../@types/store-types';
+import { createAPI } from '../services/services';
+import { State } from '../types/state';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { SlicesNames } from '../const';
-import { initialStateCatalog } from '../store/catalog-process/catalog-process';
-import { initialStateProduct } from '../store/product-process/product-process';
-import { initialStateReview } from '../store/review-process/review-process';
-import { initialStateOrder } from '../store/order-process/order-process';
-import { FetchStatus } from '../const/fetch-status';
+import { initialCamerasDataState } from '../store/cameras-data/cameras-data';
+import { initialProductDataState } from '../store/product-data/product-data';
+import { initialReviewsDataState } from '../store/reviews-data/reviews-data';
+import { initialPromoDataState } from '../store/promo-data/promo-data';
+import { initialSimilarCamerasDataState } from '../store/similar-cameras-data/similar-cameras-data';
 
 export const makeFakeReview = (): ReviewData => ({
   id: datatype.string(),
@@ -31,7 +30,7 @@ export const makeFakeReview = (): ReviewData => ({
 export const fakeReviews = Array.from({length: 15}, makeFakeReview);
 export const fakeReview = fakeReviews[1];
 
-export const makeFakeCamera = (): CameraData => ({
+export const makeFakeCamera = (): CamerasData => ({
   id: datatype.number(),
   name: commerce.productName(),
   vendorCode: datatype.string(),
@@ -39,19 +38,17 @@ export const makeFakeCamera = (): CameraData => ({
   category: datatype.string(),
   description: lorem.paragraph(),
   level: datatype.string(),
-  rating: datatype.number({ min: 1, max: 5, precision: 0.01 }),
   price: datatype.number(),
   previewImg: image.imageUrl(),
   previewImg2x: image.imageUrl(),
   previewImgWebp: image.imageUrl(),
   previewImgWebp2x: image.imageUrl(),
   reviewCount: datatype.number(),
-  reviews: fakeReviews
 });
 export const fakeCameras = Array.from({length: 20}, makeFakeCamera);
 export const fakeCamera = fakeCameras[0];
 
-export const makeFakePromo = (): Promo => ({
+export const makeFakePromo = (): PromoData => ({
   id: datatype.number(),
   name: commerce.productName(),
   previewImg: image.imageUrl(),
@@ -62,7 +59,7 @@ export const makeFakePromo = (): Promo => ({
 
 export const fakePromo = makeFakePromo();
 
-export const makeFakeUserReview = (): ReviewData => ({
+export const makeFakeUserReview = (): UserReviewData => ({
   userName: internet.userName(),
   advantage: lorem.sentence(),
   disadvantage: lorem.sentence(),
@@ -90,22 +87,20 @@ export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 export const makeMockState = () => ({
   [SlicesNames.CamerasData]: {
     ...initialCamerasDataState,
-  camerasData: fakeCameras,
-  selectedCameraData: fakeCamera,
   },
   [SlicesNames.ProductData]: {
-    ...initialStateProduct,
-    camera: fakeCamera,
-    fetchStatus: FetchStatus.Success,
-    similarCameras: fakeCameras
+    ...initialProductDataState,
   },
   [SlicesNames.ReviewsData]: {
-    ...initialStateReview,
+    ...initialReviewsDataState,
+  },
+  [SlicesNames.PromoData]: {
+    ...initialPromoDataState,
+  },
+  [SlicesNames.SimilarCamerasData]: {
+    ...initialSimilarCamerasDataState,
   },
 });
 
 export const mockState = makeMockState();
 export const mockStore = getMockStore(mockState);
-
-export const fakeMinPrice = datatype.number();
-export const fakeMaxPrice = datatype.number();

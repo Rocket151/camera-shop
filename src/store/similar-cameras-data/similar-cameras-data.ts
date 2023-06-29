@@ -10,7 +10,7 @@ export const initialSimilarCamerasDataState: SimilarCamerasDataState = {
 
 export const similarCamerasData = createSlice({
   name: SlicesNames.SimilarCamerasData,
-  initialSimilarCamerasDataState,
+  initialState: initialSimilarCamerasDataState,
   reducers: {},
   extraReducers(builder) {
     builder

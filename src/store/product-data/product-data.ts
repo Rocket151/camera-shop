@@ -12,7 +12,7 @@ export const initialProductDataState: ProductDataState = {
 
 export const productData = createSlice({
   name: SlicesNames.ProductData,
-  initialProductDataState,
+  initialState: initialProductDataState,
   reducers: {},
   extraReducers(builder) {
     builder

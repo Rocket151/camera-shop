@@ -12,7 +12,7 @@ export const initialCamerasDataState: CamerasDataState = {
 
 export const camerasData = createSlice({
   name: SlicesNames.CamerasData,
-  initialCamerasDataState,
+  initialState: initialCamerasDataState,
   reducers: {
     selectCameraData: (state, action: PayloadAction<CamerasData>) => {
       state.selectedCameraData = action.payload;

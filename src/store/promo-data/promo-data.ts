@@ -10,7 +10,7 @@ export const initialPromoDataState: PromoDataState = {
 
 export const promoData = createSlice({
   name: SlicesNames.PromoData,
-  initialPromoDataState,
+  initialState: initialPromoDataState,
   reducers: {},
   extraReducers(builder) {
     builder

@@ -2,11 +2,11 @@ export type CamerasData = {
     id: number;
     name: string;
     vendorCode: string;
-    type: 'Моментальная '|'Цифровая' | 'Плёночная';
-    category: 'Видеокамера' | 'Фотоаппарат';
+    type: string;
+    category: string;
     description: string;
     reviewCount: number;
-    level: 'Нулевой' | 'Любительский' | 'Профессиональный';
+    level: string;
     price: number;
     previewImg: string;
     previewImg2x: string;
