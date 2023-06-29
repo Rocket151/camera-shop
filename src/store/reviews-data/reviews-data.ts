@@ -6,7 +6,6 @@ import { fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
 export const initialReviewsDataState: ReviewsDataState = {
   isReviewsDataLoading: false,
   reviewsData: [],
-  isUserReviewDataSending: false,
 };
 
 export const reviewsData = createSlice({
@@ -22,12 +21,8 @@ export const reviewsData = createSlice({
         state.reviewsData = action.payload;
         state.isReviewsDataLoading = false;
       })
-      .addCase(sendUserReviewAction.pending, (state) => {
-        state.isUserReviewDataSending = true;
-      })
       .addCase(sendUserReviewAction.fulfilled, (state, action) => {
         state.reviewsData.unshift(action.payload);
-        state.isUserReviewDataSending = false;
       });
   }
 });

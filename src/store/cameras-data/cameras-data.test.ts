@@ -8,7 +8,7 @@ describe('Reducer: camerasData', () => {
     expect(camerasData.reducer(undefined, UNKNOWN_ACTION))
       .toEqual(initialCamerasDataState);
   });
-  it('should update camerasData if fetchCamerasDataAction fulfiled', () => {
+  it('should update camerasData if fetchCamerasDataAction fulfilled', () => {
     expect(camerasData.reducer(initialCamerasDataState, {type: fetchCamerasDataAction.fulfilled.type, payload: fakeCameras}))
       .toEqual({...initialCamerasDataState, camerasData: fakeCameras, isCamerasDataLoading: false });
   });
@@ -20,5 +20,4 @@ describe('Reducer: camerasData', () => {
     expect(camerasData.reducer(initialCamerasDataState, selectCameraData(fakeCameras[0])))
       .toEqual({...initialCamerasDataState, selectedCameraData: fakeCameras[0]});
   });
-
 });
