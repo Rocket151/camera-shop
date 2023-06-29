@@ -15,10 +15,10 @@ describe('Reducer: reviewsData', () => {
   });
   it('should change isReviewsDataLoading to true if ReviewsData loading', () => {
     expect(reviewsData.reducer(initialReviewsDataState, {type: fetchReviewsDataAction.pending.type}))
-      .toEqual({...initialReviewsDataState, isPromoDataLoading: true});
+      .toEqual({...initialReviewsDataState, isReviewsDataLoading: true});
   });
   it('should update reviewsData if sendUserReviewAction fulfilled', () => {
-    expect(reviewsData.reducer(initialReviewsDataState, {type: sendUserReviewAction.fulfilled.type, payload: fakeReview}))
-      .toEqual({...initialReviewsDataState, reviewsData: fakeReview});
+    expect(reviewsData.reducer({...initialReviewsDataState, reviewsData: fakeReviews}, {type: sendUserReviewAction.fulfilled.type, payload: fakeReview}))
+      .toEqual({...initialReviewsDataState, reviewsData: [fakeReview, ...fakeReviews]});
   });
 });

@@ -9,7 +9,7 @@ describe('Reducer: promoData', () => {
       .toEqual(initialSimilarCamerasDataState);
   });
   it('should update similarCamerasData if fetchSimilarCamerasDataAction fulfilled', () => {
-    expect(similarCamerasData.reducer(initialSimilarCamerasDataState, {type: fetchSimilarCamerasDataAction.fulfilled.type, payload: fakeCamera}))
+    expect(similarCamerasData.reducer(initialSimilarCamerasDataState, {type: fetchSimilarCamerasDataAction.fulfilled.type, payload: fakeCameras}))
       .toEqual({...initialSimilarCamerasDataState, similarCamerasData: fakeCameras, isSimilarCamerasDataLoading: false });
   });
   it('should change isSimilarCamerasDataLoading to true if similarCamerasData loading', () => {
