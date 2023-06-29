@@ -62,7 +62,7 @@ export const makeFakePromo = (): Promo => ({
 
 export const fakePromo = makeFakePromo();
 
-export const makeFakeUserReview = (): ReviewPost => ({
+export const makeFakeUserReview = (): ReviewData => ({
   userName: internet.userName(),
   advantage: lorem.sentence(),
   disadvantage: lorem.sentence(),
@@ -71,7 +71,7 @@ export const makeFakeUserReview = (): ReviewPost => ({
   cameraId: datatype.number(),
 });
 
-export const fakeReviewPost = makeFakeUserReview();
+export const fakeUserReview = makeFakeUserReview();
 
 export const api = createAPI();
 export const mockApi = new MockAdapter(api);
@@ -89,10 +89,9 @@ export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 
 export const makeMockState = () => ({
   [SlicesNames.CamerasData]: {
-    ...initialStateCatalog,
-    cameras: fakeCameras,
-    loadingStatus: FetchStatus.Success,
-    promo: fakePromo
+    ...initialCamerasDataState,
+  camerasData: fakeCameras,
+  selectedCameraData: fakeCamera,
   },
   [SlicesNames.ProductData]: {
     ...initialStateProduct,
