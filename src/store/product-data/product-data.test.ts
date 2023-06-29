@@ -10,7 +10,7 @@ describe('Reducer: productData', () => {
   });
   it('should update productData if fetchProductDataAction fulfilled', () => {
     expect(productData.reducer(initialProductDataState, {type: fetchProductDataAction.fulfilled.type, payload: fakeCamera}))
-      .toEqual({...initialProductDataState, camerasData: fakeCamera, isProductDataLoading: false });
+      .toEqual({...initialProductDataState, productData: fakeCamera, isProductDataLoading: false });
   });
   it('should change isProductDataLoading to true if productData loading', () => {
     expect(productData.reducer(initialProductDataState, {type: fetchProductDataAction.pending.type}))

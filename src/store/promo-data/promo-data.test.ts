@@ -1,4 +1,5 @@
 import { fakeCamera, UNKNOWN_ACTION } from '../../mocks/mocks';
+import { fetchPromoDataAction } from '../api-actions';
 import { initialPromoDataState, promoData } from './promo-data';
 
 describe('Reducer: promoData', () => {
@@ -9,10 +10,10 @@ describe('Reducer: promoData', () => {
   });
   it('should update promoData if fetchPromoDataAction fulfilled', () => {
     expect(promoData.reducer(initialPromoDataState, {type: fetchPromoDataAction.fulfilled.type, payload: fakeCamera}))
-      .toEqual({...initialProductDataState, camerasData: fakeCamera, isProductDataLoading: false });
+      .toEqual({...initialPromoDataState, promoData: fakeCamera, isPromoDataLoading: false });
   });
-  it('should change isProductDataLoading to true if productData loading', () => {
-    expect(productData.reducer(initialProductDataState, {type: fetchProductDataAction.pending.type}))
-      .toEqual({...initialProductDataState, isProductDataLoading: true});
+  it('should change isPromoDataLoading to true if promoData loading', () => {
+    expect(promoData.reducer(initialPromoDataState, {type: fetchPromoDataAction.pending.type}))
+      .toEqual({...initialPromoDataState, isPromoDataLoading: true});
   });
 });
