@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SlicesNames } from '../../const';
+import { CamerasData } from '../../types/cameras-data';
 import { ProductDataState } from '../../types/state';
 import { fetchProductDataAction } from '../api-actions';
 
 
-const initialState: ProductDataState = {
+export const initialProductDataState: ProductDataState = {
   isProductDataLoading: false,
-  productData: null,
+  productData: {} as CamerasData,
 };
 
 export const productData = createSlice({
   name: SlicesNames.ProductData,
-  initialState,
+  initialState: initialProductDataState,
   reducers: {},
   extraReducers(builder) {
     builder

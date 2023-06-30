@@ -18,10 +18,8 @@ export default function Modal({
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown);
-    document.body.style.position = 'fixed';
 
     return () => {
-      document.body.style.position = '';
       document.removeEventListener('keydown', onKeydown);
     };
   });

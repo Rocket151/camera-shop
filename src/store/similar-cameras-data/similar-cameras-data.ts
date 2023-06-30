@@ -3,14 +3,14 @@ import { SlicesNames } from '../../const';
 import { SimilarCamerasDataState } from '../../types/state';
 import { fetchSimilarCamerasDataAction } from '../api-actions';
 
-const initialState: SimilarCamerasDataState = {
+export const initialSimilarCamerasDataState: SimilarCamerasDataState = {
   isSimilarCamerasDataLoading: false,
   similarCamerasData: [],
 };
 
 export const similarCamerasData = createSlice({
   name: SlicesNames.SimilarCamerasData,
-  initialState,
+  initialState: initialSimilarCamerasDataState,
   reducers: {},
   extraReducers(builder) {
     builder

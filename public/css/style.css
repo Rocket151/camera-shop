@@ -384,6 +384,10 @@ template {
   display: none;
 }
 
+.is-hidden {
+  visibility: hidden;
+}
+
 @font-face {
   font-family: "Open Sans";
   font-weight: 400;
@@ -2403,7 +2407,7 @@ button,
   display: flex;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  flex-direction: column;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin: 10px 0 5px;
@@ -3481,12 +3485,10 @@ button,
 
 .tabs__control:disabled {
   color: #dddddd;
-  pointer-events: none;
 }
 
 .tabs__control.disabled {
   color: #dddddd;
-  pointer-events: none;
 }
 
 .tabs__control.is-active {

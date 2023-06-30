@@ -1,17 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SlicesNames } from '../../const';
+import { CamerasData } from '../../types/cameras-data';
 import { CamerasDataState } from '../../types/state';
 import { fetchCamerasDataAction } from '../api-actions';
 
-const initialState: CamerasDataState = {
+export const initialCamerasDataState: CamerasDataState = {
   isCamerasDataLoading: false,
   camerasData: [],
+  selectedCameraData: {} as CamerasData,
 };
 
 export const camerasData = createSlice({
   name: SlicesNames.CamerasData,
-  initialState,
-  reducers: {},
+  initialState: initialCamerasDataState,
+  reducers: {
+    selectCameraData: (state, action: PayloadAction<CamerasData>) => {
+      state.selectedCameraData = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCamerasDataAction.pending, (state) => {
@@ -23,3 +29,5 @@ export const camerasData = createSlice({
       });
   }
 });
+
+export const {selectCameraData} = camerasData.actions;

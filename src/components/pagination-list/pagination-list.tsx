@@ -26,18 +26,12 @@ export default function PaginationList({setPage, totalPages, currentPage}: Pagin
   return (
     <div className="pagination">
       <ul className="pagination__list">
-        {
-          currentPage >= 2 ? <li className="pagination__item"><Link className="pagination__link pagination__link--text" to="#" onClick={handlePrevPageClick}>Назад</Link></li> : null
-        }
-
+        <li className={`pagination__item ${currentPage >= 2 ? '' : 'is-hidden'}`}><Link className="pagination__link pagination__link--text" to="#" onClick={handlePrevPageClick}>Назад</Link></li>
         {
           totalPages.map((page) => (<li className="pagination__item" key={page}><Link className={`pagination__link ${page === currentPage ? 'pagination__link--active' : ''}`} id={page.toString()} onClick={handlePageClick} to="#">{page}</Link></li>)
           )
         }
-
-        {
-          currentPage !== totalPages[totalPages.length - 1] ? <li className="pagination__item"><Link className="pagination__link pagination__link--text" onClick={handleNextPageClick} to="#">Далее</Link></li> : null
-        }
+        <li className={`pagination__item ${currentPage !== totalPages[totalPages.length - 1] ? '' : 'is-hidden'}`}><Link className="pagination__link pagination__link--text" onClick={handleNextPageClick} to="#">Далее</Link></li>
       </ul>
     </div>
   );
