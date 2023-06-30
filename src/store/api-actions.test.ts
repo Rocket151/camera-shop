@@ -1,9 +1,45 @@
-import { APIRoute } from "../const";
-import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviews, fakeUserReview, getMockStore, mockApi } from "../mocks/mocks";
-import { fetchProductDataAction, fetchPromoDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction, sendUserReviewAction } from "./api-actions";
+import { APIRoute } from '../const';
+import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviews, fakeUserReview, getMockStore, mockApi } from '../mocks/mocks';
+import { fetchCamerasDataAction, fetchProductDataAction, fetchPromoDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction, sendUserReviewAction } from "./api-actions";
 
 describe('Asynk actions: test', () => {
-  it('fetchSimilarCameras  should return similar cameras if server return 200', async() => {
+  it('fetchCamerasDataAction should return similar cameras if server return 200', async() => {
+    mockApi
+      .onGet(`${APIRoute.Cameras}`)
+      .reply(200, fakeCameras);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    const { payload } = await store.dispatch(fetchCamerasDataAction());
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchCamerasDataAction.pending.type,
+      fetchCamerasDataAction.fulfilled.type
+    ]);
+
+    expect(payload).toEqual(fakeCameras);
+  });
+  it('fetchCamerasDataAction should not return similar cameras if server return 400', async() => {
+    mockApi
+      .onGet(`${APIRoute.Cameras}`)
+      .reply(400);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(fetchCamerasDataAction());
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchCamerasDataAction.pending.type,
+      fetchCamerasDataAction.rejected.type
+    ]);
+  });
+  it('fetchSimilarCameras should return similar cameras if server return 200', async() => {
     mockApi
       .onGet(`${APIRoute.Cameras}${fakeId}/similar`)
       .reply(200, fakeCameras);
@@ -25,7 +61,7 @@ describe('Asynk actions: test', () => {
   it('fetchSimilarCameras  should not return similar cameras if server return 400', async() => {
     mockApi
       .onGet(`${APIRoute.Cameras}${fakeId}/similar`)
-      .reply(400, fakeCameras);
+      .reply(400);
 
     const store = getMockStore();
     expect(store.getActions()).toEqual([]);
@@ -39,6 +75,7 @@ describe('Asynk actions: test', () => {
       fetchSimilarCamerasDataAction.rejected.type
     ]);
   });
+
   it('fetchProductDataAction should return cameraData if server return 200', async() => {
     mockApi
       .onGet(`${APIRoute.Cameras}${fakeId}`)
@@ -57,6 +94,23 @@ describe('Asynk actions: test', () => {
     ]);
 
     expect(payload).toEqual(fakeCamera);
+  });
+  it('fetchProductDataAction should not return similar cameras if server return 400', async() => {
+    mockApi
+      .onGet(`${APIRoute.Cameras}${fakeId}`)
+      .reply(400);
+
+    const store = getMockStore();
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(fetchProductDataAction(fakeId));
+
+    const actions = store.getActions().map(({type}) => type);
+
+    expect(actions).toEqual([
+      fetchProductDataAction.pending.type,
+      fetchProductDataAction.rejected.type
+    ]);
   });
 
   it('fetchPromoDataAction should return promo if server return 200', async() => {
@@ -81,7 +135,7 @@ describe('Asynk actions: test', () => {
   it('fetchPromoDataAction should not return promo if server return 400', async() => {
     mockApi
       .onGet(APIRoute.Promo)
-      .reply(400, fakePromo);
+      .reply(400);
 
     const store = getMockStore();
     expect(store.getActions()).toEqual([]);
@@ -117,7 +171,7 @@ describe('Asynk actions: test', () => {
   it('fetchReviewsDataAction should not return reviews if server return 400', async() => {
     mockApi
       .onGet(`${APIRoute.Cameras}${fakeId}/reviews`)
-      .reply(400, fakeReviews);
+      .reply(400);
 
     const store = getMockStore();
     expect(store.getActions()).toEqual([]);
