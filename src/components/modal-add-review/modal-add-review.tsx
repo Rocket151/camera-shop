@@ -1,8 +1,10 @@
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendUserReviewAction } from '../../store/api-actions';
 import { CamerasData } from '../../types/cameras-data';
 import Modal from '../modal/modal';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useEffect } from 'react';
+import { getSendingReviewStatus } from '../../store/reviews-data/selectors';
 
 type ModalAddItemProps = {
   setModalAddReview: (arg:boolean) => void;
@@ -19,7 +21,8 @@ type FormData = {
   rating: number;
 }
 
-export default function ModalAddReview({setModalAddReview, isModalAddReview, productData, setModalAddReviewSuccess}: ModalAddItemProps): JSX.Element {
+export default function ModalAddReview({setModalAddReview, isModalAddReview, productData}: ModalAddItemProps): JSX.Element {
+  const isReviewSendingStatusSuccess = useAppSelector(getSendingReviewStatus);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -29,24 +32,19 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
     formState: { errors },
   } = useForm<FormData>();
 
-  const handleModalUserReviewSuccessOpen = () => {
-    setModalAddReviewSuccess(true);
-    document.body.style.overflowY = 'hidden';
-  };
   const handleModalUserReviewClose = () => {
     setModalAddReview(false);
     document.body.style.overflowY = '';
   };
 
-  const resetFormData = () => {
-    reset();
-  };
+  useEffect(() => {
+    if(isReviewSendingStatusSuccess) {
+      reset();
+    }
+  }, [isReviewSendingStatusSuccess, reset]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(sendUserReviewAction({
-      resetFormData,
-      handleModalUserReviewClose,
-      handleModalUserReviewSuccessOpen,
       formData:
       {
         ...data,

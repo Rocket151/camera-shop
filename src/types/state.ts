@@ -16,6 +16,7 @@ export type PromoDataState = {
 export type ReviewsDataState = {
   isReviewsDataLoading: boolean;
   reviewsData: ReviewData[];
+  isSuccessReviewSending: boolean;
 }
 
 export type ProductDataState = {

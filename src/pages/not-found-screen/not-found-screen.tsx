@@ -6,9 +6,9 @@ export default function NotFoundScreen(): JSX.Element {
       <h1>
           404.
         <br />
-        <small>Page not found</small>
+        <small>Страница не найдена</small>
       </h1>
-      <Link to="/">Go to main page</Link>
+      <Link to="/">Вернуться на главную страницу</Link>
     </>
   );
 }

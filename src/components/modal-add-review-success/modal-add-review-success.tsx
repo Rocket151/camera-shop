@@ -1,15 +1,31 @@
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeSuccessSendingReviewStatus } from '../../store/reviews-data/reviews-data';
+import { getSendingReviewStatus } from '../../store/reviews-data/selectors';
 import Modal from '../modal/modal';
 
 type ModalAddReviewSuccessProps = {
   setModalAddReviewSuccess: (arg:boolean) => void;
   isModalAddReviewSuccess: boolean;
+  setModalAddReview: (arg:boolean) => void;
 }
 
-export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModalAddReviewSuccess}: ModalAddReviewSuccessProps): JSX.Element {
+export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModalAddReviewSuccess, setModalAddReview}: ModalAddReviewSuccessProps): JSX.Element {
+  const isReviewSendingStatusSuccess = useAppSelector(getSendingReviewStatus);
+  const dispatch = useAppDispatch();
   const handleModalClose = () => {
     setModalAddReviewSuccess(false);
     document.body.style.overflowY = '';
+    dispatch(changeSuccessSendingReviewStatus(false));
   };
+
+  useEffect(() => {
+    if(isReviewSendingStatusSuccess) {
+      setModalAddReview(false);
+      setModalAddReviewSuccess(true);
+      document.body.style.overflowY = 'hidden';
+    }
+  }, [isReviewSendingStatusSuccess, setModalAddReview, setModalAddReviewSuccess]);
 
   return (
     <Modal onClose={handleModalClose}>

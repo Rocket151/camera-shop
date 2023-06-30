@@ -63,20 +63,14 @@ export const fetchReviewsDataAction = createAsyncThunk<ReviewData[], string, {
 
 export const sendUserReviewAction = createAsyncThunk<ReviewData, {
   formData: UserReviewData;
-  resetFormData: () => void;
-  handleModalUserReviewClose: () => void;
-  handleModalUserReviewSuccessOpen: () => void;
     },
   {
     extra: AxiosInstance;
   }>(
     'sendUserReview',
-    async({formData, resetFormData, handleModalUserReviewClose, handleModalUserReviewSuccessOpen}, {extra: api}) => {
+    async({formData}, {extra: api}) => {
       const {data} = await api.post<ReviewData>(APIRoute.Reviews, formData);
-      resetFormData();
-      handleModalUserReviewClose();
-      handleModalUserReviewSuccessOpen();
 
       return data;
     }
-    );
+);

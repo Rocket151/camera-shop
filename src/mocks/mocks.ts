@@ -81,7 +81,7 @@ ThunkDispatch<State, typeof api, Action>
 >(middlewares);
 
 
-export const fakeId = 5;
+export const fakeId = '4';
 export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 
 export const makeMockState = () => ({

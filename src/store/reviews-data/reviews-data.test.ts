@@ -19,6 +19,6 @@ describe('Reducer: reviewsData', () => {
   });
   it('should update reviewsData if sendUserReviewAction fulfilled', () => {
     expect(reviewsData.reducer({...initialReviewsDataState, reviewsData: fakeReviews}, {type: sendUserReviewAction.fulfilled.type, payload: fakeReview}))
-      .toEqual({...initialReviewsDataState, reviewsData: [fakeReview, ...fakeReviews]});
+      .toEqual({...initialReviewsDataState, reviewsData: [fakeReview, ...fakeReviews], isSuccessReviewSending: true});
   });
 });

@@ -2,9 +2,8 @@ import { createMemoryHistory } from 'history';
 import {render, screen} from '@testing-library/react';
 import { Provider } from 'react-redux';
 
-import HistoryRouter from '../history-route/history-router';
+import HistoryRouter from '../history-route/history-route';
 import App from './app';
-
 import { fakeCamera, mockStore } from '../../mocks/mocks';
 import { AppRoute } from '../../const';
 
@@ -29,10 +28,10 @@ describe('Application Routing', () => {
   });
 
   it('should render "ProductPage" when user navigate to product', () => {
-    history.push(`${AppRoute.Product}/${fakeCamera.id}`);
+    history.push(`${AppRoute.Product}${fakeCamera.id}`);
     render(fakeApp);
 
-    expect(screen.getByText(/Интернет-магазин фото- и видеотехники/)).toBeInTheDocument();
+    expect(screen.getByText(/Всего оценок/i)).toBeInTheDocument();
     expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
   });
 
