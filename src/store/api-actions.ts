@@ -73,4 +73,4 @@ export const sendUserReviewAction = createAsyncThunk<ReviewData, {
 
       return data;
     }
-);
+  );
