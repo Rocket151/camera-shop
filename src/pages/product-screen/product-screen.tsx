@@ -87,11 +87,11 @@ export default function ProductScreen(): JSX.Element {
 
           </div>
         </div>
-        <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} productData={productData} setModalAddReviewSuccess={setModalAddReviewSuccess}/>
+        <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} productData={productData} />
 
         <ModalAddItem setModalAddItem={setModalAddItem} currentScreenName={ScreenNames.Product} isModalAddItem={isModalAddItem} />
 
-        <ModalAddReviewSuccess setModalAddReviewSuccess={setModalAddReviewSuccess} isModalAddReviewSuccess={isModalAddReviewSuccess} setModalAddReview={setModalAddReview}/>
+        <ModalAddReviewSuccess setModalAddReviewSuccess={setModalAddReviewSuccess} isModalAddReviewSuccess={isModalAddReviewSuccess} />
 
       </main>
       <a className="up-btn" href="#header">

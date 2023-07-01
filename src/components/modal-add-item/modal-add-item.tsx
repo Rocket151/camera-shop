@@ -5,7 +5,7 @@ import Modal from '../modal/modal';
 import { humanizePrice } from '../../utils';
 
 type ModalAddItemProps = {
-  currentScreenName: string;
+  currentScreenName?: string;
   setModalAddItem: (arg:boolean) => void;
   isModalAddItem: boolean;
 }
@@ -22,7 +22,7 @@ export default function ModalAddItem({currentScreenName, setModalAddItem, isModa
 
   return (
     <Modal onClose={handleModalClose}>
-      <div className={`modal ${isModalAddItem ? 'is-active' : ''}`}>
+      <div className={`modal ${isModalAddItem ? 'is-active' : ''}`} data-testid="add-item-modal">
         <div className="modal__wrapper">
           <div className="modal__overlay"></div>
           <div className="modal__content">

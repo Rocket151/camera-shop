@@ -16,6 +16,7 @@ export default function ProductAndPaginationList({setModalAddItem}: ProductAndPa
   const [data, setData] = useState<CamerasData[]>([]);
   const camerasData = useAppSelector(getCamerasData);
   const totalPages = getPagesNumber(camerasData);
+
   useEffect(() => {
     setData(camerasData.slice((page - 1) * MAX_PRODUCTS_PAGE, page * MAX_PRODUCTS_PAGE));
   }, [page, camerasData]);

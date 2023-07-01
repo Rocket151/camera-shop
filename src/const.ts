@@ -30,6 +30,37 @@ export enum ScreenNames {
   Product = 'Product',
 }
 
+
+type ReviewInput = {
+  name: string;
+  title: string;
+  placeholder: string;
+  errorText: string;
+}
+
+export enum InputName {
+  Name = 'userName',
+  Advantage = 'advantage',
+  Disadvantage = 'disadvantage',
+  Review = 'review',
+  Rating = 'rating',
+}
+
+export enum InputTitle {
+  Name = 'Ваше имя',
+  Advantage = 'Достоинства',
+  Disadvantage ='Недостатки',
+  Review = 'Комментарий',
+  Rating = 'Рейтинг'
+}
+
+export enum InputPlaceholder {
+  Name = 'Введите ваше имя',
+  Advantage = 'Основные преимущества товара',
+  Disadvantage = 'Главные недостатки товара',
+  Review = 'Поделитесь своим опытом покупки',
+}
+
 export const CAROUSEL_VISIBLE_CLASS = 'is-active';
 
 export const MAX_CAROUSEL_ITEMS = 3;

@@ -82,6 +82,7 @@ ThunkDispatch<State, typeof api, Action>
 
 
 export const fakeId = '4';
+export const fakeCurrentPage = 1;
 export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 
 export const makeMockState = () => ({

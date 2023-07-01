@@ -38,12 +38,12 @@ export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasList
               return <ProductCard setModalAddItem={setModalAddItem} cameraData={cameraData} key={cameraData.id}/>;
             })}
           </div>
-          <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" disabled={isDisabledNextBtn} onClick={handleNextButtonClick}>
+          <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" data-testid="next" disabled={isDisabledNextBtn} onClick={handleNextButtonClick}>
             <svg width="7" height="12" aria-hidden="true">
               <use xlinkHref="#icon-arrow"></use>
             </svg>
           </button>
-          <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" disabled={isDisabledPrevBtn} onClick={handlePrevButtonClick}>
+          <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" data-testid="prev" disabled={isDisabledPrevBtn} onClick={handlePrevButtonClick}>
             <svg width="7" height="12" aria-hidden="true">
               <use xlinkHref="#icon-arrow"></use>
             </svg>

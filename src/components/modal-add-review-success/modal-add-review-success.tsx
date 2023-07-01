@@ -7,10 +7,9 @@ import Modal from '../modal/modal';
 type ModalAddReviewSuccessProps = {
   setModalAddReviewSuccess: (arg:boolean) => void;
   isModalAddReviewSuccess: boolean;
-  setModalAddReview: (arg:boolean) => void;
 }
 
-export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModalAddReviewSuccess, setModalAddReview}: ModalAddReviewSuccessProps): JSX.Element {
+export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModalAddReviewSuccess}: ModalAddReviewSuccessProps): JSX.Element {
   const isReviewSendingStatusSuccess = useAppSelector(getSendingReviewStatus);
   const dispatch = useAppDispatch();
   const handleModalClose = () => {
@@ -21,15 +20,14 @@ export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModal
 
   useEffect(() => {
     if(isReviewSendingStatusSuccess) {
-      setModalAddReview(false);
       setModalAddReviewSuccess(true);
       document.body.style.overflowY = 'hidden';
     }
-  }, [isReviewSendingStatusSuccess, setModalAddReview, setModalAddReviewSuccess]);
+  }, [isReviewSendingStatusSuccess, setModalAddReviewSuccess]);
 
   return (
     <Modal onClose={handleModalClose}>
-      <div className={`modal ${isModalAddReviewSuccess ? 'is-active' : ''}`}>
+      <div className={`modal ${isModalAddReviewSuccess ? 'is-active' : ''}`} data-testid="add-review-success">
         <div className="modal__wrapper">
           <div className="modal__overlay"></div>
           <div className="modal__content">

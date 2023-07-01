@@ -23,7 +23,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
   };
 
   return (
-    <div className={`product-card ${carouselClass ? carouselClass : ''}`}>
+    <div className={`product-card ${carouselClass ? carouselClass : ''}`} data-testid="product-card">
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`${carouselClass ? `../${previewImgWebp}` : previewImgWebp}, ${carouselClass ? `../${previewImgWebp2x}` : previewImgWebp2x}`} />

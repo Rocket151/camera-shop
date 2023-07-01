@@ -10,7 +10,6 @@ type ModalAddItemProps = {
   setModalAddReview: (arg:boolean) => void;
   isModalAddReview: boolean;
   productData: CamerasData;
-  setModalAddReviewSuccess: (arg:boolean) => void;
 }
 
 type FormData = {
@@ -39,6 +38,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
 
   useEffect(() => {
     if(isReviewSendingStatusSuccess) {
+      setModalAddReview(false);
       reset();
     }
   }, [isReviewSendingStatusSuccess, reset]);
@@ -56,7 +56,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
 
   return (
     <Modal onClose={handleModalUserReviewClose}>
-      <div className={`modal ${isModalAddReview ? 'is-active' : ''}`}>
+      <div className={`modal ${isModalAddReview ? 'is-active' : ''}`} data-testid="review">
         <div className="modal__wrapper">
           <div className="modal__overlay"></div>
           <div className="modal__content">
@@ -133,7 +133,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                     <div className="custom-textarea__error">Нужно добавить комментарий</div>
                   </div>
                 </div>
-                <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+                <button className="btn btn--purple form-review__btn" aria-label="Отправить отзыв" type="submit">Отправить отзыв</button>
               </form>
             </div>
             <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={handleModalUserReviewClose}>
