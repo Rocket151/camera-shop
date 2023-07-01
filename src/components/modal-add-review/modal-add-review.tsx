@@ -41,7 +41,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
       setModalAddReview(false);
       reset();
     }
-  }, [isReviewSendingStatusSuccess, reset]);
+  }, [isReviewSendingStatusSuccess, reset, setModalAddReview]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(sendUserReviewAction({

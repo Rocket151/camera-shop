@@ -20,31 +20,11 @@ export enum APIRoute {
   Reviews = '/reviews'
 }
 
-export enum TabNames {
-  Characteristics = 'Характеристики',
-  Description = 'Описание',
-}
-
 export enum ScreenNames {
   Catalog = 'Catalog',
   Product = 'Product',
 }
 
-
-type ReviewInput = {
-  name: string;
-  title: string;
-  placeholder: string;
-  errorText: string;
-}
-
-export enum InputName {
-  Name = 'userName',
-  Advantage = 'advantage',
-  Disadvantage = 'disadvantage',
-  Review = 'review',
-  Rating = 'rating',
-}
 
 export enum InputTitle {
   Name = 'Ваше имя',
