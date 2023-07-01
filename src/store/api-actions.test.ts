@@ -1,6 +1,6 @@
 import { APIRoute } from '../const';
 import { fakeCamera, fakeCameras, fakeId, fakePromo, fakeReviews, fakeUserReview, getMockStore, mockApi } from '../mocks/mocks';
-import { fetchCamerasDataAction, fetchProductDataAction, fetchPromoDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction, sendUserReviewAction } from "./api-actions";
+import { fetchCamerasDataAction, fetchProductDataAction, fetchPromoDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction, sendUserReviewAction } from './api-actions';
 
 describe('Asynk actions: test', () => {
   it('fetchCamerasDataAction should return similar cameras if server return 200', async() => {

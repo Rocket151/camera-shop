@@ -5,7 +5,6 @@ import { mockStore } from '../../mocks/mocks';
 import NotFoundScreen from './not-found-screen';
 
 
-
 describe('Component: NotFoundScreen', () => {
   it('should render correctly', () => {
 

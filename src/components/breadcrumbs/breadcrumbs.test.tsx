@@ -22,7 +22,7 @@ describe('Component: Breadcrumbs', () => {
     const list = screen.getByRole('list');
     expect(list.childNodes.length).toBe(1);
   });
-  
+
   it('should render correctly on product page', () => {
     mockState.PRODUCT_DATA.productData = fakeCamera;
 
@@ -55,4 +55,4 @@ describe('Component: Breadcrumbs', () => {
     const list = screen.getByRole('list');
     expect(list.childNodes.length).toBe(2);
   });
-})
+});

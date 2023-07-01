@@ -32,7 +32,7 @@ describe('Component: Basket Info Modal', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-        <ModalAddItem setModalAddItem={setModalAddItem} isModalAddItem={false}/>
+          <ModalAddItem setModalAddItem={setModalAddItem} isModalAddItem={false}/>
         </MemoryRouter>
       </Provider>
     );

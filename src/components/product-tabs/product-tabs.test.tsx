@@ -5,17 +5,17 @@ import { fakeCamera, getMockStore, mockState } from '../../mocks/mocks';
 import ProductTabs from './product-tabs';
 
 const store = getMockStore({...mockState,
-    [SlicesNames.ProductData]: {
-      productData: fakeCamera,
-    }
-  });
+  [SlicesNames.ProductData]: {
+    productData: fakeCamera,
+  }
+});
 
 describe('Component: ProductTabs', () => {
   it ('should render correctly', () => {
     render (
-    <Provider store={store}>
-      <ProductTabs />
-    </Provider>
+      <Provider store={store}>
+        <ProductTabs />
+      </Provider>
     );
 
     expect(screen.getByText(/Характеристики/i)).toBeInTheDocument();

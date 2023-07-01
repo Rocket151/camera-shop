@@ -43,7 +43,8 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
     }
   }, [isReviewSendingStatusSuccess, reset, setModalAddReview]);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = (data, evt) => {
+    evt?.preventDefault();
     dispatch(sendUserReviewAction({
       formData:
       {
@@ -62,7 +63,9 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
             <div className="form-review">
-              <form method="post" onSubmit={handleSubmit(onSubmit)}>
+              <form method="post" onSubmit={(evt) =>
+                void handleSubmit(onSubmit)(evt)}
+              >
                 <div className="form-review__rate">
                   <fieldset className={`rate form-review__item ${errors.rating ? 'is-invalid' : ''}`}>
                     <legend className="rate__caption">Рейтинг

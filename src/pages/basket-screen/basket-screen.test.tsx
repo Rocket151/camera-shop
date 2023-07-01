@@ -5,7 +5,6 @@ import { mockStore } from '../../mocks/mocks';
 import BasketScreen from './basket-screen';
 
 
-
 describe('Component: BasketScreen', () => {
   it('should render correctly', () => {
 

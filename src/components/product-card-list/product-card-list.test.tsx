@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import { fakeCamera, fakeCameras, mockStore } from '../../mocks/mocks';
+import { fakeCameras, mockStore } from '../../mocks/mocks';
 import ProductCardList from './product-card-list';
 
 describe('Component: ProductCardList', () => {
