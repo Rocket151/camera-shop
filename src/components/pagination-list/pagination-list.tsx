@@ -7,7 +7,7 @@ type PaginationListProps = {
   currentPage: number;
 }
 
-export default function PaginationList({setPage, totalPages, currentPage}: PaginationListProps): JSX.Element {
+export default function PaginationList({setPage, totalPages, currentPage}: PaginationListProps): JSX.Element | null {
   const handlePageClick = (evt : React.MouseEvent<HTMLAnchorElement>) => {
     const target = evt.target as HTMLElement;
     if (target.tagName === 'A') {
@@ -22,6 +22,9 @@ export default function PaginationList({setPage, totalPages, currentPage}: Pagin
   const handleNextPageClick = () => {
     setPage(currentPage + 1);
   };
+  if(!totalPages.length) {
+    return null;
+  }
 
   return (
     <div className="pagination">
