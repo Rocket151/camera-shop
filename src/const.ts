@@ -25,6 +25,16 @@ export enum ScreenNames {
   Product = 'Product',
 }
 
+export enum ProductTabNames {
+  Description = 'Описание',
+  Characteristics = 'Характеристики',
+}
+
+export enum TabsHash {
+  Description = '#description',
+  Characteristics = '#characteristics'
+}
+
 
 export enum InputTitle {
   Name = 'Ваше имя',
