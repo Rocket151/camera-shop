@@ -4,11 +4,6 @@ import { AppRoute, ProductTabNames, TabsHash } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
 
-export const TabsNamesHash = {
-  [ProductTabNames.Description]: '#description',
-  [ProductTabNames.Characteristics]: '#characteristics',
-};
-
 export default function ProductTabs(): JSX.Element | null {
   const productData = useAppSelector(getProductData);
   const [activeTab, setTab] = useState(ProductTabNames.Description);
