@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { CamerasData } from '../../types/cameras-data';
 import { humanizePrice } from '../../utils';
@@ -57,12 +56,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button" onClick={handleModalOpen}>Купить
         </button>
-        <Link className="btn btn--transparent" onClick={() => {
-          dispatch(fetchProductDataAction(id.toString()));
-          dispatch(fetchSimilarCamerasDataAction(id.toString()));
-          dispatch(fetchReviewsDataAction(id.toString()));
-        }} to={AppRoute.Product + id.toString()}
-        >Подробнее
+        <Link className="btn btn--transparent" to={AppRoute.Product + id.toString()}>Подробнее
         </Link>
       </div>
     </div>
