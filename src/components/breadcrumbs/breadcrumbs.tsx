@@ -1,12 +1,14 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
+import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getProductData } from '../../store/product-data/selectors';
 
 const routes = [
+  { path: '/product/', breadcrumb: null},
   { path: '/product/:id', breadcrumb: ProductBreadcrumb},
-  { path: '/', breadcrumb: CatalogBreadcrumb },
-  { path: '/basket', breadcrumb: BasketBreadcrumb },
+  { path: '/', breadcrumb: CatalogBreadcrumb},
+  { path: '/basket', breadcrumb: BasketBreadcrumb, },
 ];
 
 function ProductBreadcrumb(): JSX.Element {
@@ -24,12 +26,14 @@ function BasketBreadcrumb(): JSX.Element {
 }
 
 function CatalogBreadcrumb(): JSX.Element {
+  const location = useLocation();
+
   return (
-    <span>Каталог
+    <NavLink className={`breadcrumbs__link ${location.pathname === AppRoute.Root ? 'breadcrumbs__link--active' : ''}`} to={AppRoute.Root}>Каталог
       <svg width="5" height="8" aria-hidden="true">
         <use xlinkHref="#icon-arrow-mini"></use>
       </svg>
-    </span>
+    </NavLink>
   );
 }
 
@@ -41,11 +45,8 @@ export default function BreadCrumbs(): JSX.Element {
       <div className="container">
         <ul className="breadcrumbs__list">
           {breadcrumbs.map(({ match, breadcrumb }) => (
-            match.pathname !== '/product' &&
             <li className="breadcrumbs__item" key={match.pathname}>
-              <NavLink className="breadcrumbs__link" to={match.pathname}>
-                {breadcrumb}
-              </NavLink>
+              {breadcrumb}
             </li>
           ))}
         </ul>

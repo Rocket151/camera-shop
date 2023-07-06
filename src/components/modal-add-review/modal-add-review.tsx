@@ -3,7 +3,7 @@ import { sendUserReviewAction } from '../../store/api-actions';
 import { CamerasData } from '../../types/cameras-data';
 import Modal from '../modal/modal';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useEffect } from 'react';
+import { MouseEventHandler, useEffect } from 'react';
 import { getSendingReviewStatus } from '../../store/reviews-data/selectors';
 
 type ModalAddItemProps = {
@@ -30,6 +30,13 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
     reset,
     formState: { errors },
   } = useForm<FormData>();
+
+  const handleModalUserReviewCloseOnOverlay: MouseEventHandler<HTMLDivElement> = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      setModalAddReview(false);
+      document.body.style.overflowY = '';
+    }
+  };
 
   const handleModalUserReviewClose = () => {
     setModalAddReview(false);
@@ -59,7 +66,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
     <Modal onClose={handleModalUserReviewClose}>
       <div className={`modal ${isModalAddReview ? 'is-active' : ''}`} data-testid="review">
         <div className="modal__wrapper">
-          <div className="modal__overlay"></div>
+          <div className="modal__overlay" onClick={handleModalUserReviewCloseOnOverlay}></div>
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
             <div className="form-review">
@@ -98,7 +105,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <input type="text" {...register('userName', { required: true, minLength: 2, maxLength: 10})} placeholder="Введите ваше имя" required />
+                      <input type="text" {...register('userName', { required: true, minLength: 2, maxLength: 10})} placeholder="Введите ваше имя" />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>
                   </div>
@@ -131,7 +138,7 @@ export default function ModalAddReview({setModalAddReview, isModalAddReview, pro
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <textarea {...register('review', { required: true, minLength: 5, maxLength: 50})} placeholder="Поделитесь своим опытом покупки" ></textarea>
+                      <textarea {...register('review', { required: true, minLength: 5, maxLength: 50})} placeholder="Поделитесь своим опытом покупки"></textarea>
                     </label>
                     <div className="custom-textarea__error">Нужно добавить комментарий</div>
                   </div>

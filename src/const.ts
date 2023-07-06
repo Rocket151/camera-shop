@@ -58,3 +58,5 @@ export const MAX_CAROUSEL_ITEMS = 3;
 export const MAX_PRODUCTS_PAGE = 9;
 
 export const MIN_SLIDER_ITEM_INDEX = 0;
+
+export const HASH = '#';

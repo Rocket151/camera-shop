@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks';
 import { getSelectedCameraData } from '../../store/cameras-data/selectors';
 import Modal from '../modal/modal';
 import { humanizePrice } from '../../utils';
+import { MouseEventHandler } from 'react';
 
 type ModalAddItemProps = {
   currentScreenName?: string;
@@ -15,6 +16,13 @@ export default function ModalAddItem({currentScreenName, setModalAddItem, isModa
   const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, vendorCode, category, level} = selectedCameraData;
   const isProductScreen = currentScreenName === ScreenNames.Product;
 
+  const handleModalAddItemCloseOnOverlay: MouseEventHandler<HTMLDivElement> = (evt) => {
+    if (evt.target === evt.currentTarget) {
+      setModalAddItem(false);
+      document.body.style.overflowY = '';
+    }
+  };
+
   const handleModalClose = () => {
     setModalAddItem(false);
     document.body.style.overflowY = '';
@@ -24,7 +32,7 @@ export default function ModalAddItem({currentScreenName, setModalAddItem, isModa
     <Modal onClose={handleModalClose}>
       <div className={`modal ${isModalAddItem ? 'is-active' : ''}`} data-testid="add-item-modal">
         <div className="modal__wrapper">
-          <div className="modal__overlay"></div>
+          <div className="modal__overlay" onClick={handleModalAddItemCloseOnOverlay}></div>
           <div className="modal__content">
             <p className="title title--h4">Добавить товар в корзину</p>
             <div className="basket-item basket-item--short">
