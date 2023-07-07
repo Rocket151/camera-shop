@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SlicesNames } from '../../const';
 import { ReviewsDataState } from '../../types/state';
+import { sortReviewsDateDown } from '../../utils';
 import { fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
 
 export const initialReviewsDataState: ReviewsDataState = {
@@ -23,7 +24,7 @@ export const reviewsData = createSlice({
         state.isReviewsDataLoading = true;
       })
       .addCase(fetchReviewsDataAction.fulfilled, (state, action) => {
-        state.reviewsData = action.payload;
+        state.reviewsData = action.payload.sort(sortReviewsDateDown);
         state.isReviewsDataLoading = false;
       })
       .addCase(sendUserReviewAction.fulfilled, (state, action) => {
