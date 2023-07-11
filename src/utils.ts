@@ -1,5 +1,7 @@
 import { MAX_PRODUCTS_PAGE } from './const';
 import { CamerasData } from './types/cameras-data';
+import { ReviewData } from './types/review-data';
+import dayjs from 'dayjs';
 
 export function getPagesNumber(data: CamerasData[]) {
   const pagesCount = Math.ceil(data.length / MAX_PRODUCTS_PAGE);
@@ -8,6 +10,10 @@ export function getPagesNumber(data: CamerasData[]) {
     totalPages.push(i + 1);
   }
   return totalPages;
+}
+
+export function sortReviewsDateDown(reviewA: ReviewData, reviewB: ReviewData) {
+  return dayjs(reviewB.createAt).diff(dayjs(reviewA.createAt));
 }
 
 export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;
