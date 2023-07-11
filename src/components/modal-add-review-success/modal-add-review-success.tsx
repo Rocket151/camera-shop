@@ -37,7 +37,7 @@ export default function ModalAddReviewSuccess({setModalAddReviewSuccess, isModal
   }, [isReviewSendingStatusSuccess, setModalAddReviewSuccess]);
 
   return (
-    <FocusLock disabled={isModalAddReviewSuccess}>
+    <FocusLock disabled={!isModalAddReviewSuccess}>
       <Modal onClose={handleModalClose}>
         <div className={`modal ${isModalAddReviewSuccess ? 'is-active' : ''}`} data-testid="add-review-success">
           <div className="modal__wrapper">
