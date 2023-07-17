@@ -2,11 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SlicesNames } from '../../const';
 import { ReviewsDataState } from '../../types/state';
 import { sortReviewsDateDown } from '../../utils';
-import { fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
+import { fetchAllReviewsDataAction, fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
 
 export const initialReviewsDataState: ReviewsDataState = {
   isReviewsDataLoading: false,
-  reviewsData: [],
+  productReviewsData: [],
+  allReviewsData:[],
   isSuccessReviewSending: false,
 };
 
@@ -24,12 +25,19 @@ export const reviewsData = createSlice({
         state.isReviewsDataLoading = true;
       })
       .addCase(fetchReviewsDataAction.fulfilled, (state, action) => {
-        state.reviewsData = action.payload.sort(sortReviewsDateDown);
+        state.productReviewsData = action.payload.sort(sortReviewsDateDown);
         state.isReviewsDataLoading = false;
       })
       .addCase(sendUserReviewAction.fulfilled, (state, action) => {
-        state.reviewsData.unshift(action.payload);
+        state.productReviewsData.unshift(action.payload);
         state.isSuccessReviewSending = true;
+      })
+      .addCase(fetchAllReviewsDataAction.pending, (state) => {
+        state.isReviewsDataLoading = true;
+      })
+      .addCase(fetchAllReviewsDataAction.fulfilled, (state, action) => {
+        state.allReviewsData = action.payload.flat();
+        state.isReviewsDataLoading = false;
       });
   }
 });

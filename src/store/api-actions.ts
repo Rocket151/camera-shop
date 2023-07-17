@@ -61,6 +61,22 @@ export const fetchReviewsDataAction = createAsyncThunk<ReviewData[], string, {
     },
   );
 
+export const fetchAllReviewsDataAction = createAsyncThunk<ReviewData[][], string[], {
+    extra: AxiosInstance;
+  }>(
+    'fetchAllReviewsData',
+    async (cardsId, {extra: api}) => {
+      const reviewsData: ReviewData[][] = [];
+
+      for(let i = 0; i < cardsId.length; i++) {
+        const {data} = await api.get<ReviewData[]>(APIRoute.Cameras + cardsId[i] + APIRoute.Reviews);
+        reviewsData.push(data);
+      }
+
+      return reviewsData;
+    },
+  );
+
 export const sendUserReviewAction = createAsyncThunk<ReviewData, {
   formData: UserReviewData;
     },

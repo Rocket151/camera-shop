@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getReviewsData } from '../../store/reviews-data/selectors';
+import { getProductReviewsData } from '../../store/reviews-data/selectors';
 import { humanizeReviewDate } from '../../utils';
 
 type ReviewsProps = {
@@ -8,7 +8,7 @@ type ReviewsProps = {
 }
 
 export default function Reviews({setModalAddReview}: ReviewsProps): JSX.Element {
-  const reviewsData = useAppSelector(getReviewsData);
+  const reviewsData = useAppSelector(getProductReviewsData);
   const [reviews, setReviews] = useState(3);
   const slicedReviewsData = reviewsData.slice(0,reviews);
   const handleAddReviewBtnClick = () => {

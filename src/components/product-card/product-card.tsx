@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../hooks';
 import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { CamerasData } from '../../types/cameras-data';
 import { humanizePrice } from '../../utils';
+import ProductCardRating from '../product-card-rating/product-card-rating';
 
 type ProductCardProps = {
   cameraData: CamerasData;
@@ -30,25 +31,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
         </picture>
       </div>
       <div className="product-card__info">
-        <div className="rate product-card__rate">
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <p className="visually-hidden">Рейтинг: 5</p>
-          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
-        </div>
+        <ProductCardRating reviewsCount={reviewCount} productId={id}/>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{`${humanizePrice(price)} ₽`}
         </p>

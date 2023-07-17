@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, HASH, MAX_PRODUCTS_PAGE } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchAllReviewsDataAction } from '../../store/api-actions';
 import { getCamerasData } from '../../store/cameras-data/selectors';
 import { CamerasData } from '../../types/cameras-data';
 import { getPagesNumber } from '../../utils';
@@ -18,10 +19,22 @@ export default function ProductAndPaginationList({setModalAddItem}: ProductAndPa
   const navigate = useNavigate();
   const camerasData = useAppSelector(getCamerasData);
   const totalPages = getPagesNumber(camerasData);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    navigate(AppRoute.Root + HASH + page.toString());
-    setData(camerasData.slice((page - 1) * MAX_PRODUCTS_PAGE, page * MAX_PRODUCTS_PAGE));
+    if(camerasData.length) {
+      navigate(AppRoute.Root + HASH + page.toString());
+
+      const slicedCamerasData = camerasData.slice((page - 1) * MAX_PRODUCTS_PAGE, page * MAX_PRODUCTS_PAGE);
+      const cardsId = [];
+
+      setData(slicedCamerasData);
+
+      for(let i = 0; i < slicedCamerasData.length; i++) {
+        cardsId.push(slicedCamerasData[i]?.id.toString());
+      }
+      dispatch(fetchAllReviewsDataAction(cardsId));
+    }
   }, [page, camerasData, navigate]);
 
   return (
