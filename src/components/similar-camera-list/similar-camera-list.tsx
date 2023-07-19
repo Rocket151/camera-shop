@@ -1,8 +1,9 @@
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSimilarCamerasData } from '../../store/similar-cameras-data/selectors';
 import ProductCard from '../product-card/product-card';
 import { CAROUSEL_VISIBLE_CLASS, MAX_CAROUSEL_ITEMS, MIN_SLIDER_ITEM_INDEX} from '../../const';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchAllReviewsDataAction } from '../../store/api-actions';
 
 type SimilarCamerasListProps = {
     setModalAddItem: (arg: boolean) => void;
@@ -10,6 +11,7 @@ type SimilarCamerasListProps = {
 
 
 export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasListProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const camerasData = useAppSelector(getSimilarCamerasData);
   const [similarCameraIndex, setSimilarCameraIndex] = useState(MIN_SLIDER_ITEM_INDEX);
 
@@ -20,7 +22,7 @@ export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasList
     setSimilarCameraIndex((prev) => prev - MAX_CAROUSEL_ITEMS);
   };
 
-    useEffect(() => {
+  useEffect(() => {
     if(camerasData.length) {
       const cardsId = [];
 
