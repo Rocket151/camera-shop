@@ -20,6 +20,17 @@ export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasList
     setSimilarCameraIndex((prev) => prev - MAX_CAROUSEL_ITEMS);
   };
 
+    useEffect(() => {
+    if(camerasData.length) {
+      const cardsId = [];
+
+      for(let i = 0; i < camerasData.length; i++) {
+        cardsId.push(camerasData[i]?.id.toString());
+      }
+      dispatch(fetchAllReviewsDataAction(cardsId));
+    }
+  }, [camerasData]);
+
   const isDisabledPrevBtn = similarCameraIndex === MIN_SLIDER_ITEM_INDEX;
   const isDisabledNextBtn = similarCameraIndex === camerasData.length - MAX_CAROUSEL_ITEMS;
 

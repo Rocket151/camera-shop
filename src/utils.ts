@@ -29,6 +29,17 @@ export function calculateRating(reviews: ReviewData[], id: number) {
 
 }
 
+export function calculateRatingOnProductScreen(reviews: ReviewData[]) {
+  let reviewsRating = 0;
+
+  reviews.forEach((review) => {
+    reviewsRating += review.rating;
+  });
+
+  return Math.round(reviewsRating / reviews.length);
+
+}
+
 export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;
 
 export const humanizeReviewDate = (date: Date, locales = 'ru-RU') => date.toLocaleString(locales, {day: 'numeric', month: 'long'});

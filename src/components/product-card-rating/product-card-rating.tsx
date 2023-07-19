@@ -29,7 +29,7 @@ export default function ProductCardRating({reviewsCount, productId}: ProductCard
       <svg width="17" height="16" aria-hidden="true">
         <use xlinkHref={`#icon${rating === 5 ? '-full' : ''}-star`}></use>
       </svg>
-      <p className="visually-hidden">Рейтинг: 5</p>
+      <p className="visually-hidden">Рейтинг: {rating}</p>
       <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewsCount}</p>
     </div>
   );
