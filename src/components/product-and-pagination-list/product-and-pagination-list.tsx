@@ -35,7 +35,7 @@ export default function ProductAndPaginationList({setModalAddItem}: ProductAndPa
       }
       dispatch(fetchAllReviewsDataAction(cardsId));
     }
-  }, [page, camerasData, navigate]);
+  }, [page, camerasData, navigate, dispatch]);
 
   return (
     <>
