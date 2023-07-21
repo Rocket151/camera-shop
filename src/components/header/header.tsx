@@ -1,29 +1,31 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, TabsHash } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getCamerasData } from '../../store/cameras-data/selectors';
 import Fuse from 'fuse.js';
 
 type SearchItemState = {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }
+
+const initialState = {
+  id:0,
+  name: '',
+};
 
 export default function Header(): JSX.Element {
   const camerasData = useAppSelector(getCamerasData);
-  const [data, setData] = useState<SearchItemState[] | never[]>([{
-    id:0,
-    name: '',
-  }]);
+  const [data, setData] = useState<SearchItemState[] | never[]>([initialState]);
 
   const resetData = () => {
-    setData([]);
+    setData([initialState]);
   };
 
   const searchData = (pattern: string) => {
     if (!pattern) {
-      setData([]);
+      setData([initialState]);
       return;
     }
 
@@ -35,7 +37,7 @@ export default function Header(): JSX.Element {
     const result = fuse.search(pattern);
     const matches: SearchItemState[] = [];
     if (!result.length) {
-      setData([]);
+      setData([initialState]);
     } else {
       result.forEach(({item}) => {
         matches.push({
@@ -66,7 +68,7 @@ export default function Header(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <div className={`form-search ${data.length >= 1 ? 'list-opened' : ''}`}>
+        <div className={`form-search ${data[0]?.name !== '' ? 'list-opened' : ''}`}>
           <form>
             <label>
               <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
@@ -78,7 +80,11 @@ export default function Header(): JSX.Element {
               />
             </label>
             <ul className="form-search__select-list scroller">
-              {data.map((item) => <li className="form-search__select-item" tabIndex={0} key={item.id}>{item.name}</li>)}
+              {data.map((item) => (
+                <Link to={AppRoute.Product + item.id.toString() + TabsHash.Description} key={item.id}>
+                  <li className="form-search__select-item" tabIndex={0}>{item.name}</li>
+                </Link>
+              ))}
             </ul>
           </form>
           <button className="form-search__reset" type="reset" onClick={resetData}>
