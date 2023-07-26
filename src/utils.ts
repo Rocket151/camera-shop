@@ -16,6 +16,14 @@ export function sortReviewsDateDown(reviewA: ReviewData, reviewB: ReviewData) {
   return dayjs(reviewB.createAt).diff(dayjs(reviewA.createAt));
 }
 
+export function sortCamerasDataByPriceDown(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraB.price - cameraA.price;
+}
+
+export function sortCamerasDataByPriceUp(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraA.price - cameraB.price;
+}
+
 export function calculateRating(reviews: ReviewData[], id: number) {
   const filteredReviews = reviews.filter((review) => review.cameraId === id);
 

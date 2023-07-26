@@ -7,17 +7,18 @@ export type CamerasDataState = {
   isCamerasDataLoading: boolean;
   camerasData: CamerasData[];
   selectedCameraData: CamerasData;
+  camerasDataToRender: CamerasData[],
+  currentSortType: string,
+  currentSortOrder: string,
+  isReviewsDataLoading: boolean;
+  productReviewsData: ReviewData[];
+  allReviewsData: ReviewData[];
+  isSuccessReviewSending: boolean;
 }
 
 export type PromoDataState = {
   isPromoDataLoading: boolean;
   promoData: PromoData | null;
-}
-export type ReviewsDataState = {
-  isReviewsDataLoading: boolean;
-  productReviewsData: ReviewData[];
-  allReviewsData: ReviewData[];
-  isSuccessReviewSending: boolean;
 }
 
 export type ProductDataState = {

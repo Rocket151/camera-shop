@@ -1,7 +1,6 @@
 import { datatype, commerce, image, internet, lorem } from 'faker';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-
 import { CamerasData } from '../types/cameras-data';
 import { PromoData } from '../types/promo-data';
 import { ReviewData } from '../types/review-data';
@@ -13,7 +12,6 @@ import thunk from 'redux-thunk';
 import { SlicesNames } from '../const';
 import { initialCamerasDataState } from '../store/cameras-data/cameras-data';
 import { initialProductDataState } from '../store/product-data/product-data';
-import { initialReviewsDataState } from '../store/reviews-data/reviews-data';
 import { initialPromoDataState } from '../store/promo-data/promo-data';
 import { initialSimilarCamerasDataState } from '../store/similar-cameras-data/similar-cameras-data';
 
@@ -91,9 +89,6 @@ export const makeMockState = () => ({
   },
   [SlicesNames.ProductData]: {
     ...initialProductDataState,
-  },
-  [SlicesNames.ReviewsData]: {
-    ...initialReviewsDataState,
   },
   [SlicesNames.PromoData]: {
     ...initialPromoDataState,

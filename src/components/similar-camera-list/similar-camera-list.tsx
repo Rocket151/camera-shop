@@ -31,7 +31,7 @@ export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasList
       }
       dispatch(fetchAllReviewsDataAction(cardsId));
     }
-  }, [camerasData]);
+  },);
 
   const isDisabledPrevBtn = similarCameraIndex === MIN_SLIDER_ITEM_INDEX;
   const isDisabledNextBtn = similarCameraIndex === camerasData.length - MAX_CAROUSEL_ITEMS;

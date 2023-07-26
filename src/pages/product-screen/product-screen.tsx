@@ -15,7 +15,8 @@ import { getProductData } from '../../store/product-data/selectors';
 import { calculateRatingOnProductScreen, humanizePrice } from '../../utils';
 import { useParams } from 'react-router-dom';
 import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
-import { getProductReviewsData } from '../../store/reviews-data/selectors';
+import { getProductReviewsData } from '../../store/cameras-data/selectors';
+
 
 export default function ProductScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -33,7 +34,7 @@ export default function ProductScreen(): JSX.Element {
       dispatch(fetchSimilarCamerasDataAction(id.toString()));
       dispatch(fetchReviewsDataAction(id.toString()));
     }
-  }, [id, dispatch]);
+  },[id, dispatch]);
 
   const handleAddToBasketClick = () => {
     dispatch(selectCameraData(productData));

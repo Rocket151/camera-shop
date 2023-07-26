@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getProductReviewsData } from '../../store/reviews-data/selectors';
+import { getProductReviewsData } from '../../store/cameras-data/selectors';
 import { humanizeReviewDate } from '../../utils';
 
 type ReviewsProps = {

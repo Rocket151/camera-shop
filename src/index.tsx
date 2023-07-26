@@ -7,9 +7,13 @@ import App from './components/app/app';
 import { store } from './store';
 import { fetchCamerasDataAction, fetchPromoDataAction } from './store/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
+import { getCamerasDataWithRating } from './cameras-data-adapter/cameras-data-adapter';
+import { addCamerasData } from './store/cameras-data/cameras-data';
 
 store.dispatch(fetchCamerasDataAction());
 store.dispatch(fetchPromoDataAction());
+const camerasDataWithRating = await getCamerasDataWithRating();
+store.dispatch(addCamerasData(camerasDataWithRating));
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

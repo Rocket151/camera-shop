@@ -31,7 +31,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
         </picture>
       </div>
       <div className="product-card__info">
-        <ProductCardRating reviewsCount={reviewCount} productId={id}/>
+        <ProductCardRating reviewsCount={reviewCount} cameraData={cameraData}/>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{`${humanizePrice(price)} ₽`}
         </p>
