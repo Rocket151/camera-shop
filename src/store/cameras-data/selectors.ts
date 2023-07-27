@@ -10,4 +10,3 @@ export const getSelectedCameraData = (state: State): CamerasData => state[Slices
 export const getReviewDataLoadingStatus = (state: State): boolean => state[SlicesNames.CamerasData].isReviewsDataLoading;
 export const getProductReviewsData = (state: State): ReviewData[] => state[SlicesNames.CamerasData].productReviewsData;
 export const getSendingReviewStatus = (state: State): boolean => state[SlicesNames.CamerasData].isSuccessReviewSending;
-export const getAllReviewsData = (state: State): ReviewData[] => state[SlicesNames.CamerasData].allReviewsData;

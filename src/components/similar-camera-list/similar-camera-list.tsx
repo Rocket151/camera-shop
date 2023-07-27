@@ -2,8 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSimilarCamerasData } from '../../store/similar-cameras-data/selectors';
 import ProductCard from '../product-card/product-card';
 import { CAROUSEL_VISIBLE_CLASS, MAX_CAROUSEL_ITEMS, MIN_SLIDER_ITEM_INDEX} from '../../const';
-import { useEffect, useState } from 'react';
-import { fetchAllReviewsDataAction } from '../../store/api-actions';
+import { useState } from 'react';
 
 type SimilarCamerasListProps = {
     setModalAddItem: (arg: boolean) => void;
@@ -11,7 +10,6 @@ type SimilarCamerasListProps = {
 
 
 export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasListProps): JSX.Element {
-  const dispatch = useAppDispatch();
   const camerasData = useAppSelector(getSimilarCamerasData);
   const [similarCameraIndex, setSimilarCameraIndex] = useState(MIN_SLIDER_ITEM_INDEX);
 
@@ -21,17 +19,6 @@ export default function SimilarCamerasList({setModalAddItem}: SimilarCamerasList
   const handlePrevButtonClick = () => {
     setSimilarCameraIndex((prev) => prev - MAX_CAROUSEL_ITEMS);
   };
-
-  useEffect(() => {
-    if(camerasData.length) {
-      const cardsId = [];
-
-      for(let i = 0; i < camerasData.length; i++) {
-        cardsId.push(camerasData[i]?.id.toString());
-      }
-      dispatch(fetchAllReviewsDataAction(cardsId));
-    }
-  },);
 
   const isDisabledPrevBtn = similarCameraIndex === MIN_SLIDER_ITEM_INDEX;
   const isDisabledNextBtn = similarCameraIndex === camerasData.length - MAX_CAROUSEL_ITEMS;

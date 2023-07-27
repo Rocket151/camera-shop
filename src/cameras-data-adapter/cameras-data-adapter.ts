@@ -4,18 +4,16 @@ import { CamerasData } from '../types/cameras-data';
 import { ReviewData } from '../types/review-data';
 import { calculateRating } from '../utils';
 
-export async function getCamerasDataWithRating() {
-  const {data} = await api.get<CamerasData[]>(APIRoute.Cameras);
+export async function getCamerasDataWithRating(camerasData: CamerasData[]) {
   const cardsId = [];
 
-  for(let i = 0; i < data.length; i++) {
-    cardsId.push(data[i]?.id.toString());
+  for(let i = 0; i < camerasData.length; i++) {
+    cardsId.push(camerasData[i]?.id.toString());
   }
   const allReviewsData = await fetchAllReviewsData(cardsId);
-  console.log(allReviewsData)
 
   const camerasDataWithRating: CamerasData[] = [];
-  data.forEach((cameraData) => {
+  camerasData.forEach((cameraData) => {
     const rating = calculateRating(allReviewsData, cameraData.id);
 
     camerasDataWithRating.push({
@@ -23,7 +21,7 @@ export async function getCamerasDataWithRating() {
       rating
     });
   });
-  console.log(camerasDataWithRating);
+
   return camerasDataWithRating;
 }
 
@@ -32,14 +30,12 @@ export async function fetchAllReviewsData (cardsId: string[]) {
   for(let i = 0; i < cardsId.length; i++) {
     promises.push(api.get<ReviewData[]>(APIRoute.Cameras + cardsId[i] + APIRoute.Reviews));
   }
-  const reviewsData: ReviewData[][] = []
-  const  reviewsPromisesData = await Promise.all(promises);
+  const reviewsData: ReviewData[][] = [];
+  const reviewsPromisesData = await Promise.all(promises);
   reviewsPromisesData.forEach((promise) => {
-   const  {data} = promise;
-    reviewsData.push(data)
-  });;
-
-  console.log(reviewsData)
+    const {data} = promise;
+    reviewsData.push(data);
+  });
 
   return reviewsData.flat();
 }

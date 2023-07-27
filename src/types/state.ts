@@ -12,7 +12,6 @@ export type CamerasDataState = {
   currentSortOrder: string,
   isReviewsDataLoading: boolean;
   productReviewsData: ReviewData[];
-  allReviewsData: ReviewData[];
   isSuccessReviewSending: boolean;
 }
 

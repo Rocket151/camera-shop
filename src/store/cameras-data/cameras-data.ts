@@ -15,7 +15,6 @@ export const initialCamerasDataState: CamerasDataState = {
   currentSortOrder: '',
   isReviewsDataLoading: false,
   productReviewsData: [] as ReviewData[],
-  allReviewsData:[],
   isSuccessReviewSending: false,
 };
 

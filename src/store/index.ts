@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from '../services/services';
+import { addRatingToCamerasData } from './middlewares/add-rating-to-cameras-data';
 import { rootReducer } from './root-reducer';
 
 export const api = createAPI();
@@ -11,5 +12,5 @@ export const store = configureStore({
       thunk: {
         extraArgument: api
       }
-    })
+    }).concat(addRatingToCamerasData)
 });
