@@ -5,8 +5,10 @@ import { State } from '../../types/state';
 
 
 export const getCamerasDataLoadingStatus = (state: State): boolean => state[SlicesNames.CamerasData].isCamerasDataLoading;
-export const getCamerasData = (state: State): CamerasData[] => state[SlicesNames.CamerasData].camerasData;
+export const getCamerasData = (state: State): CamerasData[] => state[SlicesNames.CamerasData].filteredCamerasData;
 export const getSelectedCameraData = (state: State): CamerasData => state[SlicesNames.CamerasData].selectedCameraData;
 export const getReviewDataLoadingStatus = (state: State): boolean => state[SlicesNames.CamerasData].isReviewsDataLoading;
 export const getProductReviewsData = (state: State): ReviewData[] => state[SlicesNames.CamerasData].productReviewsData;
 export const getSendingReviewStatus = (state: State): boolean => state[SlicesNames.CamerasData].isSuccessReviewSending;
+export const getCurrentSortType = (state: State): string => state[SlicesNames.CamerasData].currentSortType;
+export const getCurrentSortOrder = (state: State): string => state[SlicesNames.CamerasData].currentSortOrder;

@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { getSimilarCamerasData } from '../../store/similar-cameras-data/selectors';
 import ProductCard from '../product-card/product-card';
 import { CAROUSEL_VISIBLE_CLASS, MAX_CAROUSEL_ITEMS, MIN_SLIDER_ITEM_INDEX} from '../../const';

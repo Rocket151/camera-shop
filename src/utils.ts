@@ -24,6 +24,14 @@ export function sortCamerasDataByPriceUp(cameraA: CamerasData, cameraB: CamerasD
   return cameraA.price - cameraB.price;
 }
 
+export function sortCamerasDataByPopularDown(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraB.rating - cameraA.rating;
+}
+
+export function sortCamerasDataByPopularUp(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraA.rating - cameraB.rating;
+}
+
 export function calculateRating(reviews: ReviewData[], id: number) {
   const filteredReviews = reviews.filter((review) => review.cameraId === id);
 
@@ -46,6 +54,42 @@ export function calculateRatingOnProductScreen(reviews: ReviewData[]) {
 
   return Math.round(reviewsRating / reviews.length);
 
+}
+
+export const filterByIsVideocamera = (flag: boolean, data: CamerasData) => {
+  return !flag || data.category === 'Видеокамера';
+}
+
+export const filterByIsPhotocamera = (flag: boolean, data: CamerasData) => {
+  return !flag || data.category === 'Фотоаппарат';
+}
+
+export const filterByСameraIsCollection = (flag: boolean, data: CamerasData) => {
+  return !flag || data.type === 'Коллекционная';
+}
+
+export const filterByСameraIsSnapshot = (flag: boolean, data: CamerasData) => {
+  return !flag || data.type === 'Моментальная';
+}
+
+export const filterByСameraIsDigital = (flag: boolean, data: CamerasData) => {
+  return !flag || data.type === 'Цифровая';
+}
+
+export const filterByСameraIsFilm = (flag: boolean, data: CamerasData) => {
+  return !flag || data.type === 'Плёночная';
+}
+
+export const filterByСameraIsZeroLevel = (flag: boolean, data: CamerasData) => {
+  return !flag || data.level === 'Нулевой';
+}
+
+export const filterByСameraIsNonProfessional = (flag: boolean, data: CamerasData) => {
+  return !flag || data.level === 'Любительский';
+}
+
+export const filterByСameraIsProfessional = (flag: boolean, data: CamerasData) => {
+  return !flag || data.level === 'Профессиональный';
 }
 
 export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;

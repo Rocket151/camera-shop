@@ -35,6 +35,15 @@ export enum TabsHash {
   Characteristics = '#characteristics'
 }
 
+export enum SortTypes {
+  SortByPrice = 'sortPrice',
+  SortByPopular = 'sortPopular'
+}
+
+export enum SortOrders {
+  Up = 'up',
+  Down = 'down'
+}
 
 export enum InputTitle {
   Name = 'Ваше имя',

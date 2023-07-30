@@ -42,6 +42,7 @@ export const makeFakeCamera = (): CamerasData => ({
   previewImgWebp: image.imageUrl(),
   previewImgWebp2x: image.imageUrl(),
   reviewCount: datatype.number(),
+  rating: datatype.number(),
 });
 export const fakeCameras = Array.from({length: 20}, makeFakeCamera);
 export const fakeCamera = fakeCameras[0];

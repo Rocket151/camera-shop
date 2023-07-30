@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SlicesNames } from '../../const';
+import { CatalogFilterInitialState } from '../../components/catalog-filter/catalog-filter';
+import { SlicesNames, SortOrders, SortTypes } from '../../const';
 import { CamerasData } from '../../types/cameras-data';
 import { ReviewData } from '../../types/review-data';
 import { CamerasDataState } from '../../types/state';
-import { sortCamerasDataByPriceDown, sortCamerasDataByPriceUp, sortReviewsDateDown } from '../../utils';
+import { filterByIsPhotocamera, filterByIsVideocamera, filterByСameraIsCollection, filterByСameraIsDigital, filterByСameraIsFilm, filterByСameraIsNonProfessional, filterByСameraIsProfessional, filterByСameraIsSnapshot, filterByСameraIsZeroLevel, sortCamerasDataByPopularDown, sortCamerasDataByPopularUp, sortCamerasDataByPriceDown, sortCamerasDataByPriceUp, sortReviewsDateDown } from '../../utils';
 import { fetchCamerasDataAction, fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
 
 export const initialCamerasDataState: CamerasDataState = {
   isCamerasDataLoading: false,
   camerasData: [],
   selectedCameraData: {} as CamerasData,
-  camerasDataToRender: [],
+  filteredCamerasData: [],
   currentSortType: '',
   currentSortOrder: '',
   isReviewsDataLoading: false,
@@ -29,22 +30,40 @@ export const camerasData = createSlice({
       state.selectedCameraData = action.payload;
     },
     sortCamerasData: (state) => {
-      if (state.currentSortType === 'price' && state.currentSortOrder !== 'up') {
-        state.camerasDataToRender = state.camerasData.sort(sortCamerasDataByPriceUp);
-      } else if (state.currentSortType === 'price' && state.currentSortOrder !== 'down') {
-        state.camerasDataToRender = state.camerasData.sort(sortCamerasDataByPriceDown);
-      } else if (state.currentSortType === 'rating' && state.currentSortOrder !== 'up') {
-        state.camerasDataToRender = state.camerasData.sort(sortCamerasDataByPriceDown);
-      } else if (state.currentSortType === 'rating' && state.currentSortOrder !== 'down') {
-        state.camerasDataToRender = state.camerasData.sort(sortCamerasDataByPriceDown);
-      } else {
-        state.camerasDataToRender = state.camerasData;
+      if ((state.currentSortType === SortTypes.SortByPrice) && (state.currentSortOrder === SortOrders.Up)) {
+        state.camerasData.sort(sortCamerasDataByPriceUp);
+      } else if ((state.currentSortType === SortTypes.SortByPrice) && (state.currentSortOrder === SortOrders.Down)) {
+        state.camerasData.sort(sortCamerasDataByPriceDown);
+      } else if ((state.currentSortType === SortTypes.SortByPopular) && (state.currentSortOrder === SortOrders.Up)) {
+        state.camerasData.sort(sortCamerasDataByPopularUp);
+      } else if ((state.currentSortType === SortTypes.SortByPopular) && (state.currentSortOrder === SortOrders.Down)) {
+        state.camerasData.sort(sortCamerasDataByPopularDown);
       }
     },
-    addCamerasData: (state, action: PayloadAction<CamerasData[]>) => {
-      state.camerasData = action.payload;
+    setCurrentSortType: (state, action: PayloadAction<string>) => {
+      state.currentSortType = action.payload;
+    },
+    setCurrentSortOrder: (state, action: PayloadAction<string>) => {
+      state.currentSortOrder = action.payload;
+    },
+    filterCamerasData: (state, action: PayloadAction<CatalogFilterInitialState>) => {
+      const filteredCamerasData = [];
+      for(const cameraData of state.camerasData) {
+        if(filterByIsPhotocamera(action.payload.photocamera, cameraData) && 
+        filterByIsVideocamera(action.payload.videocamera, cameraData) &&
+        filterByСameraIsCollection(action.payload.collection, cameraData) &&
+        filterByСameraIsDigital(action.payload.digital, cameraData) &&
+        filterByСameraIsFilm(action.payload.film, cameraData) &&
+        filterByСameraIsSnapshot(action.payload.snapshot, cameraData) &&
+        filterByСameraIsZeroLevel(action.payload.zero, cameraData) &&
+        filterByСameraIsNonProfessional(action.payload.nonProfessional, cameraData) &&
+        filterByСameraIsProfessional(action.payload.professional, cameraData) 
+        ) {
+          filteredCamerasData.push(cameraData)
+        }
+      }
+      state.filteredCamerasData = filteredCamerasData;
     }
-
   },
   extraReducers(builder) {
     builder
@@ -53,6 +72,7 @@ export const camerasData = createSlice({
       })
       .addCase(fetchCamerasDataAction.fulfilled, (state, action) => {
         state.camerasData = action.payload;
+        state.filteredCamerasData = action.payload;
         state.isCamerasDataLoading = false;
       })
       .addCase(fetchReviewsDataAction.pending, (state) => {
@@ -69,4 +89,4 @@ export const camerasData = createSlice({
   }
 });
 
-export const {selectCameraData, changeSuccessSendingReviewStatus, addCamerasData} = camerasData.actions;
+export const {selectCameraData, changeSuccessSendingReviewStatus, setCurrentSortOrder, setCurrentSortType, sortCamerasData, filterCamerasData} = camerasData.actions;

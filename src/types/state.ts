@@ -7,7 +7,7 @@ export type CamerasDataState = {
   isCamerasDataLoading: boolean;
   camerasData: CamerasData[];
   selectedCameraData: CamerasData;
-  camerasDataToRender: CamerasData[],
+  filteredCamerasData: CamerasData[],
   currentSortType: string,
   currentSortOrder: string,
   isReviewsDataLoading: boolean;
