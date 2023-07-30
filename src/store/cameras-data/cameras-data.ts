@@ -49,7 +49,7 @@ export const camerasData = createSlice({
     filterCamerasData: (state, action: PayloadAction<CatalogFilterInitialState>) => {
       const filteredCamerasData = [];
       for(const cameraData of state.camerasData) {
-        if(filterByIsPhotocamera(action.payload.photocamera, cameraData) && 
+        if(filterByIsPhotocamera(action.payload.photocamera, cameraData) &&
         filterByIsVideocamera(action.payload.videocamera, cameraData) &&
         filterByСameraIsCollection(action.payload.collection, cameraData) &&
         filterByСameraIsDigital(action.payload.digital, cameraData) &&
@@ -57,9 +57,9 @@ export const camerasData = createSlice({
         filterByСameraIsSnapshot(action.payload.snapshot, cameraData) &&
         filterByСameraIsZeroLevel(action.payload.zero, cameraData) &&
         filterByСameraIsNonProfessional(action.payload.nonProfessional, cameraData) &&
-        filterByСameraIsProfessional(action.payload.professional, cameraData) 
+        filterByСameraIsProfessional(action.payload.professional, cameraData)
         ) {
-          filteredCamerasData.push(cameraData)
+          filteredCamerasData.push(cameraData);
         }
       }
       state.filteredCamerasData = filteredCamerasData;
