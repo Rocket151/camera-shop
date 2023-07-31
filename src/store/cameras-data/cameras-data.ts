@@ -51,17 +51,20 @@ export const camerasData = createSlice({
       for(const cameraData of state.camerasData) {
         if(filterByIsPhotocamera(action.payload.photocamera, cameraData) &&
         filterByIsVideocamera(action.payload.videocamera, cameraData) &&
-        filterByСameraIsCollection(action.payload.collection, cameraData) &&
-        filterByСameraIsDigital(action.payload.digital, cameraData) &&
-        filterByСameraIsFilm(action.payload.film, cameraData) &&
-        filterByСameraIsSnapshot(action.payload.snapshot, cameraData) &&
-        filterByСameraIsZeroLevel(action.payload.zero, cameraData) &&
-        filterByСameraIsNonProfessional(action.payload.nonProfessional, cameraData) &&
-        filterByСameraIsProfessional(action.payload.professional, cameraData)
+        ((!action.payload.digital && !action.payload.film && !action.payload.snapshot) ||
+        (filterByСameraIsCollection(action.payload.collection, cameraData) ||
+        filterByСameraIsDigital(action.payload.digital, cameraData) ||
+        filterByСameraIsFilm(action.payload.film, cameraData) ||
+        filterByСameraIsSnapshot(action.payload.snapshot, cameraData))) &&
+        ((!action.payload.zero && !action.payload.nonProfessional && !action.payload.professional) ||
+        (filterByСameraIsZeroLevel(action.payload.zero, cameraData) ||
+        filterByСameraIsNonProfessional(action.payload.nonProfessional, cameraData) ||
+        filterByСameraIsProfessional(action.payload.professional, cameraData)))
         ) {
           filteredCamerasData.push(cameraData);
         }
       }
+      console.log(filteredCamerasData);
       state.filteredCamerasData = filteredCamerasData;
     }
   },

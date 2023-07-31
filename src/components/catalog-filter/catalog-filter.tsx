@@ -43,6 +43,10 @@ export default function CatalogFilter(): JSX.Element {
     });
   };
 
+  const resetFilters = () => {
+    setFilters(initialState);
+  };
+
   return (
     <div className="catalog-filter">
       <form action="#">
@@ -66,12 +70,12 @@ export default function CatalogFilter(): JSX.Element {
           <legend className="title title--h5">Категория</legend>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="photocamera" /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Фотокамера</span>
+              <input type="checkbox" name="photocamera" checked={filters.photocamera} disabled={filters.videocamera} onChange={handleFilterClick} /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Фотокамера</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="videocamera" /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Видеокамера</span>
+              <input type="checkbox" name="videocamera" checked={filters.videocamera} disabled={filters.photocamera} onChange={handleFilterClick} /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Видеокамера</span>
             </label>
           </div>
         </fieldset>
@@ -84,17 +88,17 @@ export default function CatalogFilter(): JSX.Element {
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="film" checked={filters.film} onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Плёночная</span>
+              <input type="checkbox" name="film" checked={filters.film} disabled={filters.videocamera} onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Плёночная</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="snapshot" checked={filters.snapshot} onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Моментальная</span>
+              <input type="checkbox" name="snapshot" checked={filters.snapshot} disabled={filters.videocamera} onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Моментальная</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="collection"checked={filters.collection} onChange={handleFilterClick} /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Коллекционная</span>
+              <input type="checkbox" name="collection" checked={filters.collection} onChange={handleFilterClick} /><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Коллекционная</span>
             </label>
           </div>
         </fieldset>
@@ -102,21 +106,21 @@ export default function CatalogFilter(): JSX.Element {
           <legend className="title title--h5">Уровень</legend>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="zero" onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Нулевой</span>
+              <input type="checkbox" name="zero" checked={filters.zero} onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Нулевой</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="nonProfessional" onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Любительский</span>
+              <input type="checkbox" name="nonProfessional" checked={filters.nonProfessional} onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Любительский</span>
             </label>
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="professional" onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Профессиональный</span>
+              <input type="checkbox" name="professional" checked={filters.professional} onChange={handleFilterClick}/><span className="custom-checkbox__icon"></span><span className="custom-checkbox__label">Профессиональный</span>
             </label>
           </div>
         </fieldset>
-        <button className="btn catalog-filter__reset-btn" type="reset">Сбросить фильтры
+        <button className="btn catalog-filter__reset-btn" onClick={resetFilters} type="reset">Сбросить фильтры
         </button>
       </form>
     </div>

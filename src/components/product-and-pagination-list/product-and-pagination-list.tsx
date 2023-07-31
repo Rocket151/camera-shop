@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AppRoute, MAX_PRODUCTS_PAGE } from '../../const';
+import { MAX_PRODUCTS_PAGE } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getCamerasData, getCurrentSortOrder, getCurrentSortType } from '../../store/cameras-data/selectors';
 import { CamerasData } from '../../types/cameras-data';

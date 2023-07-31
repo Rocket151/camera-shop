@@ -56,41 +56,25 @@ export function calculateRatingOnProductScreen(reviews: ReviewData[]) {
 
 }
 
-export const filterByIsVideocamera = (flag: boolean, data: CamerasData) => {
-  return !flag || data.category === 'Видеокамера';
-}
+export const filterByIsVideocamera = (flag: boolean, data: CamerasData) => !flag || data.category === 'Видеокамера';
 
-export const filterByIsPhotocamera = (flag: boolean, data: CamerasData) => {
-  return !flag || data.category === 'Фотоаппарат';
-}
+export const filterByIsPhotocamera = (flag: boolean, data: CamerasData) => !flag || data.category === 'Фотоаппарат';
 
-export const filterByСameraIsCollection = (flag: boolean, data: CamerasData) => {
-  return !flag || data.type === 'Коллекционная';
-}
+export const filterByСameraIsCollection = (flag: boolean, data: CamerasData) => flag && data.type === 'Коллекционная';
 
-export const filterByСameraIsSnapshot = (flag: boolean, data: CamerasData) => {
-  return !flag || data.type === 'Моментальная';
-}
+export const filterByСameraIsSnapshot = (flag: boolean, data: CamerasData) => flag && data.type === 'Моментальная';
 
-export const filterByСameraIsDigital = (flag: boolean, data: CamerasData) => {
-  return !flag || data.type === 'Цифровая';
-}
+export const filterByСameraIsDigital = (flag: boolean, data: CamerasData) => flag && data.type === 'Цифровая';
 
-export const filterByСameraIsFilm = (flag: boolean, data: CamerasData) => {
-  return !flag || data.type === 'Плёночная';
-}
+export const filterByСameraIsFilm = (flag: boolean, data: CamerasData) => flag && data.type === 'Плёночная';
 
-export const filterByСameraIsZeroLevel = (flag: boolean, data: CamerasData) => {
-  return !flag || data.level === 'Нулевой';
-}
 
-export const filterByСameraIsNonProfessional = (flag: boolean, data: CamerasData) => {
-  return !flag || data.level === 'Любительский';
-}
+export const filterByСameraIsZeroLevel = (flag: boolean, data: CamerasData) => flag && data.level === 'Нулевой';
 
-export const filterByСameraIsProfessional = (flag: boolean, data: CamerasData) => {
-  return !flag || data.level === 'Профессиональный';
-}
+export const filterByСameraIsNonProfessional = (flag: boolean, data: CamerasData) => flag && data.level === 'Любительский';
+
+export const filterByСameraIsProfessional = (flag: boolean, data: CamerasData) => flag && data.level === 'Профессиональный';
+
 
 export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;
 

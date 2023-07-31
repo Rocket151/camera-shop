@@ -22,7 +22,7 @@ export default function PaginationList({setPage, totalPages, currentPage}: Pagin
   const handleNextPageClick = () => {
     setPage(currentPage + 1);
   };
-  if(!totalPages.length) {
+  if(!totalPages.length || totalPages.length === 1) {
     return null;
   }
 
