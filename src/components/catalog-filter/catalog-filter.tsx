@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks";
-import { filterCamerasData } from "../../store/cameras-data/cameras-data";
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { filterCamerasData } from '../../store/cameras-data/cameras-data';
+import CatalogFilterByPrice from './catalog-filter-by-price/catalog-filter-by-price';
 
 export type CatalogFilterInitialState = {
   photocamera: boolean;
@@ -43,7 +44,8 @@ export default function CatalogFilter(): JSX.Element {
     const currentFilters = {
       ...filters,
       [targetName]: !filters[targetName as keyof CatalogFilterInitialState],
-    }
+    };
+
     setFilters(currentFilters);
     for(const key in currentFilters) {
       if(currentFilters[key as keyof CatalogFilterInitialState]) {
@@ -52,6 +54,7 @@ export default function CatalogFilter(): JSX.Element {
         queryParams.delete(`${key}`);
       }
     }
+
     navigate({ search: queryParams.toString(), hash: location.hash });
   };
 
@@ -63,21 +66,7 @@ export default function CatalogFilter(): JSX.Element {
     <div className="catalog-filter">
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
-        <fieldset className="catalog-filter__block">
-          <legend className="title title--h5">Цена, ₽</legend>
-          <div className="catalog-filter__price-range">
-            <div className="custom-input">
-              <label>
-                <input type="number" name="price" placeholder="от" />
-              </label>
-            </div>
-            <div className="custom-input">
-              <label>
-                <input type="number" name="priceUp" placeholder="до" />
-              </label>
-            </div>
-          </div>
-        </fieldset>
+        <CatalogFilterByPrice />
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
           <div className="custom-checkbox catalog-filter__item">

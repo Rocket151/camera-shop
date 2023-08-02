@@ -65,7 +65,13 @@ export const camerasData = createSlice({
         }
       }
       state.filteredCamerasData = filteredCamerasData;
-    }
+    },
+    filterCamerasDataByMinPrice: (state, action: PayloadAction<number>) => {
+      state.filteredCamerasData = state.filteredCamerasData.filter((cameraData) => cameraData.price >= action.payload);
+    },
+    filterCamerasDataByMaxPrice: (state, action: PayloadAction<number>) => {
+      state.filteredCamerasData = state.filteredCamerasData.filter((cameraData) => cameraData.price <= action.payload);
+    },
   },
   extraReducers(builder) {
     builder
@@ -91,4 +97,6 @@ export const camerasData = createSlice({
   }
 });
 
-export const {selectCameraData, changeSuccessSendingReviewStatus, setCurrentSortOrder, setCurrentSortType, sortCamerasData, filterCamerasData} = camerasData.actions;
+export const { selectCameraData, changeSuccessSendingReviewStatus, setCurrentSortOrder,
+  setCurrentSortType, sortCamerasData, filterCamerasData, filterCamerasDataByMinPrice,
+  filterCamerasDataByMaxPrice } = camerasData.actions;

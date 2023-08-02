@@ -45,6 +45,11 @@ export enum SortOrders {
   Down = 'down'
 }
 
+export enum FilterByPriceTypes {
+  Min = 'priceMin',
+  Max = 'priceMax',
+}
+
 export enum InputTitle {
   Name = 'Ваше имя',
   Advantage = 'Достоинства',
