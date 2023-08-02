@@ -15,10 +15,11 @@ export default function CatalogSortOrder(): JSX.Element {
     const target = evt.target as HTMLInputElement;
 
     if (target.tagName === 'INPUT' && target.name === 'sort-icon') {
-        dispatch(setCurrentSortOrder(target.id));
-        dispatch(sortCamerasData());
-        navigate({ search: queryParams.toString(), hash: location.hash });
-      }
+      dispatch(setCurrentSortOrder(target.id));
+      dispatch(sortCamerasData());
+      queryParams.set('sortOrder', target.id);
+      navigate({ search: queryParams.toString(), hash: location.hash });
+    }
   };
 
   return (

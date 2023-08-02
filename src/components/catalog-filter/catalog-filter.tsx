@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks";
 import { filterCamerasData } from "../../store/cameras-data/cameras-data";
 
@@ -29,18 +30,29 @@ const initialState: CatalogFilterInitialState = {
 export default function CatalogFilter(): JSX.Element {
   const [filters, setFilters] = useState(initialState);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
 
   useEffect(() => {
     dispatch(filterCamerasData(filters));
-    console.log(filters);
   },[filters, dispatch]);
 
   const handleFilterClick = (evt : React.ChangeEvent<HTMLInputElement>) => {
     const targetName = evt.target.name;
-    setFilters({
+    const currentFilters = {
       ...filters,
       [targetName]: !filters[targetName as keyof CatalogFilterInitialState],
-    });
+    }
+    setFilters(currentFilters);
+    for(const key in currentFilters) {
+      if(currentFilters[key as keyof CatalogFilterInitialState]) {
+        queryParams.set(`${key}`, currentFilters[key as keyof CatalogFilterInitialState].toString());
+      } else {
+        queryParams.delete(`${key}`);
+      }
+    }
+    navigate({ search: queryParams.toString(), hash: location.hash });
   };
 
   const resetFilters = () => {

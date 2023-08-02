@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { SortTypes } from '../../../const';
+import { SortOrders, SortTypes } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { setCurrentSortType, sortCamerasData } from '../../../store/cameras-data/cameras-data';
-import { getCurrentSortType } from '../../../store/cameras-data/selectors';
+import { setCurrentSortOrder, setCurrentSortType, sortCamerasData } from '../../../store/cameras-data/cameras-data';
+import { getCurrentSortOrder, getCurrentSortType } from '../../../store/cameras-data/selectors';
 
 export default function CatalogSortType(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -10,15 +10,21 @@ export default function CatalogSortType(): JSX.Element {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const currentSortType = useAppSelector(getCurrentSortType);
+  const currentSortOrder = useAppSelector(getCurrentSortOrder);
 
   const handleSortClick = (evt : React.MouseEvent<HTMLDivElement>) => {
     const target = evt.target as HTMLInputElement;
 
     if (target.tagName === 'INPUT' && target.name === 'sort') {
-        dispatch(setCurrentSortType(target.id));
-        dispatch(sortCamerasData());
-        navigate({ search: queryParams.toString(), hash: location.hash });
+      if(!currentSortOrder.length) {
+        dispatch(setCurrentSortOrder(SortOrders.Up));
       }
+
+      dispatch(setCurrentSortType(target.id));
+      dispatch(sortCamerasData());
+      queryParams.set('sortType', target.id);
+      navigate({ search: queryParams.toString(), hash: location.hash });
+    }
   };
 
   return (

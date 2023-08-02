@@ -20,16 +20,9 @@ export default function ProductAndPaginationList({setModalAddItem}: ProductAndPa
   const location = useLocation();
   const totalPages = getPagesNumber(camerasData);
   const queryParams = new URLSearchParams(location.search);
-  const currentSortType = useAppSelector(getCurrentSortType);
-  const currentSortOrder = useAppSelector(getCurrentSortOrder);
 
   useEffect(() => {
     if(camerasData.length) {
-      if(currentSortType.length) {
-        queryParams.set('sortType', currentSortType);
-        queryParams.set('sortOrder', currentSortOrder);
-      }
-
       navigate({hash: page.toString(), search: queryParams.toString()});
 
       const slicedCamerasData = camerasData.slice((page - 1) * MAX_PRODUCTS_PAGE, page * MAX_PRODUCTS_PAGE);

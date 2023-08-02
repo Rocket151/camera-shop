@@ -31,13 +31,13 @@ export const camerasData = createSlice({
     },
     sortCamerasData: (state) => {
       if ((state.currentSortType === SortTypes.SortByPrice) && (state.currentSortOrder === SortOrders.Up)) {
-        state.camerasData.sort(sortCamerasDataByPriceUp);
+        state.filteredCamerasData.sort(sortCamerasDataByPriceUp);
       } else if ((state.currentSortType === SortTypes.SortByPrice) && (state.currentSortOrder === SortOrders.Down)) {
-        state.camerasData.sort(sortCamerasDataByPriceDown);
+        state.filteredCamerasData.sort(sortCamerasDataByPriceDown);
       } else if ((state.currentSortType === SortTypes.SortByPopular) && (state.currentSortOrder === SortOrders.Up)) {
-        state.camerasData.sort(sortCamerasDataByPopularUp);
+        state.filteredCamerasData.sort(sortCamerasDataByPopularUp);
       } else if ((state.currentSortType === SortTypes.SortByPopular) && (state.currentSortOrder === SortOrders.Down)) {
-        state.camerasData.sort(sortCamerasDataByPopularDown);
+        state.filteredCamerasData.sort(sortCamerasDataByPopularDown);
       }
     },
     setCurrentSortType: (state, action: PayloadAction<string>) => {
@@ -64,7 +64,6 @@ export const camerasData = createSlice({
           filteredCamerasData.push(cameraData);
         }
       }
-      console.log(filteredCamerasData);
       state.filteredCamerasData = filteredCamerasData;
     }
   },
