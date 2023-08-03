@@ -76,6 +76,11 @@ export const filterByСameraIsNonProfessional = (flag: boolean, data: CamerasDat
 export const filterByСameraIsProfessional = (flag: boolean, data: CamerasData) => flag && data.level === 'Профессиональный';
 
 
+export const filterCameraByMinPrice = (minPrice: number, data: CamerasData) => data.price >= minPrice;
+
+export const filterCameraByMaxPrice = (maxPrice: number, data: CamerasData) => data.price <= maxPrice;
+
+
 export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;
 
 export const humanizeReviewDate = (date: Date, locales = 'ru-RU') => date.toLocaleString(locales, {day: 'numeric', month: 'long'});

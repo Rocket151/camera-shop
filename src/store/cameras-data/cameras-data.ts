@@ -4,7 +4,7 @@ import { SlicesNames, SortOrders, SortTypes } from '../../const';
 import { CamerasData } from '../../types/cameras-data';
 import { ReviewData } from '../../types/review-data';
 import { CamerasDataState } from '../../types/state';
-import { filterByIsPhotocamera, filterByIsVideocamera, filterByСameraIsCollection, filterByСameraIsDigital, filterByСameraIsFilm, filterByСameraIsNonProfessional, filterByСameraIsProfessional, filterByСameraIsSnapshot, filterByСameraIsZeroLevel, sortCamerasDataByPopularDown, sortCamerasDataByPopularUp, sortCamerasDataByPriceDown, sortCamerasDataByPriceUp, sortReviewsDateDown } from '../../utils';
+import { filterByIsPhotocamera, filterByIsVideocamera, filterByСameraIsCollection, filterByСameraIsDigital, filterByСameraIsFilm, filterByСameraIsNonProfessional, filterByСameraIsProfessional, filterByСameraIsSnapshot, filterByСameraIsZeroLevel, filterCameraByMaxPrice, filterCameraByMinPrice, sortCamerasDataByPopularDown, sortCamerasDataByPopularUp, sortCamerasDataByPriceDown, sortCamerasDataByPriceUp, sortReviewsDateDown } from '../../utils';
 import { fetchCamerasDataAction, fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
 
 export const initialCamerasDataState: CamerasDataState = {
@@ -17,6 +17,8 @@ export const initialCamerasDataState: CamerasDataState = {
   isReviewsDataLoading: false,
   productReviewsData: [] as ReviewData[],
   isSuccessReviewSending: false,
+  maxPrice: 0,
+  minPrice: 0,
 };
 
 export const camerasData = createSlice({
@@ -51,7 +53,7 @@ export const camerasData = createSlice({
       for(const cameraData of state.camerasData) {
         if(filterByIsPhotocamera(action.payload.photocamera, cameraData) &&
         filterByIsVideocamera(action.payload.videocamera, cameraData) &&
-        ((!action.payload.digital && !action.payload.film && !action.payload.snapshot) ||
+        ((!action.payload.digital && !action.payload.film && !action.payload.snapshot && !action.payload.collection) ||
         (filterByСameraIsCollection(action.payload.collection, cameraData) ||
         filterByСameraIsDigital(action.payload.digital, cameraData) ||
         filterByСameraIsFilm(action.payload.film, cameraData) ||
@@ -59,19 +61,20 @@ export const camerasData = createSlice({
         ((!action.payload.zero && !action.payload.nonProfessional && !action.payload.professional) ||
         (filterByСameraIsZeroLevel(action.payload.zero, cameraData) ||
         filterByСameraIsNonProfessional(action.payload.nonProfessional, cameraData) ||
-        filterByСameraIsProfessional(action.payload.professional, cameraData)))
+        filterByСameraIsProfessional(action.payload.professional, cameraData))) &&
+        filterCameraByMinPrice(state.minPrice, cameraData) && filterCameraByMaxPrice(state.maxPrice, cameraData)
         ) {
           filteredCamerasData.push(cameraData);
         }
       }
       state.filteredCamerasData = filteredCamerasData;
     },
-    filterCamerasDataByMinPrice: (state, action: PayloadAction<number>) => {
-      state.filteredCamerasData = state.filteredCamerasData.filter((cameraData) => cameraData.price >= action.payload);
+    setProductMinPrice: (state, action: PayloadAction<number>) => {
+      state.minPrice = action.payload;
     },
-    filterCamerasDataByMaxPrice: (state, action: PayloadAction<number>) => {
-      state.filteredCamerasData = state.filteredCamerasData.filter((cameraData) => cameraData.price <= action.payload);
-    },
+    setProductMaxPrice: (state, action: PayloadAction<number>) => {
+      state.maxPrice = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -79,6 +82,8 @@ export const camerasData = createSlice({
         state.isCamerasDataLoading = true;
       })
       .addCase(fetchCamerasDataAction.fulfilled, (state, action) => {
+        state.minPrice = action.payload.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
+        state.maxPrice = action.payload.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
         state.camerasData = action.payload;
         state.filteredCamerasData = action.payload;
         state.isCamerasDataLoading = false;
@@ -98,5 +103,4 @@ export const camerasData = createSlice({
 });
 
 export const { selectCameraData, changeSuccessSendingReviewStatus, setCurrentSortOrder,
-  setCurrentSortType, sortCamerasData, filterCamerasData, filterCamerasDataByMinPrice,
-  filterCamerasDataByMaxPrice } = camerasData.actions;
+  setCurrentSortType, sortCamerasData, filterCamerasData, setProductMaxPrice, setProductMinPrice } = camerasData.actions;

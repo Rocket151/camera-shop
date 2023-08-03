@@ -13,6 +13,8 @@ export type CamerasDataState = {
   isReviewsDataLoading: boolean;
   productReviewsData: ReviewData[];
   isSuccessReviewSending: boolean;
+  minPrice: number;
+  maxPrice: number;
 }
 
 export type PromoDataState = {

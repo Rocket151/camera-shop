@@ -22,13 +22,10 @@ export default function ProductAndPaginationList({setModalAddItem}: ProductAndPa
   const queryParams = new URLSearchParams(location.search);
 
   useEffect(() => {
-    if(camerasData.length) {
-      navigate({hash: page.toString(), search: queryParams.toString()});
-
-      const slicedCamerasData = camerasData.slice((page - 1) * MAX_PRODUCTS_PAGE, page * MAX_PRODUCTS_PAGE);
-
-      setData(slicedCamerasData);
-    }
+    navigate({hash: page.toString(), search: queryParams.toString()});
+    const slicedCamerasData = camerasData.slice((page - 1) * MAX_PRODUCTS_PAGE, page * MAX_PRODUCTS_PAGE);
+    setData(slicedCamerasData);
+    
   }, [page, navigate, camerasData]);
 
   return (

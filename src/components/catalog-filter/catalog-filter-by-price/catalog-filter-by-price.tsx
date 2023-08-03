@@ -1,44 +1,65 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import { FilterByPriceTypes } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { filterCamerasDataByMaxPrice, filterCamerasDataByMinPrice } from '../../../store/cameras-data/cameras-data';
-import { getCamerasData, getCamerasDataLoadingStatus } from '../../../store/cameras-data/selectors';
+import { filterCamerasData, setProductMaxPrice, setProductMinPrice } from '../../../store/cameras-data/cameras-data';
+import { getCamerasData, getCamerasDataFromServer, getCamerasDataLoadingStatus } from '../../../store/cameras-data/selectors';
+import { CatalogFilterInitialState } from '../catalog-filter';
 
-export default function CatalogFilterByPrice(): JSX.Element | null {
+type CatalogFilterByPriceProps = {
+  filters: CatalogFilterInitialState;
+}
+
+export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProps): JSX.Element | null {
   const camerasData = useAppSelector(getCamerasData);
   const isCamerasDataLoadingStatus = useAppSelector(getCamerasDataLoadingStatus);
+  const camerasDataFromServer = useAppSelector(getCamerasDataFromServer);
   const dispatch = useAppDispatch();
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
+  const debouncedSetMinValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
+    if(Number(inputValue) < minPriceData || Number(inputValue) > maxPriceData) {
+      setMinPrice(minPriceData.toString());
+      dispatch(setProductMinPrice(minPriceData));
+      dispatch(filterCamerasData(filters));
+      return;
+    }
+    setMinPrice(inputValue);
+    dispatch(setProductMinPrice(Number(minPrice)));
+    dispatch(filterCamerasData(filters));
+
+  }, 1000);
+
+  const debouncedSetMaxValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
+    if(Number(inputValue) > maxPriceData || Number(inputValue) < minPriceData) {
+      setMaxPrice(maxPriceData.toString());
+      dispatch(setProductMaxPrice(maxPriceData));
+      dispatch(filterCamerasData(filters));
+
+      return;
+    }
+    setMaxPrice(inputValue);
+    dispatch(setProductMaxPrice(Number(inputValue)));
+    dispatch(filterCamerasData(filters));
+  }, 1000);
+
   if(!isCamerasDataLoadingStatus) {
-    const cameraDataWithMinPrice = camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData) : {price: 0};
-    const cameraDataWithMaxPrice = camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData) : {price: 0};
 
     const handleFilterChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
       const target = evt.target;
 
+      const minPriceData = camerasDataFromServer.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
+      const maxPriceData = camerasDataFromServer.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
+
       if(target.name === FilterByPriceTypes.Min) {
-
-        if((Number(target.value) < cameraDataWithMinPrice.price) && cameraDataWithMinPrice.price !== 0) {
-          setMinPrice(cameraDataWithMinPrice.price.toString());
-          dispatch(filterCamerasDataByMinPrice(Number(cameraDataWithMinPrice.price.toString())));
-
-          return;
-        }
         setMinPrice(target.value);
-        dispatch(filterCamerasDataByMinPrice(Number(target.value)));
+        debouncedSetMinValue(target.value, maxPriceData, minPriceData);
       }
 
       if(target.name === FilterByPriceTypes.Max) {
-        if((Number(target.value) > cameraDataWithMaxPrice.price) && cameraDataWithMaxPrice.price !== 0 ) {
-          setMaxPrice(cameraDataWithMaxPrice.price.toString());
-          dispatch(filterCamerasDataByMaxPrice(Number(cameraDataWithMaxPrice.price.toString())));
-
-          return;
-        }
         setMaxPrice(target.value);
-        dispatch(filterCamerasDataByMaxPrice(Number(target.value)));
+        debouncedSetMaxValue(target.value, maxPriceData, minPriceData)
       }
     };
 
@@ -48,12 +69,12 @@ export default function CatalogFilterByPrice(): JSX.Element | null {
         <div className="catalog-filter__price-range">
           <div className="custom-input">
             <label>
-              <input type="number" name="priceMin" value={minPrice} min={0} placeholder={cameraDataWithMinPrice.price.toString()} onChange={handleFilterChange} />
+              <input type="number" name="priceMin" value={minPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : '0'} onChange={handleFilterChange} />
             </label>
           </div>
           <div className="custom-input">
             <label>
-              <input type="number" name="priceMax" value={maxPrice} min={0} placeholder={cameraDataWithMaxPrice.price.toString()} onChange={handleFilterChange} />
+              <input type="number" name="priceMax" value={maxPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : '0'} onChange={handleFilterChange} />
             </label>
           </div>
         </div>

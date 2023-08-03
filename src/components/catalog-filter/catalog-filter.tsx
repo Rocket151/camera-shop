@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { filterCamerasData } from '../../store/cameras-data/cameras-data';
@@ -35,16 +35,14 @@ export default function CatalogFilter(): JSX.Element {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
 
-  useEffect(() => {
-    dispatch(filterCamerasData(filters));
-  },[filters, dispatch]);
-
   const handleFilterClick = (evt : React.ChangeEvent<HTMLInputElement>) => {
     const targetName = evt.target.name;
     const currentFilters = {
       ...filters,
       [targetName]: !filters[targetName as keyof CatalogFilterInitialState],
     };
+
+    dispatch(filterCamerasData(currentFilters));
 
     setFilters(currentFilters);
     for(const key in currentFilters) {
@@ -66,7 +64,7 @@ export default function CatalogFilter(): JSX.Element {
     <div className="catalog-filter">
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
-        <CatalogFilterByPrice />
+        <CatalogFilterByPrice filters={filters}/>
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
           <div className="custom-checkbox catalog-filter__item">
