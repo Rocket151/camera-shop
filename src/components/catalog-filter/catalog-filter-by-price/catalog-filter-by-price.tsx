@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { FilterByPriceTypes } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -15,6 +16,9 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
   const isCamerasDataLoadingStatus = useAppSelector(getCamerasDataLoadingStatus);
   const camerasDataFromServer = useAppSelector(getCamerasDataFromServer);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
@@ -24,13 +28,17 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
       dispatch(setProductMinPrice(minPriceData));
       dispatch(filterCamerasData(filters));
       dispatch(sortCamerasData());
+      queryParams.set('price_gte', minPriceData.toString());
+      navigate({ search: queryParams.toString(), hash: location.hash });
+
       return;
     }
     setMinPrice(inputValue);
     dispatch(setProductMinPrice(Number(minPrice)));
     dispatch(filterCamerasData(filters));
     dispatch(sortCamerasData());
-
+    queryParams.set('price_gte', minPrice.toString());
+    navigate({ search: queryParams.toString(), hash: location.hash });
   }, 1000);
 
   const debouncedSetMaxValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
@@ -39,6 +47,8 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
       dispatch(setProductMaxPrice(maxPriceData));
       dispatch(filterCamerasData(filters));
       dispatch(sortCamerasData());
+      queryParams.set('price_lte', maxPriceData.toString());
+      navigate({ search: queryParams.toString(), hash: location.hash });
 
       return;
     }
@@ -46,6 +56,8 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
     dispatch(setProductMaxPrice(Number(inputValue)));
     dispatch(filterCamerasData(filters));
     dispatch(sortCamerasData());
+    queryParams.set('price_lte', maxPrice.toString());
+    navigate({ search: queryParams.toString(), hash: location.hash });
   }, 1000);
 
   if(!isCamerasDataLoadingStatus) {

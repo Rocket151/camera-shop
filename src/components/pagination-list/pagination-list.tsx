@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Link } from 'react-router-dom';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 type PaginationListProps = {
   totalPages: number[];
@@ -8,10 +8,16 @@ type PaginationListProps = {
 }
 
 export default function PaginationList({setPage, totalPages, currentPage}: PaginationListProps): JSX.Element | null {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+
   const handlePageClick = (evt : React.MouseEvent<HTMLAnchorElement>) => {
     const target = evt.target as HTMLElement;
     if (target.tagName === 'A') {
       setPage(+target.id);
+      queryParams.set('page', target.id);
+      navigate({ search: queryParams.toString() });
     }
   };
 
@@ -22,6 +28,7 @@ export default function PaginationList({setPage, totalPages, currentPage}: Pagin
   const handleNextPageClick = () => {
     setPage(currentPage + 1);
   };
+
   if(!totalPages.length || totalPages.length === 1) {
     return null;
   }
