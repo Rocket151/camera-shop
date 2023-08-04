@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { FilterByPriceTypes } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { filterCamerasData, setProductMaxPrice, setProductMinPrice } from '../../../store/cameras-data/cameras-data';
+import { filterCamerasData, setProductMaxPrice, setProductMinPrice, sortCamerasData } from '../../../store/cameras-data/cameras-data';
 import { getCamerasData, getCamerasDataFromServer, getCamerasDataLoadingStatus } from '../../../store/cameras-data/selectors';
 import { CatalogFilterInitialState } from '../catalog-filter';
 
@@ -23,11 +23,13 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
       setMinPrice(minPriceData.toString());
       dispatch(setProductMinPrice(minPriceData));
       dispatch(filterCamerasData(filters));
+      dispatch(sortCamerasData());
       return;
     }
     setMinPrice(inputValue);
     dispatch(setProductMinPrice(Number(minPrice)));
     dispatch(filterCamerasData(filters));
+    dispatch(sortCamerasData());
 
   }, 1000);
 
@@ -36,12 +38,14 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
       setMaxPrice(maxPriceData.toString());
       dispatch(setProductMaxPrice(maxPriceData));
       dispatch(filterCamerasData(filters));
+      dispatch(sortCamerasData());
 
       return;
     }
     setMaxPrice(inputValue);
     dispatch(setProductMaxPrice(Number(inputValue)));
     dispatch(filterCamerasData(filters));
+    dispatch(sortCamerasData());
   }, 1000);
 
   if(!isCamerasDataLoadingStatus) {
@@ -69,12 +73,12 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
         <div className="catalog-filter__price-range">
           <div className="custom-input">
             <label>
-              <input type="number" name="priceMin" value={minPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : '0'} onChange={handleFilterChange} />
+              <input type="number" name="priceMin" value={minPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
             </label>
           </div>
           <div className="custom-input">
             <label>
-              <input type="number" name="priceMax" value={maxPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : '0'} onChange={handleFilterChange} />
+              <input type="number" name="priceMax" value={maxPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
             </label>
           </div>
         </div>

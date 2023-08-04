@@ -19,6 +19,17 @@ export const initialCamerasDataState: CamerasDataState = {
   isSuccessReviewSending: false,
   maxPrice: 0,
   minPrice: 0,
+  filters: {
+    photocamera: false,
+    videocamera: false,
+    digital: false,
+    film: false,
+    snapshot: false,
+    collection: false,
+    zero: false,
+    nonProfessional: false,
+    professional: false,
+  },
 };
 
 export const camerasData = createSlice({
@@ -74,6 +85,9 @@ export const camerasData = createSlice({
     },
     setProductMaxPrice: (state, action: PayloadAction<number>) => {
       state.maxPrice = action.payload;
+    },
+    setFiltersData: (state, action: PayloadAction<CatalogFilterInitialState>) => {
+      state.filters = action.payload;
     }
   },
   extraReducers(builder) {
@@ -103,4 +117,4 @@ export const camerasData = createSlice({
 });
 
 export const { selectCameraData, changeSuccessSendingReviewStatus, setCurrentSortOrder,
-  setCurrentSortType, sortCamerasData, filterCamerasData, setProductMaxPrice, setProductMinPrice } = camerasData.actions;
+  setCurrentSortType, sortCamerasData, filterCamerasData, setProductMaxPrice, setProductMinPrice, setFiltersData } = camerasData.actions;

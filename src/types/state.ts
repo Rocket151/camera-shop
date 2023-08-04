@@ -1,3 +1,4 @@
+import { CatalogFilterInitialState } from '../components/catalog-filter/catalog-filter';
 import { store } from '../store';
 import { CamerasData } from './cameras-data';
 import { PromoData } from './promo-data';
@@ -15,6 +16,7 @@ export type CamerasDataState = {
   isSuccessReviewSending: boolean;
   minPrice: number;
   maxPrice: number;
+  filters: CatalogFilterInitialState;
 }
 
 export type PromoDataState = {
