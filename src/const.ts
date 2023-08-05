@@ -73,4 +73,4 @@ export const MAX_PRODUCTS_PAGE = 9;
 
 export const MIN_SLIDER_ITEM_INDEX = 0;
 
-export const HASH = '#';
+export const SPINNER_COLOR = '#7777FF';

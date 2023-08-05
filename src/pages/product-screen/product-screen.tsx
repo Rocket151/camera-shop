@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -13,8 +13,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { getProductData } from '../../store/product-data/selectors';
 import { calculateRatingOnProductScreen, humanizePrice } from '../../utils';
-import { useParams } from 'react-router-dom';
-import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 import { getProductReviewsData } from '../../store/cameras-data/selectors';
 
 
@@ -23,18 +21,9 @@ export default function ProductScreen(): JSX.Element {
   const productData = useAppSelector(getProductData);
   const reviews = useAppSelector(getProductReviewsData);
   const rating = calculateRatingOnProductScreen(reviews);
-  const {id} = useParams() as { id: string };
   const [isModalAddItem, setModalAddItem] = useState(false);
   const [isModalAddReview, setModalAddReview] = useState(false);
   const [isModalAddReviewSuccess, setModalAddReviewSuccess] = useState(false);
-
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchProductDataAction(id.toString()));
-      dispatch(fetchSimilarCamerasDataAction(id.toString()));
-      dispatch(fetchReviewsDataAction(id.toString()));
-    }
-  },[id, dispatch]);
 
   const handleAddToBasketClick = () => {
     dispatch(selectCameraData(productData));

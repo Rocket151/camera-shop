@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, TabsHash } from '../../const';
 import { useAppDispatch } from '../../hooks';
+import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { CamerasData } from '../../types/cameras-data';
 import { humanizePrice } from '../../utils';
@@ -15,6 +16,12 @@ type ProductCardProps = {
 export default function ProductCard({cameraData, carouselClass, setModalAddItem}: ProductCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const {id, name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount} = cameraData;
+
+  const handleRedirectToProductPage = () => {
+    dispatch(fetchProductDataAction(id.toString()));
+    dispatch(fetchSimilarCamerasDataAction(id.toString()));
+    dispatch(fetchReviewsDataAction(id.toString()));
+  };
 
   const handleModalOpen = () => {
     dispatch(selectCameraData(cameraData));
@@ -39,7 +46,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button" onClick={handleModalOpen}>Купить
         </button>
-        <Link className="btn btn--transparent" to={AppRoute.Product + id.toString() + TabsHash.Description}>Подробнее
+        <Link className="btn btn--transparent" to={AppRoute.Product + id.toString() + TabsHash.Description} onClick={handleRedirectToProductPage}>Подробнее
         </Link>
       </div>
     </div>
