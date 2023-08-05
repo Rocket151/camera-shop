@@ -12,12 +12,17 @@ export default function PaginationList({setPage, totalPages, currentPage}: Pagin
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
 
+  useEffect(() => {
+    navigate({ search: queryParams.toString(), hash: `page=${currentPage}` });
+    // eslint-disable-next-line
+  },[]);
+
   const handlePageClick = (evt : React.MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
     const target = evt.target as HTMLElement;
     if (target.tagName === 'A') {
       setPage(+target.id);
-      queryParams.set('page', target.id);
-      navigate({ search: queryParams.toString() });
+      navigate({ search: queryParams.toString(), hash: `page=${target.id}` });
     }
   };
 

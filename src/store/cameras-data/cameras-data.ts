@@ -4,7 +4,7 @@ import { SlicesNames, SortOrders, SortTypes } from '../../const';
 import { CamerasData } from '../../types/cameras-data';
 import { ReviewData } from '../../types/review-data';
 import { CamerasDataState } from '../../types/state';
-import { filterByIsPhotocamera, filterByIsVideocamera, filterByСameraIsCollection, filterByСameraIsDigital, filterByСameraIsFilm, filterByСameraIsNonProfessional, filterByСameraIsProfessional, filterByСameraIsSnapshot, filterByСameraIsZeroLevel, filterCameraByMaxPrice, filterCameraByMinPrice, sortCamerasDataByPopularDown, sortCamerasDataByPopularUp, sortCamerasDataByPriceDown, sortCamerasDataByPriceUp, sortReviewsDateDown } from '../../utils';
+import { filterByIsPhotocamera, filterByIsVideocamera, filterByСameraIsCollection, filterByСameraIsDigital, filterByСameraIsFilm, filterByСameraIsNonProfessional, filterByСameraIsProfessional, filterByСameraIsSnapshot, filterByСameraIsZeroLevel, filterCameraByMaxPrice, filterCameraByMinPrice, getInitalMaxPrice, getInitalMinPrice, sortCamerasDataByPopularDown, sortCamerasDataByPopularUp, sortCamerasDataByPriceDown, sortCamerasDataByPriceUp, sortReviewsDateDown } from '../../utils';
 import { fetchCamerasDataAction, fetchReviewsDataAction, sendUserReviewAction } from '../api-actions';
 
 export const initialCamerasDataState: CamerasDataState = {
@@ -88,6 +88,11 @@ export const camerasData = createSlice({
     },
     setFiltersData: (state, action: PayloadAction<CatalogFilterInitialState>) => {
       state.filters = action.payload;
+    },
+    resetFilters: (state) => {
+      state.filters = initialCamerasDataState.filters;
+      state.minPrice = getInitalMinPrice(state.camerasData);
+      state.maxPrice = getInitalMaxPrice(state.camerasData);
     }
   },
   extraReducers(builder) {
@@ -96,8 +101,8 @@ export const camerasData = createSlice({
         state.isCamerasDataLoading = true;
       })
       .addCase(fetchCamerasDataAction.fulfilled, (state, action) => {
-        state.minPrice = action.payload.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
-        state.maxPrice = action.payload.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
+        state.minPrice = getInitalMinPrice(action.payload);
+        state.maxPrice = getInitalMaxPrice(action.payload);
         state.camerasData = action.payload;
         state.filteredCamerasData = action.payload;
         state.isCamerasDataLoading = false;
@@ -117,4 +122,5 @@ export const camerasData = createSlice({
 });
 
 export const { selectCameraData, changeSuccessSendingReviewStatus, setCurrentSortOrder,
-  setCurrentSortType, sortCamerasData, filterCamerasData, setProductMaxPrice, setProductMinPrice, setFiltersData } = camerasData.actions;
+  setCurrentSortType, sortCamerasData, filterCamerasData, setProductMaxPrice,
+  setProductMinPrice, setFiltersData, resetFilters } = camerasData.actions;

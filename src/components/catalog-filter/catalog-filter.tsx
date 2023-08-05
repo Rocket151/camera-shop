@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setFiltersData, filterCamerasData } from '../../store/cameras-data/cameras-data';
+import { setFiltersData, filterCamerasData, sortCamerasData, resetFilters } from '../../store/cameras-data/cameras-data';
 import { getFiletrsData } from '../../store/cameras-data/selectors';
 import CatalogFilterByPrice from './catalog-filter-by-price/catalog-filter-by-price';
 
@@ -46,6 +46,7 @@ export default function CatalogFilter(): JSX.Element {
 
     dispatch(filterCamerasData(currentFilters));
     dispatch(setFiltersData(currentFilters));
+    dispatch(sortCamerasData());
 
     setFilters(currentFilters);
     for(const key in currentFilters) {
@@ -59,9 +60,10 @@ export default function CatalogFilter(): JSX.Element {
     navigate({ search: queryParams.toString(), hash: location.hash });
   };
 
-  const resetFilters = () => {
+  const resetFiltersData = () => {
+    dispatch(resetFilters());
+    dispatch(filterCamerasData(initialState));
     setFilters(initialState);
-    setFiltersData(initialState);
   };
 
   return (
@@ -123,7 +125,7 @@ export default function CatalogFilter(): JSX.Element {
             </label>
           </div>
         </fieldset>
-        <button className="btn catalog-filter__reset-btn" onClick={resetFilters} type="reset">Сбросить фильтры
+        <button className="btn catalog-filter__reset-btn" onClick={resetFiltersData} type="reset">Сбросить фильтры
         </button>
       </form>
     </div>

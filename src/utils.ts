@@ -80,6 +80,9 @@ export const filterCameraByMinPrice = (minPrice: number, data: CamerasData) => d
 
 export const filterCameraByMaxPrice = (maxPrice: number, data: CamerasData) => data.price <= maxPrice;
 
+export const getInitalMinPrice = (camerasData: CamerasData[]): number => camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
+
+export const getInitalMaxPrice = (camerasData: CamerasData[]): number => camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
 
 export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;
 

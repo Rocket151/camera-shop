@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { FilterByPriceTypes } from '../../../const';
@@ -23,7 +23,7 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
   const [maxPrice, setMaxPrice] = useState('');
 
   const debouncedSetMinValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
-    if(Number(inputValue) < minPriceData || Number(inputValue) > maxPriceData) {
+    if((Number(inputValue) < minPriceData || Number(inputValue) > maxPriceData) && inputValue !== '') {
       setMinPrice(minPriceData.toString());
       dispatch(setProductMinPrice(minPriceData));
       dispatch(filterCamerasData(filters));
@@ -42,7 +42,7 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
   }, 1000);
 
   const debouncedSetMaxValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
-    if(Number(inputValue) > maxPriceData || Number(inputValue) < minPriceData) {
+    if((Number(inputValue) > maxPriceData || Number(inputValue) < minPriceData) && inputValue !== '') {
       setMaxPrice(maxPriceData.toString());
       dispatch(setProductMaxPrice(maxPriceData));
       dispatch(filterCamerasData(filters));
@@ -75,7 +75,7 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
 
       if(target.name === FilterByPriceTypes.Max) {
         setMaxPrice(target.value);
-        debouncedSetMaxValue(target.value, maxPriceData, minPriceData)
+        debouncedSetMaxValue(target.value, maxPriceData, minPriceData);
       }
     };
 
