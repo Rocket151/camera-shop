@@ -89,11 +89,6 @@ export const camerasData = createSlice({
     setFiltersData: (state, action: PayloadAction<CatalogFilterInitialState>) => {
       state.filters = action.payload;
     },
-    resetFilters: (state) => {
-      state.filters = initialCamerasDataState.filters;
-      state.minPrice = getInitalMinPrice(state.camerasData);
-      state.maxPrice = getInitalMaxPrice(state.camerasData);
-    }
   },
   extraReducers(builder) {
     builder
@@ -123,4 +118,4 @@ export const camerasData = createSlice({
 
 export const { selectCameraData, changeSuccessSendingReviewStatus, setCurrentSortOrder,
   setCurrentSortType, sortCamerasData, filterCamerasData, setProductMaxPrice,
-  setProductMinPrice, setFiltersData, resetFilters } = camerasData.actions;
+  setProductMinPrice, setFiltersData } = camerasData.actions;

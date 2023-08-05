@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, TabsHash } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getCamerasData } from '../../store/cameras-data/selectors';
+import { getCamerasDataFromServer } from '../../store/cameras-data/selectors';
 import Fuse from 'fuse.js';
 
 type SearchItemState = {
@@ -16,7 +16,7 @@ const initialState = {
 };
 
 export default function Header(): JSX.Element {
-  const camerasData = useAppSelector(getCamerasData);
+  const camerasData = useAppSelector(getCamerasDataFromServer);
   const [data, setData] = useState<SearchItemState[] | never[]>([initialState]);
 
   const resetData = () => {
