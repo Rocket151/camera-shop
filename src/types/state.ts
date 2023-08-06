@@ -1,3 +1,4 @@
+import { CatalogFilterInitialState } from '../components/catalog-filter/catalog-filter';
 import { store } from '../store';
 import { CamerasData } from './cameras-data';
 import { PromoData } from './promo-data';
@@ -7,17 +8,20 @@ export type CamerasDataState = {
   isCamerasDataLoading: boolean;
   camerasData: CamerasData[];
   selectedCameraData: CamerasData;
+  filteredCamerasData: CamerasData[],
+  currentSortType: string,
+  currentSortOrder: string,
+  isReviewsDataLoading: boolean;
+  productReviewsData: ReviewData[];
+  isSuccessReviewSending: boolean;
+  minPrice: number;
+  maxPrice: number;
+  filters: CatalogFilterInitialState;
 }
 
 export type PromoDataState = {
   isPromoDataLoading: boolean;
   promoData: PromoData | null;
-}
-export type ReviewsDataState = {
-  isReviewsDataLoading: boolean;
-  productReviewsData: ReviewData[];
-  allReviewsData: ReviewData[];
-  isSuccessReviewSending: boolean;
 }
 
 export type ProductDataState = {

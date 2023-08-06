@@ -1,9 +1,9 @@
 import { MouseEventHandler, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeSuccessSendingReviewStatus } from '../../store/reviews-data/reviews-data';
-import { getSendingReviewStatus } from '../../store/reviews-data/selectors';
 import Modal from '../modal/modal';
 import FocusLock from 'react-focus-lock';
+import { getSendingReviewStatus } from '../../store/cameras-data/selectors';
+import { changeSuccessSendingReviewStatus } from '../../store/cameras-data/cameras-data';
 
 
 type ModalAddReviewSuccessProps = {

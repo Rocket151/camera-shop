@@ -35,6 +35,20 @@ export enum TabsHash {
   Characteristics = '#characteristics'
 }
 
+export enum SortTypes {
+  SortByPrice = 'sortPrice',
+  SortByPopular = 'sortPopular'
+}
+
+export enum SortOrders {
+  Up = 'up',
+  Down = 'down'
+}
+
+export enum FilterByPriceTypes {
+  Min = 'priceMin',
+  Max = 'priceMax',
+}
 
 export enum InputTitle {
   Name = 'Ваше имя',
@@ -59,4 +73,4 @@ export const MAX_PRODUCTS_PAGE = 9;
 
 export const MIN_SLIDER_ITEM_INDEX = 0;
 
-export const HASH = '#';
+export const SPINNER_COLOR = '#7777FF';

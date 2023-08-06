@@ -4,8 +4,8 @@ import { CamerasData } from '../../types/cameras-data';
 import Modal from '../modal/modal';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { MouseEventHandler, useEffect } from 'react';
-import { getSendingReviewStatus } from '../../store/reviews-data/selectors';
 import FocusLock from 'react-focus-lock';
+import { getSendingReviewStatus } from '../../store/cameras-data/selectors';
 
 type ModalAddItemProps = {
   setModalAddReview: (arg:boolean) => void;

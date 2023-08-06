@@ -16,6 +16,22 @@ export function sortReviewsDateDown(reviewA: ReviewData, reviewB: ReviewData) {
   return dayjs(reviewB.createAt).diff(dayjs(reviewA.createAt));
 }
 
+export function sortCamerasDataByPriceDown(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraB.price - cameraA.price;
+}
+
+export function sortCamerasDataByPriceUp(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraA.price - cameraB.price;
+}
+
+export function sortCamerasDataByPopularDown(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraB.rating - cameraA.rating;
+}
+
+export function sortCamerasDataByPopularUp(cameraA: CamerasData, cameraB: CamerasData) {
+  return cameraA.rating - cameraB.rating;
+}
+
 export function calculateRating(reviews: ReviewData[], id: number) {
   const filteredReviews = reviews.filter((review) => review.cameraId === id);
 
@@ -28,6 +44,45 @@ export function calculateRating(reviews: ReviewData[], id: number) {
   return Math.round(reviewsRating / filteredReviews.length);
 
 }
+
+export function calculateRatingOnProductScreen(reviews: ReviewData[]) {
+  let reviewsRating = 0;
+
+  reviews.forEach((review) => {
+    reviewsRating += review.rating;
+  });
+
+  return Math.round(reviewsRating / reviews.length);
+
+}
+
+export const filterByIsVideocamera = (flag: boolean, data: CamerasData) => !flag || data.category === 'Видеокамера';
+
+export const filterByIsPhotocamera = (flag: boolean, data: CamerasData) => !flag || data.category === 'Фотоаппарат';
+
+export const filterByСameraIsCollection = (flag: boolean, data: CamerasData) => flag && data.type === 'Коллекционная';
+
+export const filterByСameraIsSnapshot = (flag: boolean, data: CamerasData) => flag && data.type === 'Моментальная';
+
+export const filterByСameraIsDigital = (flag: boolean, data: CamerasData) => flag && data.type === 'Цифровая';
+
+export const filterByСameraIsFilm = (flag: boolean, data: CamerasData) => flag && data.type === 'Плёночная';
+
+
+export const filterByСameraIsZeroLevel = (flag: boolean, data: CamerasData) => flag && data.level === 'Нулевой';
+
+export const filterByСameraIsNonProfessional = (flag: boolean, data: CamerasData) => flag && data.level === 'Любительский';
+
+export const filterByСameraIsProfessional = (flag: boolean, data: CamerasData) => flag && data.level === 'Профессиональный';
+
+
+export const filterCameraByMinPrice = (minPrice: number, data: CamerasData) => data.price >= minPrice;
+
+export const filterCameraByMaxPrice = (maxPrice: number, data: CamerasData) => data.price <= maxPrice;
+
+export const getInitalMinPrice = (camerasData: CamerasData[]): number => camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
+
+export const getInitalMaxPrice = (camerasData: CamerasData[]): number => camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
 
 export const humanizePrice = (value: number) => value ? value.toLocaleString() : 0;
 

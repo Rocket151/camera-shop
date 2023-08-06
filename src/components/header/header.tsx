@@ -1,7 +1,53 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, TabsHash } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getCamerasDataFromServer } from '../../store/cameras-data/selectors';
+import Fuse from 'fuse.js';
+
+type SearchItemState = {
+  id: number;
+  name: string;
+}
+
+const initialState = {
+  id:0,
+  name: '',
+};
 
 export default function Header(): JSX.Element {
+  const camerasData = useAppSelector(getCamerasDataFromServer);
+  const [data, setData] = useState<SearchItemState[] | never[]>([initialState]);
+
+  const resetData = () => {
+    setData([initialState]);
+  };
+
+  const searchData = (pattern: string) => {
+    if (!pattern) {
+      setData([initialState]);
+      return;
+    }
+
+    const fuse = new Fuse(camerasData, {
+      keys: ['name'],
+      threshold: 0,
+    });
+
+    const result = fuse.search(pattern);
+    const matches: SearchItemState[] = [];
+    if (!result.length) {
+      setData([initialState]);
+    } else {
+      result.forEach(({item}) => {
+        matches.push({
+          name: item.name,
+          id: item.id,
+        });
+      });
+      setData(matches);
+    }
+  };
   return (
     <header className="header" id="header">
       <div className="container">
@@ -22,23 +68,26 @@ export default function Header(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <div className="form-search">
+        <div className={`form-search ${data[0]?.name !== '' ? 'list-opened' : ''}`}>
           <form>
             <label>
               <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-lens"></use>
               </svg>
-              <input className="form-search__input" type="text" autoComplete="off" placeholder="Поиск по сайту" />
+              <input className="form-search__input" type="text" autoComplete="off" placeholder="Поиск по сайту" onChange={(evt) => {
+                searchData(evt.target.value);
+              }}
+              />
             </label>
-            <ul className="form-search__select-list">
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 8i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 7i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 6i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 5i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 4i</li>
+            <ul className="form-search__select-list scroller">
+              {data.map((item) => (
+                <Link to={AppRoute.Product + item.id.toString() + TabsHash.Description} key={item.id}>
+                  <li className="form-search__select-item" tabIndex={0}>{item.name}</li>
+                </Link>
+              ))}
             </ul>
           </form>
-          <button className="form-search__reset" type="reset">
+          <button className="form-search__reset" type="reset" onClick={resetData}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg><span className="visually-hidden">Сбросить поиск</span>

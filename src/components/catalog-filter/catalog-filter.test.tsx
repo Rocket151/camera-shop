@@ -19,6 +19,7 @@ describe('Component: Filters', () => {
     expect(screen.getByText(/Тип камеры/i)).toBeInTheDocument();
     expect(screen.getByText(/Категория/i)).toBeInTheDocument();
     expect(screen.getByText(/Уровень/i)).toBeInTheDocument();
+    expect(screen.getByText(/Цена, ₽/i)).toBeInTheDocument();
 
     expect(screen.getByRole('button')).toHaveTextContent('Сбросить фильтры');
   });

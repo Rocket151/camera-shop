@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -12,25 +12,18 @@ import { ScreenNames } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { getProductData } from '../../store/product-data/selectors';
-import { humanizePrice } from '../../utils';
-import { useParams } from 'react-router-dom';
-import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
+import { calculateRatingOnProductScreen, humanizePrice } from '../../utils';
+import { getProductReviewsData } from '../../store/cameras-data/selectors';
+
 
 export default function ProductScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const productData = useAppSelector(getProductData);
-  const {id} = useParams() as { id: string };
+  const reviews = useAppSelector(getProductReviewsData);
+  const rating = calculateRatingOnProductScreen(reviews);
   const [isModalAddItem, setModalAddItem] = useState(false);
   const [isModalAddReview, setModalAddReview] = useState(false);
   const [isModalAddReviewSuccess, setModalAddReviewSuccess] = useState(false);
-
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchProductDataAction(id.toString()));
-      dispatch(fetchSimilarCamerasDataAction(id.toString()));
-      dispatch(fetchReviewsDataAction(id.toString()));
-    }
-  }, [id, dispatch]);
 
   const handleAddToBasketClick = () => {
     dispatch(selectCameraData(productData));
@@ -60,21 +53,21 @@ export default function ProductScreen(): JSX.Element {
                   <h1 className="title title--h3">{name}</h1>
                   <div className="rate product__rate">
                     <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
+                      <use xlinkHref={`#icon${rating >= 1 ? '-full' : ''}-star`}></use>
                     </svg>
                     <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
+                      <use xlinkHref={`#icon${rating >= 2 ? '-full' : ''}-star`}></use>
                     </svg>
                     <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
+                      <use xlinkHref={`#icon${rating >= 3 ? '-full' : ''}-star`}></use>
                     </svg>
                     <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-full-star"></use>
+                      <use xlinkHref={`#icon${rating >= 4 ? '-full' : ''}-star`}></use>
                     </svg>
                     <svg width="17" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-star"></use>
+                      <use xlinkHref={`#icon${rating === 5 ? '-full' : ''}-star`}></use>
                     </svg>
-                    <p className="visually-hidden">Рейтинг: 4</p>
+                    <p className="visually-hidden">Рейтинг: {rating}</p>
                     <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                   </div>
                   <p className="product__price"><span className="visually-hidden">Цена:</span>{humanizePrice(price)} ₽</p>

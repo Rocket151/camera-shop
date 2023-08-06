@@ -8,8 +8,8 @@ import { store } from './store';
 import { fetchCamerasDataAction, fetchPromoDataAction } from './store/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
 
-store.dispatch(fetchCamerasDataAction());
 store.dispatch(fetchPromoDataAction());
+store.dispatch(fetchCamerasDataAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
