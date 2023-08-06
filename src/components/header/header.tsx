@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, TabsHash } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCamerasDataFromServer } from '../../store/cameras-data/selectors';
 import Fuse from 'fuse.js';
+import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 
 type SearchItemState = {
   id: number;
@@ -17,10 +18,17 @@ const initialState = {
 
 export default function Header(): JSX.Element {
   const camerasData = useAppSelector(getCamerasDataFromServer);
+  const dispatch = useAppDispatch();
   const [data, setData] = useState<SearchItemState[] | never[]>([initialState]);
 
   const resetData = () => {
     setData([initialState]);
+  };
+
+  const handleRedirectToProductPage = (id: number) => {
+    dispatch(fetchProductDataAction(id.toString()));
+    dispatch(fetchSimilarCamerasDataAction(id.toString()));
+    dispatch(fetchReviewsDataAction(id.toString()));
   };
 
   const searchData = (pattern: string) => {
@@ -81,7 +89,7 @@ export default function Header(): JSX.Element {
             </label>
             <ul className="form-search__select-list scroller">
               {data.map((item) => (
-                <Link to={AppRoute.Product + item.id.toString() + TabsHash.Description} key={item.id}>
+                <Link to={AppRoute.Product + item.id.toString() + TabsHash.Description} key={item.id} onClick={() => handleRedirectToProductPage(item.id)}>
                   <li className="form-search__select-item" tabIndex={0}>{item.name}</li>
                 </Link>
               ))}
