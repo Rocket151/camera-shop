@@ -11,21 +11,19 @@ export default function CatalogSortOrder(): JSX.Element {
   const queryParams = new URLSearchParams(location.search);
   const currentSortOrder = useAppSelector(getCurrentSortOrder);
 
-  const handleSortClick = (evt : React.MouseEvent<HTMLDivElement>) => {
+  const handleSortChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
     const target = evt.target as HTMLInputElement;
 
-    if (target.tagName === 'INPUT' && target.name === 'sort-icon') {
-      dispatch(setCurrentSortOrder(target.id));
-      dispatch(sortCamerasData());
-      queryParams.set('sortOrder', target.id);
-      navigate({ search: queryParams.toString(), hash: location.hash });
-    }
+    dispatch(setCurrentSortOrder(target.id));
+    dispatch(sortCamerasData());
+    queryParams.set('sortOrder', target.id);
+    navigate({ search: queryParams.toString(), hash: location.hash });
   };
 
   return (
-    <div className="catalog-sort__order" onClick={handleSortClick}>
+    <div className="catalog-sort__order">
       <div className="catalog-sort__btn catalog-sort__btn--up">
-        <input type="radio" id="up" name="sort-icon" aria-label="По возрастанию" checked={currentSortOrder === SortOrders.Up}/>
+        <input type="radio" id="up" name="sort-icon" aria-label="По возрастанию" checked={currentSortOrder === SortOrders.Up} onChange={handleSortChange}/>
         <label htmlFor="up">
           <svg width="16" height="14" aria-hidden="false">
             <use xlinkHref="#icon-sort"></use>
@@ -33,7 +31,7 @@ export default function CatalogSortOrder(): JSX.Element {
         </label>
       </div>
       <div className="catalog-sort__btn catalog-sort__btn--down">
-        <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" checked={currentSortOrder === SortOrders.Down}/>
+        <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" checked={currentSortOrder === SortOrders.Down} onChange={handleSortChange}/>
         <label htmlFor="down">
           <svg width="16" height="14" aria-hidden="false">
             <use xlinkHref="#icon-sort"></use>

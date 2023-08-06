@@ -20,7 +20,7 @@ describe('Component: Breadcrumbs', () => {
     expect(screen.getByText(/Каталог/i)).toBeInTheDocument();
 
     const list = screen.getByRole('list');
-    expect(list.childNodes.length).toBe(1);
+    expect(list.childNodes.length).toBe(2);
   });
 
   it('should render correctly on product page', () => {
@@ -37,7 +37,7 @@ describe('Component: Breadcrumbs', () => {
     expect(screen.getByText(fakeCamera.name)).toBeInTheDocument();
 
     const list = screen.getByRole('list');
-    expect(list.childNodes.length).toBe(2);
+    expect(list.childNodes.length).toBe(3);
   });
 
   it('should render correctly on basket page', () => {
@@ -53,6 +53,6 @@ describe('Component: Breadcrumbs', () => {
     expect(screen.getByText(/Корзина/i)).toBeInTheDocument();
 
     const list = screen.getByRole('list');
-    expect(list.childNodes.length).toBe(2);
+    expect(list.childNodes.length).toBe(3);
   });
 });

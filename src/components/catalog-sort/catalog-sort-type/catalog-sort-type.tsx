@@ -12,29 +12,26 @@ export default function CatalogSortType(): JSX.Element {
   const currentSortType = useAppSelector(getCurrentSortType);
   const currentSortOrder = useAppSelector(getCurrentSortOrder);
 
-  const handleSortClick = (evt : React.MouseEvent<HTMLDivElement>) => {
+  const handleSortChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
     const target = evt.target as HTMLInputElement;
-
-    if (target.tagName === 'INPUT' && target.name === 'sort') {
-      if(!currentSortOrder.length) {
-        dispatch(setCurrentSortOrder(SortOrders.Up));
-      }
-
-      dispatch(setCurrentSortType(target.id));
-      dispatch(sortCamerasData());
-      queryParams.set('sortType', target.id);
-      navigate({ search: queryParams.toString(), hash: location.hash });
+    if(!currentSortOrder.length) {
+      dispatch(setCurrentSortOrder(SortOrders.Up));
     }
+
+    dispatch(setCurrentSortType(target.id));
+    dispatch(sortCamerasData());
+    queryParams.set('sortType', target.id);
+    navigate({ search: queryParams.toString(), hash: location.hash });
   };
 
   return (
-    <div className="catalog-sort__type" onClick = {handleSortClick}>
+    <div className="catalog-sort__type">
       <div className="catalog-sort__btn-text">
-        <input type="radio" id="sortPrice" name="sort" checked={currentSortType === SortTypes.SortByPrice}/>
+        <input type="radio" id="sortPrice" name="sort" checked={currentSortType === SortTypes.SortByPrice} onChange={handleSortChange}/>
         <label htmlFor="sortPrice">по цене</label>
       </div>
       <div className="catalog-sort__btn-text">
-        <input type="radio" id="sortPopular" name="sort" checked={currentSortType === SortTypes.SortByPopular}/>
+        <input type="radio" id="sortPopular" name="sort" checked={currentSortType === SortTypes.SortByPopular} onChange={handleSortChange}/>
         <label htmlFor="sortPopular">по популярности</label>
       </div>
     </div>
