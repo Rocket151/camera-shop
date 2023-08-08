@@ -22,7 +22,7 @@ export default function CatalogSortOrder(): JSX.Element {
 
   return (
     <div className="catalog-sort__order">
-      <div className="catalog-sort__btn catalog-sort__btn--up">
+      <div className="catalog-sort__btn catalog-sort__btn--up" data-testid="catalog-sort__btn--up">
         <input type="radio" id="up" name="sort-icon" aria-label="По возрастанию" checked={currentSortOrder === SortOrders.Up} onChange={handleSortChange}/>
         <label htmlFor="up">
           <svg width="16" height="14" aria-hidden="false">
@@ -30,7 +30,7 @@ export default function CatalogSortOrder(): JSX.Element {
           </svg>
         </label>
       </div>
-      <div className="catalog-sort__btn catalog-sort__btn--down">
+      <div className="catalog-sort__btn catalog-sort__btn--down" data-testid="catalog-sort__btn--down">
         <input type="radio" id="down" name="sort-icon" aria-label="По убыванию" checked={currentSortOrder === SortOrders.Down} onChange={handleSortChange}/>
         <label htmlFor="down">
           <svg width="16" height="14" aria-hidden="false">

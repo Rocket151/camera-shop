@@ -83,12 +83,12 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
       <fieldset className="catalog-filter__block">
         <legend className="title title--h5">Цена, ₽</legend>
         <div className="catalog-filter__price-range">
-          <div className="custom-input">
+          <div className="custom-input" data-testid="priceMin">
             <label>
               <input type="number" name="priceMin" value={minPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
             </label>
           </div>
-          <div className="custom-input">
+          <div className="custom-input" data-testid="priceMax">
             <label>
               <input type="number" name="priceMax" value={maxPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
             </label>
