@@ -66,6 +66,8 @@ export default function CatalogFilter(): JSX.Element {
     for(const key in filters) {
       queryParams.delete(`${key}`);
     }
+    queryParams.delete('price_gte');
+    queryParams.delete('price_lte');
 
     navigate({ search: queryParams.toString(), hash: location.hash });
 
