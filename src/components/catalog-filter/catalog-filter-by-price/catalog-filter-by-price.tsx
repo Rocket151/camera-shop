@@ -33,6 +33,12 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
 
       return;
     }
+
+    if(inputValue === '') {
+      setMinPrice(inputValue);
+      return;
+    }
+
     setMinPrice(inputValue);
     dispatch(setProductMinPrice(Number(minPrice)));
     dispatch(filterCamerasData(filters));
@@ -52,6 +58,13 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
 
       return;
     }
+
+    if(inputValue === '') {
+      setMaxPrice(inputValue);
+
+      return;
+    }
+
     setMaxPrice(inputValue);
     dispatch(setProductMaxPrice(Number(inputValue)));
     dispatch(filterCamerasData(filters));
