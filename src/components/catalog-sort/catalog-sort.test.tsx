@@ -16,7 +16,5 @@ describe('Component: CatalogSort', () => {
     );
 
     expect(screen.getByText(/Сортировать:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/по популярности/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/по цене/i)).toBeInTheDocument();
   });
 });

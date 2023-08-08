@@ -16,6 +16,7 @@ export default function CatalogSortType(): JSX.Element {
     const target = evt.target as HTMLInputElement;
     if(!currentSortOrder.length) {
       dispatch(setCurrentSortOrder(SortOrders.Up));
+      queryParams.set('sortOrder', SortOrders.Up);
     }
 
     dispatch(setCurrentSortType(target.id));

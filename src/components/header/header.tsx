@@ -39,7 +39,7 @@ export default function Header(): JSX.Element {
 
     const fuse = new Fuse(camerasData, {
       keys: ['name'],
-      threshold: 0,
+      threshold: 0.6,
     });
 
     const result = fuse.search(pattern);

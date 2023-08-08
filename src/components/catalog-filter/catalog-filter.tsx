@@ -63,11 +63,18 @@ export default function CatalogFilter(): JSX.Element {
   };
 
   const resetFiltersData = () => {
+    for(const key in filters) {
+      queryParams.delete(`${key}`);
+    }
+
+    navigate({ search: queryParams.toString(), hash: location.hash });
+
     dispatch(setProductMinPrice(getInitalMinPrice(camerasDataFromServer)));
     dispatch(setProductMaxPrice(getInitalMaxPrice(camerasDataFromServer)));
     dispatch(setFiltersData(initialState));
     setFilters(initialState);
     dispatch(filterCamerasData(initialState));
+    dispatch(sortCamerasData());
   };
 
   return (
