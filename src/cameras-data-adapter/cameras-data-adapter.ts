@@ -26,12 +26,8 @@ export async function getCamerasDataWithRating(camerasData: CamerasData[]) {
 }
 
 export async function fetchAllReviewsData (cardsId: string[]) {
-  const promises = [];
-  for(let i = 0; i < cardsId.length; i++) {
-    promises.push(api.get<ReviewData[]>(APIRoute.Cameras + cardsId[i] + APIRoute.Reviews));
-  }
   const reviewsData: ReviewData[][] = [];
-  const reviewsPromisesData = await Promise.all(promises);
+  const reviewsPromisesData = await Promise.all(cardsId.map((id) => api.get<ReviewData[]>(APIRoute.Cameras + id + APIRoute.Reviews)));
   reviewsPromisesData.forEach((promise) => {
     const {data} = promise;
     reviewsData.push(data);
