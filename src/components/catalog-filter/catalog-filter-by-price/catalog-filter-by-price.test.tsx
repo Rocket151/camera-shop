@@ -7,16 +7,16 @@ import CatalogFilterByPrice from './catalog-filter-by-price';
 describe('Component: CatalogSortOrder', () => {
   it('should render correctly', () => {
     const initialState = {
-        photocamera: false,
-        videocamera: false,
-        digital: false,
-        film: false,
-        snapshot: false,
-        collection: false,
-        zero: false,
-        nonProfessional: false,
-        professional: false,
-      };
+      photocamera: false,
+      videocamera: false,
+      digital: false,
+      film: false,
+      snapshot: false,
+      collection: false,
+      zero: false,
+      nonProfessional: false,
+      professional: false,
+    };
 
     render (
       <Provider store={mockStore}>

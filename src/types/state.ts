@@ -8,9 +8,9 @@ export type CamerasDataState = {
   isCamerasDataLoading: boolean;
   camerasData: CamerasData[];
   selectedCameraData: CamerasData;
-  filteredCamerasData: CamerasData[],
-  currentSortType: string,
-  currentSortOrder: string,
+  filteredCamerasData: CamerasData[];
+  currentSortType: string;
+  currentSortOrder: string;
   isReviewsDataLoading: boolean;
   productReviewsData: ReviewData[];
   isSuccessReviewSending: boolean;
