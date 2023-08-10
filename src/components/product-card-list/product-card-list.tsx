@@ -12,7 +12,7 @@ export default function ProductCardList({camerasData, setModalAddItem}: ProductC
     <div className="cards catalog__cards">
       {
         !camerasData.length ?
-          'Товары отсутсвуют'
+          'По вашему запросу ничего не найдено'
           :
           camerasData.map((cameraData) => <ProductCard setModalAddItem={setModalAddItem} cameraData={cameraData} key={cameraData.id}/>)
       }

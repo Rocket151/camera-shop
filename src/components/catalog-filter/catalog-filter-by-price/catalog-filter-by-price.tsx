@@ -5,6 +5,7 @@ import { FilterByPriceTypes } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { filterCamerasData, setProductMaxPrice, setProductMinPrice, sortCamerasData } from '../../../store/cameras-data/cameras-data';
 import { getCamerasData, getCamerasDataFromServer, getCamerasDataLoadingStatus } from '../../../store/cameras-data/selectors';
+import { getInitalMaxPrice, getInitalMinPrice } from '../../../utils';
 import { CatalogFilterInitialState } from '../catalog-filter';
 
 type CatalogFilterByPriceProps = {
@@ -36,6 +37,13 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
 
     if(inputValue === '') {
       setMinPrice(inputValue);
+      const initialMinPrice = getInitalMinPrice(camerasDataFromServer);
+      dispatch(setProductMinPrice(initialMinPrice));
+      dispatch(filterCamerasData(filters));
+      dispatch(sortCamerasData());
+      queryParams.set('price_gte', initialMinPrice.toString());
+      navigate({ search: queryParams.toString(), hash: location.hash });
+
       return;
     }
 
@@ -61,6 +69,12 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
 
     if(inputValue === '') {
       setMaxPrice(inputValue);
+      const initialMaxPrice = getInitalMaxPrice(camerasDataFromServer);
+      dispatch(setProductMaxPrice(initialMaxPrice));
+      dispatch(filterCamerasData(filters));
+      dispatch(sortCamerasData());
+      queryParams.set('price_lte', initialMaxPrice.toString());
+      navigate({ search: queryParams.toString(), hash: location.hash });
 
       return;
     }
@@ -78,17 +92,17 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
     const handleFilterChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
       const target = evt.target;
 
-      const minPriceData = camerasDataFromServer.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
-      const maxPriceData = camerasDataFromServer.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
+      const minPriceData = camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
+      const maxPriceData = camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
 
       if(target.name === FilterByPriceTypes.Min) {
-        setMinPrice(target.value);
-        debouncedSetMinValue(target.value, maxPriceData, minPriceData);
+        setMinPrice(target.value.replace(/[^0-9]/g, ''));
+        debouncedSetMinValue(target.value.replace(/[^0-9]/g, ''), maxPriceData, minPriceData);
       }
 
       if(target.name === FilterByPriceTypes.Max) {
-        setMaxPrice(target.value);
-        debouncedSetMaxValue(target.value, maxPriceData, minPriceData);
+        setMaxPrice(target.value.replace(/[^0-9]/g, ''));
+        debouncedSetMaxValue(target.value.replace(/[^0-9]/g, ''), maxPriceData, minPriceData);
       }
     };
 
@@ -98,12 +112,12 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
         <div className="catalog-filter__price-range">
           <div className="custom-input" data-testid="priceMin">
             <label>
-              <input type="number" name="priceMin" value={minPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
+              <input type="text" name="priceMin" value={minPrice} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
             </label>
           </div>
           <div className="custom-input" data-testid="priceMax">
             <label>
-              <input type="number" name="priceMax" value={maxPrice} min={0} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
+              <input type="text" name="priceMax" value={maxPrice} placeholder={camerasData.length ? camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price.toString() : ''} onChange={handleFilterChange} />
             </label>
           </div>
         </div>
