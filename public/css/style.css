@@ -1649,6 +1649,10 @@ button,
   background-color: #f4f4fc;
 }
 
+.form-search__select-item:focus {
+  background-color: #56569d;
+}
+
 .form-search__reset {
   position: absolute;
   top: 0;
