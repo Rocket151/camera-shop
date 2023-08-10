@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { SortOrders } from '../../../const';
+import { SortOrders, SortTypes } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { setCurrentSortOrder, sortCamerasData } from '../../../store/cameras-data/cameras-data';
-import { getCurrentSortOrder } from '../../../store/cameras-data/selectors';
+import { setCurrentSortOrder, sortCamerasData, setCurrentSortType } from '../../../store/cameras-data/cameras-data';
+import { getCurrentSortOrder, getCurrentSortType } from '../../../store/cameras-data/selectors';
 
 export default function CatalogSortOrder(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -10,9 +10,15 @@ export default function CatalogSortOrder(): JSX.Element {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const currentSortOrder = useAppSelector(getCurrentSortOrder);
+  const currentSortType = useAppSelector(getCurrentSortType);
 
   const handleSortChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
     const target = evt.target as HTMLInputElement;
+
+    if(!currentSortType.length) {
+      dispatch(setCurrentSortType(SortTypes.SortByPrice));
+      queryParams.set('sortOrder', SortOrders.Up);
+    }
 
     dispatch(setCurrentSortOrder(target.id));
     dispatch(sortCamerasData());

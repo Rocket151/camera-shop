@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, TabsHash } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCamerasDataFromServer } from '../../store/cameras-data/selectors';
 import Fuse from 'fuse.js';
 import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
+import FocusLock from 'react-focus-lock';
+import { useNavigate } from 'react-router-dom';
+import { KeyboardNavigatorBoard , KeyboardNavigatorElement, useKeyboardNavigator } from 'react-keyboard-navigator';
 
 type SearchItemState = {
   id: number;
@@ -17,12 +20,36 @@ const initialState = {
 };
 
 export default function Header(): JSX.Element {
+  const { markRef } = useKeyboardNavigator({
+    eventCallback: (evt) => evt.preventDefault()
+  });
   const camerasData = useAppSelector(getCamerasDataFromServer);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState('');
+  const [highlightBlockIndex, setHighlightBockIndex] = useState(0);
   const [data, setData] = useState<SearchItemState[] | never[]>([initialState]);
+
+  const onKeydown = ({ key }: KeyboardEvent) => {
+    if (key === '38') {
+      setHighlightBockIndex(highlightBlockIndex - 1);
+    }
+    if (key === '40') {
+      setHighlightBockIndex(highlightBlockIndex + 1);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeydown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+    };
+  });
 
   const resetData = () => {
     setData([initialState]);
+    setInputValue('');
   };
 
   const handleRedirectToProductPage = (id: number) => {
@@ -76,31 +103,40 @@ export default function Header(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <div className={`form-search ${data[0]?.name !== '' ? 'list-opened' : ''}`}>
-          <form>
-            <label>
-              <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-lens"></use>
-              </svg>
-              <input className="form-search__input" type="text" autoComplete="off" placeholder="Поиск по сайту" onChange={(evt) => {
-                searchData(evt.target.value);
-              }}
-              />
-            </label>
-            <ul className="form-search__select-list scroller">
-              {data.map((item) => (
-                <Link to={AppRoute.Product + item.id.toString() + TabsHash.Description} key={item.id} onClick={() => handleRedirectToProductPage(item.id)}>
-                  <li className="form-search__select-item" tabIndex={0}>{item.name}</li>
-                </Link>
-              ))}
-            </ul>
-          </form>
-          <button className="form-search__reset" type="reset" onClick={resetData}>
-            <svg width="10" height="10" aria-hidden="true">
-              <use xlinkHref="#icon-close"></use>
-            </svg><span className="visually-hidden">Сбросить поиск</span>
-          </button>
-        </div>
+        <FocusLock disabled={data[0].name === ''}>
+          <div className={`form-search ${data[0]?.name !== '' ? 'list-opened' : ''}`}>
+            <form>
+              <label>
+                <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
+                  <use xlinkHref="#icon-lens"></use>
+                </svg>
+                <input className="form-search__input" type="text" value={inputValue} autoComplete="off" placeholder="Поиск по сайту" onChange={(evt) => {
+                  setInputValue(evt.target.value);
+                  searchData(evt.target.value);
+                }}
+                />
+              </label>
+              <KeyboardNavigatorBoard
+                as="ul"
+                markRef={markRef} active={true} className="form-search__select-list scroller"
+              >
+                {data.map((item, index) => (
+                  <KeyboardNavigatorElement markRef={markRef} key={item.id} className="form-search__select-item" onClick={() => {
+                    navigate(AppRoute.Product + item.id.toString() + TabsHash.Description);
+                    handleRedirectToProductPage(item.id);
+                  }} tabIndex={0} as='li' active={index === highlightBlockIndex} onActiveChange={() => setHighlightBockIndex(index)}
+                  >{item.name}
+                  </KeyboardNavigatorElement>
+                ))}
+              </KeyboardNavigatorBoard>
+            </form>
+            <button className="form-search__reset" type="reset" onClick={resetData}>
+              <svg width="10" height="10" aria-hidden="true">
+                <use xlinkHref="#icon-close"></use>
+              </svg><span className="visually-hidden">Сбросить поиск</span>
+            </button>
+          </div>
+        </FocusLock>
         <Link className="header__basket-link" to={AppRoute.Basket}>
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
