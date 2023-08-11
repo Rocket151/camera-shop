@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, RefObject, MutableRefObject, LegacyRef} from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, TabsHash } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -19,6 +19,8 @@ const initialState = {
   name: '',
 };
 
+const inpArr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,25,24,42,42,2,42,42,24,2,4];
+
 export default function Header(): JSX.Element {
   const { markRef } = useKeyboardNavigator({
     eventCallback: (evt) => evt.preventDefault()
@@ -27,15 +29,51 @@ export default function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
-  const [highlightBlockIndex, setHighlightBockIndex] = useState(0);
+  const [highlightBlockIndex, setHighlightBockIndex] = useState(-1);
   const [data, setData] = useState<SearchItemState[] | never[]>([initialState]);
+  const refs: MutableRefObject<RefObject<HTMLLIElement>[]> = useRef(inpArr.map(() => React.createRef()));
+  const inpRef: LegacyRef<HTMLInputElement> | undefined = useRef(null);
+  const closeBtnRef: LegacyRef<HTMLButtonElement> | undefined = useRef(null);
 
-  const onKeydown = ({ key }: KeyboardEvent) => {
-    if (key === '38') {
-      setHighlightBockIndex(highlightBlockIndex - 1);
+  useEffect(() => {
+    if(highlightBlockIndex === -1) {
+      inpRef.current?.focus();
+
+      return;
     }
-    if (key === '40') {
-      setHighlightBockIndex(highlightBlockIndex + 1);
+
+    if(highlightBlockIndex === -2) {
+      closeBtnRef.current?.focus();
+
+      return;
+    }
+
+    refs?.current[highlightBlockIndex]?.current?.focus();
+
+  }, [highlightBlockIndex]);
+
+  const onKeydown = (evt: KeyboardEvent) => {
+    if (evt.key === 'Enter' && refs?.current[highlightBlockIndex]?.current !== undefined && data[0].name !== '') {
+      navigate(`${AppRoute.Product} + ${refs?.current[highlightBlockIndex]?.current?.id || '0'} + ${TabsHash.Description}`);
+      handleRedirectToProductPage(Number(refs?.current[highlightBlockIndex]?.current?.id));
+    }
+
+    if (evt.key === 'ArrowUp' && highlightBlockIndex > -2) {
+      setHighlightBockIndex((prev) => prev - 1);
+    }
+
+    if (evt.key === 'ArrowDown' && highlightBlockIndex < (data.length - 1)) {
+      setHighlightBockIndex((prev) => prev + 1);
+    }
+
+    if (evt.key === 'Tab' && highlightBlockIndex < (data.length - 1)) {
+      evt.preventDefault();
+      setHighlightBockIndex((prev) => prev + 1);
+    }
+
+    if (evt.key === 'Tab' && highlightBlockIndex === (data.length - 1)) {
+      evt.preventDefault();
+      setHighlightBockIndex(-2);
     }
   };
 
@@ -50,6 +88,7 @@ export default function Header(): JSX.Element {
   const resetData = () => {
     setData([initialState]);
     setInputValue('');
+    setHighlightBockIndex(-1);
   };
 
   const handleRedirectToProductPage = (id: number) => {
@@ -66,7 +105,7 @@ export default function Header(): JSX.Element {
 
     const fuse = new Fuse(camerasData, {
       keys: ['name'],
-      threshold: 0.6,
+      threshold: 0.4,
     });
 
     const result = fuse.search(pattern);
@@ -110,27 +149,28 @@ export default function Header(): JSX.Element {
                 <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
                   <use xlinkHref="#icon-lens"></use>
                 </svg>
-                <input className="form-search__input" type="text" value={inputValue} autoComplete="off" placeholder="Поиск по сайту" onChange={(evt) => {
+                <input ref={inpRef} className="form-search__input" type="text" value={inputValue} autoComplete="off" placeholder="Поиск по сайту" onChange={(evt) => {
                   setInputValue(evt.target.value);
                   searchData(evt.target.value);
+                  setHighlightBockIndex(-1);
                 }}
                 />
               </label>
               <KeyboardNavigatorBoard
                 as="ul"
-                markRef={markRef} active={true} className="form-search__select-list scroller"
+                markRef={markRef} active={data[0].name !== ''} className="form-search__select-list scroller"
               >
                 {data.map((item, index) => (
                   <KeyboardNavigatorElement markRef={markRef} key={item.id} className="form-search__select-item" onClick={() => {
                     navigate(AppRoute.Product + item.id.toString() + TabsHash.Description);
                     handleRedirectToProductPage(item.id);
-                  }} tabIndex={0} as='li' active={index === highlightBlockIndex} onActiveChange={() => setHighlightBockIndex(index)}
+                  }} ref={refs?.current[index]} id={item.id.toString()} tabIndex={0} as='li' active={index === highlightBlockIndex}
                   >{item.name}
                   </KeyboardNavigatorElement>
                 ))}
               </KeyboardNavigatorBoard>
             </form>
-            <button className="form-search__reset" type="reset" onClick={resetData}>
+            <button className="form-search__reset" ref={closeBtnRef} type="reset" onClick={resetData}>
               <svg width="10" height="10" aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg><span className="visually-hidden">Сбросить поиск</span>
