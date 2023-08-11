@@ -59,10 +59,12 @@ export default function Header(): JSX.Element {
     }
 
     if (evt.key === 'ArrowUp' && highlightBlockIndex > -2) {
+      evt.preventDefault();
       setHighlightBockIndex((prev) => prev - 1);
     }
 
     if (evt.key === 'ArrowDown' && highlightBlockIndex < (data.length - 1)) {
+      evt.preventDefault();
       setHighlightBockIndex((prev) => prev + 1);
     }
 
