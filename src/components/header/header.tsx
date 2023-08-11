@@ -124,6 +124,7 @@ export default function Header(): JSX.Element {
       setData(matches);
     }
   };
+
   return (
     <header className="header" id="header">
       <div className="container">
@@ -144,40 +145,38 @@ export default function Header(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <FocusLock disabled={data[0].name === ''}>
-          <div className={`form-search ${data[0]?.name !== '' ? 'list-opened' : ''}`}>
-            <form>
-              <label>
-                <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
-                  <use xlinkHref="#icon-lens"></use>
-                </svg>
-                <input ref={inpRef} className="form-search__input" type="text" value={inputValue} autoComplete="off" placeholder="Поиск по сайту" onChange={(evt) => {
-                  setInputValue(evt.target.value);
-                  searchData(evt.target.value);
-                  setHighlightBockIndex(-1);
-                }}
-                />
-              </label>
-              <KeyboardNavigatorBoard
-                as="ul"
-                markRef={markRef} active={data[0].name !== ''} className="form-search__select-list scroller"
-              >
-                {data.map((item, index) => (
-                  <KeyboardNavigatorElement markRef={markRef} key={item.id} className="form-search__select-item" onClick={() => {
-                    navigate(AppRoute.Product + item.id.toString() + TabsHash.Description);
-                    handleRedirectToProductPage(item.id);
-                  }} ref={refs?.current[index]} id={item.id.toString()} tabIndex={0} as='li' active={index === highlightBlockIndex}
-                  >{item.name}
-                  </KeyboardNavigatorElement>
-                ))}
-              </KeyboardNavigatorBoard>
-            </form>
-            <button className="form-search__reset" ref={closeBtnRef} type="reset" onClick={resetData}>
-              <svg width="10" height="10" aria-hidden="true">
-                <use xlinkHref="#icon-close"></use>
-              </svg><span className="visually-hidden">Сбросить поиск</span>
-            </button>
-          </div>
+        <FocusLock disabled={data[0].name === ''} className={`form-search ${data[0]?.name !== '' ? 'list-opened' : ''}`}>
+          <form>
+            <label>
+              <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
+                <use xlinkHref="#icon-lens"></use>
+              </svg>
+              <input ref={inpRef} className="form-search__input" type="text" value={inputValue} autoComplete="off" placeholder="Поиск по сайту" onChange={(evt) => {
+                setInputValue(evt.target.value);
+                searchData(evt.target.value);
+                setHighlightBockIndex(-1);
+              }}
+              />
+            </label>
+            <KeyboardNavigatorBoard
+              as="ul"
+              markRef={markRef} active={data[0].name !== ''} className="form-search__select-list scroller"
+            >
+              {data.map((item, index) => (
+                <KeyboardNavigatorElement markRef={markRef} key={item.id} className="form-search__select-item" onClick={() => {
+                  navigate(AppRoute.Product + item.id.toString() + TabsHash.Description);
+                  handleRedirectToProductPage(item.id);
+                }} ref={refs?.current[index]} id={item.id.toString()} tabIndex={0} as='li' active={index === highlightBlockIndex}
+                >{item.name}
+                </KeyboardNavigatorElement>
+              ))}
+            </KeyboardNavigatorBoard>
+          </form>
+          <button className="form-search__reset" ref={closeBtnRef} type="reset" onClick={resetData}>
+            <svg width="10" height="10" aria-hidden="true">
+              <use xlinkHref="#icon-close"></use>
+            </svg><span className="visually-hidden">Сбросить поиск</span>
+          </button>
         </FocusLock>
         <Link className="header__basket-link" to={AppRoute.Basket}>
           <svg width="16" height="16" aria-hidden="true">
