@@ -6,7 +6,8 @@ import { State } from '../../types/state';
 
 
 export const getCamerasDataLoadingStatus = (state: State): boolean => state[SlicesNames.CamerasData].isCamerasDataLoading;
-export const getCamerasData = (state: State): CamerasData[] => state[SlicesNames.CamerasData].filteredCamerasData;
+export const getFilteredCamerasData = (state: State): CamerasData[] => state[SlicesNames.CamerasData].filteredCamerasData;
+export const getCamerasData = (state: State): CamerasData[] => state[SlicesNames.CamerasData].filteredByPriceCamerasData;
 export const getCamerasDataFromServer = (state: State): CamerasData[] => state[SlicesNames.CamerasData].camerasData;
 export const getSelectedCameraData = (state: State): CamerasData => state[SlicesNames.CamerasData].selectedCameraData;
 export const getReviewDataLoadingStatus = (state: State): boolean => state[SlicesNames.CamerasData].isReviewsDataLoading;
@@ -15,3 +16,5 @@ export const getFiletrsData = (state: State): CatalogFilterInitialState => state
 export const getSendingReviewStatus = (state: State): boolean => state[SlicesNames.CamerasData].isSuccessReviewSending;
 export const getCurrentSortType = (state: State): string => state[SlicesNames.CamerasData].currentSortType;
 export const getCurrentSortOrder = (state: State): string => state[SlicesNames.CamerasData].currentSortOrder;
+export const getProductMinPrice = (state: State): number => state[SlicesNames.CamerasData].minPrice;
+export const getProductMaxPrice = (state: State): number => state[SlicesNames.CamerasData].maxPrice;

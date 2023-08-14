@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { FilterByPriceTypes } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { filterCamerasData, setProductMaxPrice, setProductMinPrice, sortCamerasData } from '../../../store/cameras-data/cameras-data';
-import { getCamerasData, getCamerasDataFromServer, getCamerasDataLoadingStatus } from '../../../store/cameras-data/selectors';
+import { filterByPriceCamerasData, setProductMaxPrice, setProductMinPrice, sortCamerasData } from '../../../store/cameras-data/cameras-data';
+import { getCamerasData, getCamerasDataLoadingStatus, getFilteredCamerasData, getProductMaxPrice, getProductMinPrice } from '../../../store/cameras-data/selectors';
 import { getInitalMaxPrice, getInitalMinPrice } from '../../../utils';
 import { CatalogFilterInitialState } from '../catalog-filter';
 
@@ -14,8 +14,10 @@ type CatalogFilterByPriceProps = {
 
 export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProps): JSX.Element | null {
   const camerasData = useAppSelector(getCamerasData);
+  const filteredCamerasData = useAppSelector(getFilteredCamerasData);
   const isCamerasDataLoadingStatus = useAppSelector(getCamerasDataLoadingStatus);
-  const camerasDataFromServer = useAppSelector(getCamerasDataFromServer);
+  const productMinPrice = useAppSelector(getProductMinPrice);
+  const productMaxPrice = useAppSelector(getProductMaxPrice);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,12 +25,24 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
+  useEffect(() => {
+    if(Number(minPrice) < productMinPrice && minPrice !== '') {
+      setMinPrice(productMinPrice.toString());
+    }
+
+    if(Number(maxPrice) > productMaxPrice && maxPrice !== '') {
+      setMaxPrice(productMaxPrice.toString());
+    }
+  }, [productMinPrice, productMaxPrice]);
+
   const debouncedSetMinValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
     if((Number(inputValue) < minPriceData || Number(inputValue) > maxPriceData) && inputValue !== '') {
       setMinPrice(minPriceData.toString());
+
       dispatch(setProductMinPrice(minPriceData));
-      dispatch(filterCamerasData(filters));
+      dispatch(filterByPriceCamerasData());
       dispatch(sortCamerasData());
+
       queryParams.set('price_gte', minPriceData.toString());
       navigate({ search: queryParams.toString(), hash: location.hash });
 
@@ -37,20 +51,22 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
 
     if(inputValue === '') {
       setMinPrice(inputValue);
-      const initialMinPrice = getInitalMinPrice(camerasDataFromServer);
-      dispatch(setProductMinPrice(initialMinPrice));
-      dispatch(filterCamerasData(filters));
+      const initialMinPrice = getInitalMinPrice(filteredCamerasData);
+
+      dispatch(setProductMinPrice(minPriceData));
+      dispatch(filterByPriceCamerasData());
       dispatch(sortCamerasData());
+
       queryParams.set('price_gte', initialMinPrice.toString());
       navigate({ search: queryParams.toString(), hash: location.hash });
 
       return;
     }
 
-
-    dispatch(setProductMinPrice(Number(minPrice)));
-    dispatch(filterCamerasData(filters));
+    dispatch(setProductMinPrice(Number(inputValue)));
+    dispatch(filterByPriceCamerasData());
     dispatch(sortCamerasData());
+
     queryParams.set('price_gte', minPrice.toString());
     navigate({ search: queryParams.toString(), hash: location.hash });
   }, 1000);
@@ -59,7 +75,7 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
     if((Number(inputValue) > maxPriceData || Number(inputValue) < minPriceData) && inputValue !== '') {
       setMaxPrice(maxPriceData.toString());
       dispatch(setProductMaxPrice(maxPriceData));
-      dispatch(filterCamerasData(filters));
+      dispatch(filterByPriceCamerasData());
       dispatch(sortCamerasData());
       queryParams.set('price_lte', maxPriceData.toString());
       navigate({ search: queryParams.toString(), hash: location.hash });
@@ -69,10 +85,12 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
 
     if(inputValue === '') {
       setMaxPrice(inputValue);
-      const initialMaxPrice = getInitalMaxPrice(camerasDataFromServer);
-      dispatch(setProductMaxPrice(initialMaxPrice));
-      dispatch(filterCamerasData(filters));
+      const initialMaxPrice = getInitalMaxPrice(filteredCamerasData);
+
+      dispatch(setProductMaxPrice(maxPriceData));
+      dispatch(filterByPriceCamerasData());
       dispatch(sortCamerasData());
+
       queryParams.set('price_lte', initialMaxPrice.toString());
       navigate({ search: queryParams.toString(), hash: location.hash });
 
@@ -80,8 +98,9 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
     }
 
     dispatch(setProductMaxPrice(Number(inputValue)));
-    dispatch(filterCamerasData(filters));
+    dispatch(filterByPriceCamerasData());
     dispatch(sortCamerasData());
+
     queryParams.set('price_lte', maxPrice.toString());
     navigate({ search: queryParams.toString(), hash: location.hash });
   }, 1000);
@@ -91,8 +110,8 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
     const handleFilterChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
       const target = evt.target;
 
-      const minPriceData = camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
-      const maxPriceData = camerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
+      const minPriceData = filteredCamerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price < currentCameraData.price ? prevCameraData : currentCameraData).price;
+      const maxPriceData = filteredCamerasData.reduce((prevCameraData, currentCameraData) => prevCameraData.price > currentCameraData.price ? prevCameraData : currentCameraData).price;
 
       if(target.name === FilterByPriceTypes.Min) {
         setMinPrice(target.value.replace(/[^0-9]/g, ''));

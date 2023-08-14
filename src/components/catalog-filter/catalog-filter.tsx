@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setFiltersData, filterCamerasData, sortCamerasData, setProductMinPrice, setProductMaxPrice } from '../../store/cameras-data/cameras-data';
-import { getCamerasDataFromServer, getFiletrsData } from '../../store/cameras-data/selectors';
+import { setFiltersData, filterCamerasData, sortCamerasData, setProductMinPrice, setProductMaxPrice, filterByPriceCamerasData } from '../../store/cameras-data/cameras-data';
+import { getCamerasDataFromServer, getFiletrsData, getFilteredCamerasData } from '../../store/cameras-data/selectors';
 import { getInitalMaxPrice, getInitalMinPrice } from '../../utils';
 import CatalogFilterByPrice from './catalog-filter-by-price/catalog-filter-by-price';
 
@@ -34,7 +34,7 @@ export default function CatalogFilter(): JSX.Element {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const camerasDataFromServer = useAppSelector(getCamerasDataFromServer);
+  const filteredCamerasData = useAppSelector(getFilteredCamerasData)
   const queryParams = new URLSearchParams(location.search);
   const filtersData = useAppSelector(getFiletrsData);
   const [filters, setFilters] = useState(filtersData);
@@ -48,6 +48,7 @@ export default function CatalogFilter(): JSX.Element {
 
     dispatch(filterCamerasData(currentFilters));
     dispatch(setFiltersData(currentFilters));
+    dispatch(filterByPriceCamerasData());
     dispatch(sortCamerasData());
 
     setFilters(currentFilters);
@@ -71,11 +72,12 @@ export default function CatalogFilter(): JSX.Element {
 
     navigate({ search: queryParams.toString(), hash: location.hash });
 
-    dispatch(setProductMinPrice(getInitalMinPrice(camerasDataFromServer)));
-    dispatch(setProductMaxPrice(getInitalMaxPrice(camerasDataFromServer)));
+    dispatch(setProductMinPrice(getInitalMinPrice(filteredCamerasData)));
+    dispatch(setProductMaxPrice(getInitalMaxPrice(filteredCamerasData)));
     dispatch(setFiltersData(initialState));
     setFilters(initialState);
     dispatch(filterCamerasData(initialState));
+    dispatch(filterByPriceCamerasData());
     dispatch(sortCamerasData());
   };
 

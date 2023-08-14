@@ -17,6 +17,7 @@ export type CamerasDataState = {
   minPrice: number;
   maxPrice: number;
   filters: CatalogFilterInitialState;
+  filteredByPriceCamerasData: CamerasData[],
 }
 
 export type PromoDataState = {
