@@ -79,8 +79,11 @@ export const camerasData = createSlice({
         }
       }
       state.filteredCamerasData = filteredCamerasData;
-      state.minPrice = getInitalMinPrice(state.filteredCamerasData);
-      state.maxPrice = getInitalMaxPrice(state.filteredCamerasData);
+
+      if(state.filteredCamerasData.length) {
+        state.minPrice = getInitalMinPrice(state.filteredCamerasData);
+        state.maxPrice = getInitalMaxPrice(state.filteredCamerasData);
+      }
     },
     filterByPriceCamerasData: (state) => {
       state.filteredByPriceCamerasData = state.filteredCamerasData.filter((cameraData) => filterCameraByMinPrice(state.minPrice, cameraData) && filterCameraByMaxPrice(state.maxPrice, cameraData));
