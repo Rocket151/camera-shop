@@ -6,13 +6,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { filterByPriceCamerasData, setProductMaxPrice, setProductMinPrice, sortCamerasData } from '../../../store/cameras-data/cameras-data';
 import { getCamerasData, getCamerasDataLoadingStatus, getFilteredCamerasData, getProductMaxPrice, getProductMinPrice } from '../../../store/cameras-data/selectors';
 import { getInitalMaxPrice, getInitalMinPrice } from '../../../utils';
-import { CatalogFilterInitialState } from '../catalog-filter';
 
-type CatalogFilterByPriceProps = {
-  filters: CatalogFilterInitialState;
-}
-
-export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProps): JSX.Element | null {
+export default function CatalogFilterByPrice(): JSX.Element | null {
   const camerasData = useAppSelector(getCamerasData);
   const filteredCamerasData = useAppSelector(getFilteredCamerasData);
   const isCamerasDataLoadingStatus = useAppSelector(getCamerasDataLoadingStatus);

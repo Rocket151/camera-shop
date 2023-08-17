@@ -85,7 +85,7 @@ export default function CatalogFilter(): JSX.Element {
     <div className="catalog-filter">
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
-        <CatalogFilterByPrice filters={filters}/>
+        <CatalogFilterByPrice />
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
           <div className="custom-checkbox catalog-filter__item">
