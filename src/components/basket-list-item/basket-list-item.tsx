@@ -30,7 +30,7 @@ export default function BasketListItem (): JSX.Element {
                         </svg>
                       </button>
                     </div>
-                    <div className="basket-item__total-price"><span class="visually-hidden">Общая цена:</span>37 940 ₽</div>
+                    <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>37 940 ₽</div>
                     <button className="cross-btn" type="button" aria-label="Удалить товар">
                       <svg width="10" height="10" aria-hidden="true">
                         <use xlinkHref="#icon-close"></use>

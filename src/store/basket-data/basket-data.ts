@@ -1,9 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SlicesNames } from '../../const';
 import { BasketDataState } from '../../types/state';
+import { BasketCamerasData } from '../../types/basket-cameras-data';
 
 export const initialBasketDataState: BasketDataState = {
-  basketCamerasData: [];
+  basketCamerasData: [],
 };
 
 export const basketData = createSlice({
