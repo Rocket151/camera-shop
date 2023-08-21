@@ -19,10 +19,10 @@ export const basketData = createSlice({
               return {
                 ...basketCameraData,
                 basketItemCount: ++basketCameraData.basketItemCount,
-              }
+              };
             }
-            return basketCameraData
-          })
+            return basketCameraData;
+          });
         } else {
           state.basketCamerasData.push(action.payload);
         }
