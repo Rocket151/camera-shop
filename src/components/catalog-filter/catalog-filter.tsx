@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setFiltersData, filterCamerasData, sortCamerasData, setProductMinPrice, setProductMaxPrice, filterByPriceCamerasData } from '../../store/cameras-data/cameras-data';
-import { getCamerasDataFromServer, getFiletrsData, getFilteredCamerasData } from '../../store/cameras-data/selectors';
+import { getFiletrsData, getFilteredCamerasData } from '../../store/cameras-data/selectors';
 import { getInitalMaxPrice, getInitalMinPrice } from '../../utils';
 import CatalogFilterByPrice from './catalog-filter-by-price/catalog-filter-by-price';
 
@@ -34,7 +34,7 @@ export default function CatalogFilter(): JSX.Element {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const filteredCamerasData = useAppSelector(getFilteredCamerasData)
+  const filteredCamerasData = useAppSelector(getFilteredCamerasData);
   const queryParams = new URLSearchParams(location.search);
   const filtersData = useAppSelector(getFiletrsData);
   const [filters, setFilters] = useState(filtersData);
@@ -85,7 +85,7 @@ export default function CatalogFilter(): JSX.Element {
     <div className="catalog-filter">
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
-        <CatalogFilterByPrice filters={filters}/>
+        <CatalogFilterByPrice />
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Категория</legend>
           <div className="custom-checkbox catalog-filter__item">

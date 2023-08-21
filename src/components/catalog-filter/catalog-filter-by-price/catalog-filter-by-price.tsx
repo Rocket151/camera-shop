@@ -6,13 +6,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { filterByPriceCamerasData, setProductMaxPrice, setProductMinPrice, sortCamerasData } from '../../../store/cameras-data/cameras-data';
 import { getCamerasData, getCamerasDataLoadingStatus, getFilteredCamerasData, getProductMaxPrice, getProductMinPrice } from '../../../store/cameras-data/selectors';
 import { getInitalMaxPrice, getInitalMinPrice } from '../../../utils';
-import { CatalogFilterInitialState } from '../catalog-filter';
 
-type CatalogFilterByPriceProps = {
-  filters: CatalogFilterInitialState;
-}
-
-export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProps): JSX.Element | null {
+export default function CatalogFilterByPrice(): JSX.Element | null {
   const camerasData = useAppSelector(getCamerasData);
   const filteredCamerasData = useAppSelector(getFilteredCamerasData);
   const isCamerasDataLoadingStatus = useAppSelector(getCamerasDataLoadingStatus);
@@ -33,10 +28,11 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
     if(Number(maxPrice) > productMaxPrice && maxPrice !== '') {
       setMaxPrice(productMaxPrice.toString());
     }
+    // eslint-disable-next-line
   }, [productMinPrice, productMaxPrice]);
 
   const debouncedSetMinValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
-    if((Number(inputValue) < minPriceData || Number(inputValue) > maxPriceData) && inputValue !== '') {
+    if(((Number(inputValue) < minPriceData || Number(inputValue) > maxPriceData) && inputValue !== '') || (Number(inputValue) > Number(maxPrice) && maxPrice !== '' && minPrice !== '')) {
       setMinPrice(minPriceData.toString());
 
       dispatch(setProductMinPrice(minPriceData));
@@ -53,7 +49,7 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
       setMinPrice(inputValue);
       const initialMinPrice = getInitalMinPrice(filteredCamerasData);
 
-      dispatch(setProductMinPrice(minPriceData));
+      dispatch(setProductMinPrice(initialMinPrice));
       dispatch(filterByPriceCamerasData());
       dispatch(sortCamerasData());
 
@@ -72,7 +68,7 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
   }, 1000);
 
   const debouncedSetMaxValue = useDebouncedCallback((inputValue: string, maxPriceData: number, minPriceData: number) => {
-    if((Number(inputValue) > maxPriceData || Number(inputValue) < minPriceData) && inputValue !== '') {
+    if(((Number(inputValue) > maxPriceData || Number(inputValue) < minPriceData) && inputValue !== '') || (Number(inputValue) < Number(minPrice) && minPrice !== '' && maxPrice !== '')) {
       setMaxPrice(maxPriceData.toString());
       dispatch(setProductMaxPrice(maxPriceData));
       dispatch(filterByPriceCamerasData());
@@ -87,7 +83,7 @@ export default function CatalogFilterByPrice({filters}: CatalogFilterByPriceProp
       setMaxPrice(inputValue);
       const initialMaxPrice = getInitalMaxPrice(filteredCamerasData);
 
-      dispatch(setProductMaxPrice(maxPriceData));
+      dispatch(setProductMaxPrice(initialMaxPrice));
       dispatch(filterByPriceCamerasData());
       dispatch(sortCamerasData());
 

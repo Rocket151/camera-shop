@@ -11,6 +11,7 @@ export enum SlicesNames {
   ProductData = 'PRODUCT_DATA',
   SimilarCamerasData = 'SIMILAR_CAMERAS_DATA',
   ReviewsData = 'REVIEWS_DATA',
+  BasketData = 'BASKET_DATA',
 }
 
 export enum APIRoute {
