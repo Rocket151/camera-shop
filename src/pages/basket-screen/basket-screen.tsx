@@ -1,8 +1,12 @@
+import BasketList from '../../components/basket-list/basket-list';
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import { useAppSelector } from '../../hooks';
+import { getBasketCamerasData } from '../../store/basket-data/selectors';
 
 export default function BasketScreen(): JSX.Element {
+  const basketCamerasData = useAppSelector(getBasketCamerasData);
   return (
     <div className="wrapper">
       <Header />
@@ -13,7 +17,9 @@ export default function BasketScreen(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                В данный момент корзина пуста
+                { basketCamerasData.length ?
+                  <BasketList /> :
+                  'В данный момент корзина пуста'}
               </ul>
               <div className="basket__summary">
                 <div className="basket__promo">

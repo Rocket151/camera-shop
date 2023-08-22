@@ -1,4 +1,39 @@
-export default function BasketListItem (): JSX.Element {
+import { useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { changeBasketItemCount } from '../../store/basket-data/basket-data';
+import { BasketCamerasData } from '../../types/basket-cameras-data';
+
+type BasketListItemProps = {
+  basketListItem: BasketCamerasData;
+}
+
+export default function BasketListItem ({basketListItem}: BasketListItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const {name, type, level, price, basketItemCount, vendorCode} = basketListItem;
+  const [quantity, setQuantity] = useState(`${basketItemCount}`);
+
+  const handleCounterFocusOut = (evt : React.ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const inputValue = evt.target.value;
+
+    dispatch(changeBasketItemCount({
+      ...basketListItem,
+      basketItemCount: Number(inputValue),
+    }));
+  };
+
+  const handleCounterChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const inputValue = evt.target.value;
+
+    if(inputValue.length > 2 || inputValue === '0') {
+      setQuantity('1');
+      return;
+    }
+
+    setQuantity(inputValue.replace(/[^0-9]/g, ''));
+  };
+
   return (
     <li className="basket-item">
       <div className="basket-item__img">
@@ -7,15 +42,15 @@ export default function BasketListItem (): JSX.Element {
         </picture>
       </div>
       <div className="basket-item__description">
-        <p className="basket-item__title">Орлёнок</p>
+        <p className="basket-item__title">{name}</p>
         <ul className="basket-item__list">
-          <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">O78DFGSD832</span>
+          <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">{vendorCode}</span>
           </li>
-          <li className="basket-item__list-item">Плёночная фотокамера</li>
-          <li className="basket-item__list-item">Любительский уровень</li>
+          <li className="basket-item__list-item">{type}</li>
+          <li className="basket-item__list-item">{level}</li>
         </ul>
       </div>
-      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>18 970 ₽</p>
+      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
       <div className="quantity">
         <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
           <svg width="7" height="12" aria-hidden="true">
@@ -23,14 +58,14 @@ export default function BasketListItem (): JSX.Element {
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        <input type="number" id="counter1" value="2" min="1" max="99" aria-label="количество товара" />
+        <input type="number" id="counter1" value={quantity} aria-label="количество товара" onChange={handleCounterChange} onBlur={handleCounterFocusOut}/>
         <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>37 940 ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{basketItemCount * price} ₽</div>
       <button className="cross-btn" type="button" aria-label="Удалить товар">
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>

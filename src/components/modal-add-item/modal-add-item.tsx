@@ -1,10 +1,11 @@
 import { ScreenNames } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSelectedCameraData } from '../../store/cameras-data/selectors';
 import Modal from '../modal/modal';
 import { humanizePrice } from '../../utils';
 import { MouseEventHandler } from 'react';
 import FocusLock from 'react-focus-lock';
+import { addToBasket } from '../../store/basket-data/basket-data';
 
 type ModalAddItemProps = {
   currentScreenName?: string;
@@ -13,9 +14,14 @@ type ModalAddItemProps = {
 }
 
 export default function ModalAddItem({currentScreenName, setModalAddItem, isModalAddItem}: ModalAddItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const selectedCameraData = useAppSelector(getSelectedCameraData);
   const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, vendorCode, category, level} = selectedCameraData;
   const isProductScreen = currentScreenName === ScreenNames.Product;
+
+  const handleAddToBasketBtnClick = () => {
+    dispatch(addToBasket(selectedCameraData));
+  };
 
   const handleModalAddItemCloseOnOverlay: MouseEventHandler<HTMLDivElement> = (evt) => {
     if (evt.target === evt.currentTarget) {
@@ -56,7 +62,7 @@ export default function ModalAddItem({currentScreenName, setModalAddItem, isModa
                 </div>
               </div>
               <div className="modal__buttons">
-                <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button">
+                <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={handleAddToBasketBtnClick}>
                   <svg width="24" height="16" aria-hidden="true">
                     <use xlinkHref="#icon-add-basket"></use>
                   </svg>Добавить в корзину
