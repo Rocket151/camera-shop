@@ -15,7 +15,7 @@ export const basketData = createSlice({
     addToBasket: (state, action: PayloadAction<CamerasData>) => {
       if(state.basketCamerasData.length) {
         if(state.basketCamerasData.every((basketCamera) => basketCamera.id === action.payload.id)) {
-          state.basketCamerasData.map((basketCameraData) => {
+          state.basketCamerasData = state.basketCamerasData.map((basketCameraData) => {
             if(basketCameraData.id === action.payload.id) {
               return {
                 ...basketCameraData,
@@ -39,7 +39,7 @@ export const basketData = createSlice({
     },
 
     changeBasketItemCount: (state, action: PayloadAction<BasketCamerasData>) => {
-      state.basketCamerasData.map((basketCameraData) => {
+      state.basketCamerasData = state.basketCamerasData.map((basketCameraData) => {
         if(basketCameraData.id === action.payload.id) {
           return {
             ...basketCameraData,

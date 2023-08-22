@@ -10,15 +10,28 @@ type BasketListItemProps = {
 export default function BasketListItem ({basketListItem}: BasketListItemProps): JSX.Element {
   const dispatch = useAppDispatch();
   const {name, type, level, price, basketItemCount, vendorCode} = basketListItem;
-  const [quantity, setQuantity] = useState(basketItemCount);
-  const handleCounterChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
+  const [quantity, setQuantity] = useState(`${basketItemCount}`);
+
+  const handleCounterFocusOut = (evt : React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
     const inputValue = evt.target.value;
-    setQuantity(Number(inputValue));
+
     dispatch(changeBasketItemCount({
       ...basketListItem,
       basketItemCount: Number(inputValue),
     }));
+  };
+
+  const handleCounterChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const inputValue = evt.target.value;
+
+    if(inputValue.length > 2 || inputValue === '0') {
+      setQuantity('1');
+      return;
+    }
+
+    setQuantity(inputValue.replace(/[^0-9]/g, ''));
   };
 
   return (
@@ -45,7 +58,7 @@ export default function BasketListItem ({basketListItem}: BasketListItemProps): 
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        <input type="number" id="counter1" value={quantity} min="1" max="99" aria-label="количество товара" onChange={handleCounterChange}/>
+        <input type="number" id="counter1" value={quantity} aria-label="количество товара" onChange={handleCounterChange} onBlur={handleCounterFocusOut}/>
         <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
