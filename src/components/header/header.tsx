@@ -81,6 +81,9 @@ export default function Header(): JSX.Element {
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown);
+    if(data[0].name === '') {
+      document.removeEventListener('keydown', onKeydown);
+    }
 
     return () => {
       document.removeEventListener('keydown', onKeydown);

@@ -1,6 +1,8 @@
 import { MouseEventHandler } from 'react';
 import Modal from '../modal/modal';
 import FocusLock from 'react-focus-lock';
+import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
 
 type ModalAddItemSuccessProps = {
   setModalAddItemSuccess: (arg:boolean) => void;
@@ -11,7 +13,7 @@ export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddI
 
   const handleModalCloseOnOverlay: MouseEventHandler<HTMLDivElement> = (evt) => {
     if (evt.target === evt.currentTarget) {
-      setModalAddReviewSuccess(false);
+      setModalAddItemSuccess(false);
       document.body.style.overflowY = '';
     }
   };
@@ -22,9 +24,9 @@ export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddI
   };
 
   return (
-    <FocusLock disabled={!isModalAddReviewSuccess}>
+    <FocusLock disabled={!isModalAddItemSuccess}>
       <Modal onClose={handleModalClose}>
-        <div className={`modal ${isModalAddReviewSuccess ? 'is-active' : ''}`} data-testid="add-item-success">
+        <div className={`modal ${isModalAddItemSuccess ? 'is-active' : ''}`} data-testid="add-item-success">
           <div className="modal__wrapper">
             <div className="modal__overlay" onClick={handleModalCloseOnOverlay}></div>
             <div className="modal__content">
@@ -33,8 +35,8 @@ export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddI
                 <use xlinkHref="#icon-success"></use>
               </svg>
               <div className="modal__buttons">
-                <button className="btn btn--transparent modal__btn">Продолжить покупки</button>
-                <Link className="btn btn--purple modal__btn modal__btn--fit-width"  to={AppRoute.Basket}>Перейти в корзину</Link>
+                <button className="btn btn--transparent modal__btn" onClick={handleModalClose}>Продолжить покупки</button>
+                <Link className="btn btn--purple modal__btn modal__btn--fit-width" to={AppRoute.Basket}>Перейти в корзину</Link>
               </div>
               <button className="cross-btn" type="button" aria-label="Закрыть попап">
                 <svg width="10" height="10" aria-hidden="true">

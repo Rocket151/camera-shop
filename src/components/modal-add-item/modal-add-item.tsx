@@ -10,16 +10,20 @@ import { addToBasket } from '../../store/basket-data/basket-data';
 type ModalAddItemProps = {
   currentScreenName?: string;
   setModalAddItem: (arg:boolean) => void;
+  setModalAddItemSuccess: (arg:boolean) => void;
   isModalAddItem: boolean;
 }
 
-export default function ModalAddItem({currentScreenName, setModalAddItem, isModalAddItem}: ModalAddItemProps): JSX.Element {
+export default function ModalAddItem({currentScreenName, setModalAddItem, isModalAddItem, setModalAddItemSuccess}: ModalAddItemProps): JSX.Element {
   const dispatch = useAppDispatch();
   const selectedCameraData = useAppSelector(getSelectedCameraData);
   const {name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, vendorCode, category, level} = selectedCameraData;
   const isProductScreen = currentScreenName === ScreenNames.Product;
 
   const handleAddToBasketBtnClick = () => {
+    setModalAddItem(false);
+    document.body.style.overflowY = '';
+    setModalAddItemSuccess(true);
     dispatch(addToBasket(selectedCameraData));
   };
 
