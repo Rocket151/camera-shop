@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 type ModalAddItemSuccessProps = {
   setModalAddItemSuccess: (arg:boolean) => void;
   isModalAddItemSuccess: boolean;
+  isProductScreen?: boolean;
 }
 
-export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddItemSuccess}: ModalAddItemSuccessProps): JSX.Element {
+export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddItemSuccess, isProductScreen}: ModalAddItemSuccessProps): JSX.Element {
 
   const handleModalCloseOnOverlay: MouseEventHandler<HTMLDivElement> = (evt) => {
     if (evt.target === evt.currentTarget) {
@@ -35,7 +36,11 @@ export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddI
                 <use xlinkHref="#icon-success"></use>
               </svg>
               <div className="modal__buttons">
-                <button className="btn btn--transparent modal__btn" onClick={handleModalClose}>Продолжить покупки</button>
+                {
+                  isProductScreen ? 
+                    <Link className="btn btn--transparent modal__btn" onClick={handleModalClose} to={AppRoute.Root}>Продолжить покупки</Link> :
+                    <button className="btn btn--transparent modal__btn" onClick={handleModalClose}>Продолжить покупки</button>
+                }
                 <Link className="btn btn--purple modal__btn modal__btn--fit-width" to={AppRoute.Basket}>Перейти в корзину</Link>
               </div>
               <button className="cross-btn" type="button" aria-label="Закрыть попап">

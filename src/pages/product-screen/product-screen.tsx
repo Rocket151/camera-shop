@@ -99,7 +99,7 @@ export default function ProductScreen(): JSX.Element {
 
         <ModalAddReviewSuccess setModalAddReviewSuccess={setModalAddReviewSuccess} isModalAddReviewSuccess={isModalAddReviewSuccess} />
 
-        <ModalAddItemSuccess setModalAddItemSuccess={setModalAddItemSuccess} isModalAddItemSuccess={isModalAddItemSuccess} />
+        <ModalAddItemSuccess isProductScreen setModalAddItemSuccess={setModalAddItemSuccess} isModalAddItemSuccess={isModalAddItemSuccess} />
 
       </main>
       <a className="up-btn" href="#header">
