@@ -37,7 +37,7 @@ export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddI
               </svg>
               <div className="modal__buttons">
                 {
-                  isProductScreen ? 
+                  isProductScreen ?
                     <Link className="btn btn--transparent modal__btn" onClick={handleModalClose} to={AppRoute.Root}>Продолжить покупки</Link> :
                     <button className="btn btn--transparent modal__btn" onClick={handleModalClose}>Продолжить покупки</button>
                 }

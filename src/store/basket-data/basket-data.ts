@@ -49,7 +49,11 @@ export const basketData = createSlice({
         return basketCameraData;
       });
     },
+
+    deleteBasketItem : (state, action: PayloadAction<number>) => {
+      state.basketCamerasData = state.basketCamerasData.filter((basketCameraData) => basketCameraData.id !== action.payload);
+    },
   }
 });
 
-export const {changeBasketItemCount, addToBasket} = basketData.actions;
+export const {changeBasketItemCount, addToBasket, deleteBasketItem} = basketData.actions;
