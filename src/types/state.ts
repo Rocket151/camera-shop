@@ -28,6 +28,7 @@ export type PromoDataState = {
 
 export type BasketDataState = {
   basketCamerasData: BasketCamerasData[];
+  itemToRemoveFromBasket: BasketCamerasData;
 }
 
 export type ProductDataState = {

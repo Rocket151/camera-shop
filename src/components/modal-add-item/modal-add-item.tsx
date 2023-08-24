@@ -22,7 +22,6 @@ export default function ModalAddItem({currentScreenName, setModalAddItem, isModa
 
   const handleAddToBasketBtnClick = () => {
     setModalAddItem(false);
-    document.body.style.overflowY = '';
     setModalAddItemSuccess(true);
     dispatch(addToBasket(selectedCameraData));
   };

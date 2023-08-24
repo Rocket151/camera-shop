@@ -6,6 +6,7 @@ import { CamerasData } from '../../types/cameras-data';
 
 export const initialBasketDataState: BasketDataState = {
   basketCamerasData: [],
+  itemToRemoveFromBasket: {} as BasketCamerasData,
 };
 
 export const basketData = createSlice({
@@ -50,10 +51,14 @@ export const basketData = createSlice({
       });
     },
 
+    setItemToRemoveFromBasket : (state, action: PayloadAction<BasketCamerasData>) => {
+      state.itemToRemoveFromBasket = action.payload;
+    },
+
     deleteBasketItem : (state, action: PayloadAction<number>) => {
       state.basketCamerasData = state.basketCamerasData.filter((basketCameraData) => basketCameraData.id !== action.payload);
     },
   }
 });
 
-export const {changeBasketItemCount, addToBasket, deleteBasketItem} = basketData.actions;
+export const {changeBasketItemCount, addToBasket, deleteBasketItem, setItemToRemoveFromBasket} = basketData.actions;

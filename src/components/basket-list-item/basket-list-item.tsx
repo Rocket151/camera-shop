@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { changeBasketItemCount, deleteBasketItem } from '../../store/basket-data/basket-data';
+import { changeBasketItemCount, setItemToRemoveFromBasket } from '../../store/basket-data/basket-data';
 import { BasketCamerasData } from '../../types/basket-cameras-data';
 import { humanizePrice } from '../../utils';
 
 type BasketListItemProps = {
   basketListItem: BasketCamerasData;
+  setModalRemoveBasketItem: (arg: boolean) => void;
 }
 
-export default function BasketListItem ({basketListItem}: BasketListItemProps): JSX.Element {
+export default function BasketListItem ({basketListItem, setModalRemoveBasketItem}: BasketListItemProps): JSX.Element {
   const dispatch = useAppDispatch();
   const {name, type, level, price, basketItemCount, vendorCode,
-    previewImg, previewImgWebp, previewImgWebp2x, previewImg2x, id} = basketListItem;
+    previewImg, previewImgWebp, previewImgWebp2x, previewImg2x} = basketListItem;
 
   const [quantity, setQuantity] = useState(`${basketItemCount}`);
 
@@ -64,8 +65,10 @@ export default function BasketListItem ({basketListItem}: BasketListItemProps): 
     setQuantity(inputValue.replace(/[^0-9]/g, ''));
   };
 
-  const deleteItemFromBasket = () => {
-    dispatch(deleteBasketItem(id));
+  const handleDeleteItemFromBasketClick = () => {
+    dispatch(setItemToRemoveFromBasket(basketListItem));
+    setModalRemoveBasketItem(true);
+    document.body.style.overflow = 'hidden';
   };
 
   return (
@@ -87,21 +90,21 @@ export default function BasketListItem ({basketListItem}: BasketListItemProps): 
       </div>
       <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{humanizePrice(price)} ₽</p>
       <div className="quantity">
-        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={handleDecreaseQuantityBtnClick}>
+        <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={handleDecreaseQuantityBtnClick} disabled={quantity === '1'}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
         <input type="number" id="counter1" value={quantity} aria-label="количество товара" onChange={handleCounterChange} onBlur={handleCounterFocusOut}/>
-        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={handleIncreaseQuantityBtnClick}>
+        <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара" onClick={handleIncreaseQuantityBtnClick} disabled={quantity === '99'}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
       </div>
       <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{humanizePrice(basketItemCount * price)} ₽</div>
-      <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={deleteItemFromBasket}>
+      <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={handleDeleteItemFromBasketClick}>
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>
