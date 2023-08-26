@@ -3,6 +3,7 @@ import { store } from '../store';
 import { CamerasData } from './cameras-data';
 import { PromoData } from './promo-data';
 import { ReviewData } from './review-data';
+import { BasketCamerasData } from './basket-cameras-data';
 
 export type CamerasDataState = {
   isCamerasDataLoading: boolean;
@@ -17,12 +18,17 @@ export type CamerasDataState = {
   minPrice: number;
   maxPrice: number;
   filters: CatalogFilterInitialState;
-  filteredByPriceCamerasData: CamerasData[],
+  filteredByPriceCamerasData: CamerasData[];
 }
 
 export type PromoDataState = {
   isPromoDataLoading: boolean;
   promoData: PromoData | null;
+}
+
+export type BasketDataState = {
+  basketCamerasData: BasketCamerasData[];
+  itemToRemoveFromBasket: BasketCamerasData;
 }
 
 export type ProductDataState = {

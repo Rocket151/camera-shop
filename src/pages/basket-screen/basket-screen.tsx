@@ -1,8 +1,15 @@
+import { useState } from 'react';
+import BasketListItem from '../../components/basket-list-item/basket-list-item';
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import ModalRemoveBasketItem from '../../components/modal-remove-basket-item/modal-remove-basket-item';
+import { useAppSelector } from '../../hooks';
+import { getBasketCamerasData } from '../../store/basket-data/selectors';
 
 export default function BasketScreen(): JSX.Element {
+  const basketCamerasData = useAppSelector(getBasketCamerasData);
+  const [isModalRemoveBasketItem, setModalRemoveBasketItem] = useState(false);
   return (
     <div className="wrapper">
       <Header />
@@ -13,7 +20,11 @@ export default function BasketScreen(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                В данный момент корзина пуста
+                {
+                  basketCamerasData.length ?
+                    basketCamerasData.map((basketCamera) => <BasketListItem basketListItem={basketCamera} key={basketCamera.id} setModalRemoveBasketItem={setModalRemoveBasketItem}/>) :
+                    'В данный момент корзина пуста'
+                }
               </ul>
               <div className="basket__summary">
                 <div className="basket__promo">
@@ -44,6 +55,7 @@ export default function BasketScreen(): JSX.Element {
           </section>
         </div>
       </main>
+      <ModalRemoveBasketItem isModalRemoveBasketItem={isModalRemoveBasketItem} setModalRemoveBasketItem={setModalRemoveBasketItem}/>
       <Footer />
     </div>
   );

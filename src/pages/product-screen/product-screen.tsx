@@ -14,6 +14,7 @@ import { selectCameraData } from '../../store/cameras-data/cameras-data';
 import { getProductData } from '../../store/product-data/selectors';
 import { calculateRatingOnProductScreen, humanizePrice } from '../../utils';
 import { getProductReviewsData } from '../../store/cameras-data/selectors';
+import ModalAddItemSuccess from '../../components/modal-add-item-success/modal-add-item-success';
 
 
 export default function ProductScreen(): JSX.Element {
@@ -24,6 +25,7 @@ export default function ProductScreen(): JSX.Element {
   const [isModalAddItem, setModalAddItem] = useState(false);
   const [isModalAddReview, setModalAddReview] = useState(false);
   const [isModalAddReviewSuccess, setModalAddReviewSuccess] = useState(false);
+  const [isModalAddItemSuccess, setModalAddItemSuccess] = useState(false);
 
   const handleAddToBasketClick = () => {
     dispatch(selectCameraData(productData));
@@ -93,9 +95,11 @@ export default function ProductScreen(): JSX.Element {
         </div>
         <ModalAddReview setModalAddReview={setModalAddReview} isModalAddReview={isModalAddReview} productData={productData} />
 
-        <ModalAddItem setModalAddItem={setModalAddItem} currentScreenName={ScreenNames.Product} isModalAddItem={isModalAddItem} />
+        <ModalAddItem setModalAddItem={setModalAddItem} currentScreenName={ScreenNames.Product} isModalAddItem={isModalAddItem} setModalAddItemSuccess={setModalAddItemSuccess}/>
 
         <ModalAddReviewSuccess setModalAddReviewSuccess={setModalAddReviewSuccess} isModalAddReviewSuccess={isModalAddReviewSuccess} />
+
+        <ModalAddItemSuccess isProductScreen setModalAddItemSuccess={setModalAddItemSuccess} isModalAddItemSuccess={isModalAddItemSuccess} />
 
       </main>
       <a className="up-btn" href="#header">

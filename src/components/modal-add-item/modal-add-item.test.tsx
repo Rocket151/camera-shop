@@ -13,13 +13,14 @@ const store = getMockStore({
 
 describe('Component: Basket Info Modal', () => {
   const setModalAddItem = jest.fn();
+  const setModalAddItemSuccess = jest.fn();
 
   it('should render correctly ModalAddItem modal', () => {
 
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ModalAddItem setModalAddItem={setModalAddItem} isModalAddItem/>
+          <ModalAddItem setModalAddItemSuccess={setModalAddItemSuccess} setModalAddItem={setModalAddItem} isModalAddItem/>
         </MemoryRouter>
       </Provider>
     );
@@ -32,7 +33,7 @@ describe('Component: Basket Info Modal', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ModalAddItem setModalAddItem={setModalAddItem} isModalAddItem={false}/>
+          <ModalAddItem setModalAddItemSuccess={setModalAddItemSuccess} setModalAddItem={setModalAddItem} isModalAddItem={false}/>
         </MemoryRouter>
       </Provider>
     );

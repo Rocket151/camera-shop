@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, TabsHash } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCamerasDataFromServer } from '../../store/cameras-data/selectors';
+import HeaderBasketLink from '../header-basket-link/header-basket-link';
 import Fuse from 'fuse.js';
 import { fetchProductDataAction, fetchReviewsDataAction, fetchSimilarCamerasDataAction } from '../../store/api-actions';
 import FocusLock from 'react-focus-lock';
@@ -81,6 +82,9 @@ export default function Header(): JSX.Element {
 
   useEffect(() => {
     document.addEventListener('keydown', onKeydown);
+    if(data[0].name === '') {
+      document.removeEventListener('keydown', onKeydown);
+    }
 
     return () => {
       document.removeEventListener('keydown', onKeydown);
@@ -178,11 +182,8 @@ export default function Header(): JSX.Element {
             </svg><span className="visually-hidden">Сбросить поиск</span>
           </button>
         </FocusLock>
-        <Link className="header__basket-link" to={AppRoute.Basket}>
-          <svg width="16" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-basket"></use>
-          </svg>
-        </Link>
+        <HeaderBasketLink />
+
       </div>
     </header>
   );
