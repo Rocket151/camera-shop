@@ -41,7 +41,7 @@ export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddI
                     <Link className="btn btn--transparent modal__btn" onClick={handleModalClose} to={AppRoute.Root}>Продолжить покупки</Link> :
                     <button className="btn btn--transparent modal__btn" onClick={handleModalClose}>Продолжить покупки</button>
                 }
-                <Link className="btn btn--purple modal__btn modal__btn--fit-width" to={AppRoute.Basket}>Перейти в корзину</Link>
+                <Link className="btn btn--purple modal__btn modal__btn--fit-width" onClick={handleModalClose} to={AppRoute.Basket}>Перейти в корзину</Link>
               </div>
               <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={handleModalClose}>
                 <svg width="10" height="10" aria-hidden="true">

@@ -29,6 +29,8 @@ export type PromoDataState = {
 export type BasketDataState = {
   basketCamerasData: BasketCamerasData[];
   itemToRemoveFromBasket: BasketCamerasData;
+  couponDiscount: string;
+  orderHasPlaced: boolean;
 }
 
 export type ProductDataState = {

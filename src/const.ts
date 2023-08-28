@@ -18,7 +18,9 @@ export enum APIRoute {
   Cameras = '/cameras/',
   Promo = '/promo',
   SimilarCameras = '/similar',
-  Reviews = '/reviews'
+  Reviews = '/reviews',
+  Coupons = '/coupons',
+  Orders = '/orders',
 }
 
 export enum ScreenNames {
@@ -65,6 +67,12 @@ export enum InputPlaceholder {
   Disadvantage = 'Главные недостатки товара',
   Review = 'Поделитесь своим опытом покупки',
 }
+
+export enum CouponStatus {
+  noDiscount = '1',
+  InvalidCoupon = '0',
+}
+
 
 export const CAROUSEL_VISIBLE_CLASS = 'is-active';
 

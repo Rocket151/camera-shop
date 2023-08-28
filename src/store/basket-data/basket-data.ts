@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SlicesNames } from '../../const';
+import { CouponStatus, SlicesNames } from '../../const';
 import { BasketDataState } from '../../types/state';
 import { BasketCamerasData } from '../../types/basket-cameras-data';
 import { CamerasData } from '../../types/cameras-data';
+import { checkCouponAction, setOrderAction } from '../api-actions';
 
 export const initialBasketDataState: BasketDataState = {
   basketCamerasData: [],
   itemToRemoveFromBasket: {} as BasketCamerasData,
+  couponDiscount: CouponStatus.noDiscount,
+  orderHasPlaced: false,
 };
 
 export const basketData = createSlice({
@@ -15,7 +18,7 @@ export const basketData = createSlice({
   reducers: {
     addToBasket: (state, action: PayloadAction<CamerasData>) => {
       if(state.basketCamerasData.length) {
-        if(state.basketCamerasData.every((basketCamera) => basketCamera.id === action.payload.id)) {
+        if(state.basketCamerasData.some((basketCamera) => basketCamera.id === action.payload.id)) {
           state.basketCamerasData = state.basketCamerasData.map((basketCameraData) => {
             if(basketCameraData.id === action.payload.id) {
               return {
@@ -58,7 +61,35 @@ export const basketData = createSlice({
     deleteBasketItem : (state, action: PayloadAction<number>) => {
       state.basketCamerasData = state.basketCamerasData.filter((basketCameraData) => basketCameraData.id !== action.payload);
     },
+
+    resetCouponDiscount : (state) => {
+      state.couponDiscount = CouponStatus.noDiscount;
+    },
+
+    resetOrderStatus : (state) => {
+      state.orderHasPlaced = false;
+    },
+
+    clearBasket : (state) => {
+      state.basketCamerasData = [];
+    },
+  },
+  extraReducers (builder) {
+    builder
+      .addCase(checkCouponAction.fulfilled, (state, action) => {
+        state.couponDiscount = action.payload;
+      })
+      .addCase(checkCouponAction.rejected, (state) => {
+        state.couponDiscount = CouponStatus.InvalidCoupon;
+      })
+      .addCase(setOrderAction.fulfilled, (state) => {
+        state.orderHasPlaced = true;
+      })
+      .addCase(setOrderAction.rejected, (state) => {
+        state.orderHasPlaced = false;
+      });
   }
 });
 
-export const {changeBasketItemCount, addToBasket, deleteBasketItem, setItemToRemoveFromBasket} = basketData.actions;
+export const {changeBasketItemCount, addToBasket, deleteBasketItem, setItemToRemoveFromBasket,
+  resetCouponDiscount, resetOrderStatus, clearBasket} = basketData.actions;

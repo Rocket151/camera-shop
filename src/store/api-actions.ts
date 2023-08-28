@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 import { CamerasData } from '../types/cameras-data';
+import { CouponData } from '../types/coupon-data';
+import { OrderData } from '../types/order-data';
 import { PromoData } from '../types/promo-data';
 import { ReviewData } from '../types/review-data';
 import { UserReviewData } from '../types/user-review-data';
@@ -74,3 +76,28 @@ export const sendUserReviewAction = createAsyncThunk<ReviewData, {
       return data;
     }
   );
+
+export const checkCouponAction = createAsyncThunk<string, {
+    formData: CouponData;
+      },
+    {
+      extra: AxiosInstance;
+    }>(
+      'checkCoupon',
+      async({formData}, {extra: api}) => {
+        const {data} = await api.post<string>(APIRoute.Coupons, formData);
+
+        return data;
+      }
+    );
+
+export const setOrderAction = createAsyncThunk<unknown, OrderData,
+{
+  extra: AxiosInstance;
+}>('setOrder',
+  async(orderData, {extra: api}) => {
+    const data = await api.post(APIRoute.Orders, orderData);
+
+    return data;
+  }
+);
