@@ -37,7 +37,7 @@ export default function ModalRemoveBasketItem({setModalRemoveBasketItem, isModal
   return (
     <FocusLock disabled={!isModalRemoveBasketItem}>
       <Modal onClose={handleModalClose}>
-        <div className={`modal ${isModalRemoveBasketItem ? 'is-active' : ''}`} data-testid="add-item-success">
+        <div className={`modal ${isModalRemoveBasketItem ? 'is-active' : ''}`} data-testid="modal-remove-basket-item">
           <div className="modal__wrapper">
             <div className="modal__overlay" onClick={handleModalCloseOnOverlay}></div>
             <div className="modal__content">

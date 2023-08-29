@@ -42,7 +42,7 @@ export default function ModalSetOrderSuccess({setModalSetOrderSuccess, isModalSe
   return (
     <FocusLock disabled={!isModalSetOrderSuccess}>
       <Modal onClose={handleModalClose}>
-        <div className={`modal ${isModalSetOrderSuccess ? 'is-active' : ''}`} data-testid="set-order-success">
+        <div className={`modal ${isModalSetOrderSuccess ? 'is-active' : ''}`} data-testid="modal-set-order-success">
           <div className="modal__wrapper">
             <div className="modal__overlay" onClick={handleModalCloseOnOverlay}></div>
             <div className="modal__content">

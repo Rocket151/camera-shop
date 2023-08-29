@@ -11,7 +11,7 @@ const store = getMockStore({
   }
 });
 
-describe('Component: setModalAddItemSuccess', () => {
+describe('Component: ModalAddItemSuccess', () => {
   const setModalAddItemSuccess = jest.fn();
 
   it('should render correctly ModalAddItemSuccess modal', () => {
