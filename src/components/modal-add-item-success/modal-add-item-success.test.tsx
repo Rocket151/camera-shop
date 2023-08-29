@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 import { fakeCamera, getMockStore } from '../../mocks/mocks';
 import { SlicesNames } from '../../const';
-import ModalAddItem from './modal-add-item';
+import ModalAddItemSuccess from './modal-add-item-success';
 
 const store = getMockStore({
   [SlicesNames.CamerasData]: {
@@ -11,21 +11,20 @@ const store = getMockStore({
   }
 });
 
-describe('Component: ModalAddItem', () => {
-  const setModalAddItem = jest.fn();
+describe('Component: setModalAddItemSuccess', () => {
   const setModalAddItemSuccess = jest.fn();
 
-  it('should render correctly ModalAddItem modal', () => {
+  it('should render correctly ModalAddItemSuccess modal', () => {
 
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ModalAddItem setModalAddItemSuccess={setModalAddItemSuccess} setModalAddItem={setModalAddItem} isModalAddItem/>
+          <ModalAddItemSuccess setModalAddItemSuccess={setModalAddItemSuccess}  isModalAddItemSuccess isProductScreen/>
         </MemoryRouter>
       </Provider>
     );
 
-    expect(screen.getByTestId('add-item-modal')).toBeInTheDocument();
+    expect(screen.getByTestId('add-item-modal-success')).toBeInTheDocument();
   });
 
   it('setModalAddItem should called when close the modal', () => {
@@ -33,7 +32,7 @@ describe('Component: ModalAddItem', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ModalAddItem setModalAddItemSuccess={setModalAddItemSuccess} setModalAddItem={setModalAddItem} isModalAddItem/>
+          <ModalAddItemSuccess setModalAddItemSuccess={setModalAddItemSuccess} isModalAddItemSuccess isProductScreen/>
         </MemoryRouter>
       </Provider>
     );
@@ -41,6 +40,6 @@ describe('Component: ModalAddItem', () => {
     const closeButton = screen.getByLabelText('Закрыть попап');
     fireEvent.click(closeButton);
 
-    expect(setModalAddItem).toBeCalled();
+    expect(setModalAddItemSuccess).toBeCalled();
   });
 });
