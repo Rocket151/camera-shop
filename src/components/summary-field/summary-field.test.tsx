@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
-import {  mockStore } from '../../mocks/mocks';
+import { mockStore } from '../../mocks/mocks';
 import SummaryField from './summary-field';
 
 describe('Component: SummaryField', () => {

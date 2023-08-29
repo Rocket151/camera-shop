@@ -19,7 +19,7 @@ describe('Component: ModalAddItemSuccess', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <ModalAddItemSuccess setModalAddItemSuccess={setModalAddItemSuccess}  isModalAddItemSuccess isProductScreen/>
+          <ModalAddItemSuccess setModalAddItemSuccess={setModalAddItemSuccess} isModalAddItemSuccess isProductScreen/>
         </MemoryRouter>
       </Provider>
     );

@@ -13,12 +13,12 @@ describe('Reducer: basketData', () => {
   it('should update basketData if checkCouponAction fulfilled', () => {
     const fakeDiscount = '15';
     expect(basketData.reducer(initialBasketDataState, {type: checkCouponAction.fulfilled.type, payload: fakeDiscount}))
-      .toEqual({...initialBasketDataState, couponDiscount: fakeDiscount})
+      .toEqual({...initialBasketDataState, couponDiscount: fakeDiscount});
   });
 
   it('should update basketData if checkCouponAction rejected', () => {
     expect(basketData.reducer(initialBasketDataState, {type: checkCouponAction.rejected.type}))
-      .toEqual({...initialBasketDataState, couponDiscount: CouponStatus.InvalidCoupon})
+      .toEqual({...initialBasketDataState, couponDiscount: CouponStatus.InvalidCoupon});
   });
 
   it('should change orderHasPlaced to true if setOrderAction fulfilled', () => {
@@ -47,7 +47,8 @@ describe('Reducer: basketData', () => {
   });
 
   it('should remove basket item from basketCamerasData on deleteBasketItem', () => {
-    const fakeBasketCameras = [...basketFakeCameras]
+    const fakeBasketCameras = [...basketFakeCameras];
+
     fakeBasketCameras.shift();
 
     expect(basketData.reducer({...initialBasketDataState, basketCamerasData: basketFakeCameras}, deleteBasketItem(basketFakeCameras[0].id)))

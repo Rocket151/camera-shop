@@ -1,8 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { fakeCamera, getMockStore, mockStore } from '../../mocks/mocks';
-import { SlicesNames } from '../../const';
+import { mockStore } from '../../mocks/mocks';
 import ModalSetOrderSuccess from './modal-set-order-success';
 
 describe('Component: ModalSetOrderSuccess', () => {
