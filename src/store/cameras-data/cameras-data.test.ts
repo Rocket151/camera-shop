@@ -13,7 +13,7 @@ describe('Reducer: camerasData', () => {
   it('should update camerasData if fetchCamerasDataAction fulfilled', () => {
     expect(camerasData.reducer(initialCamerasDataState, {type: fetchCamerasDataAction.fulfilled.type, payload: fakeCameras}))
       .toEqual({...initialCamerasDataState, camerasData: fakeCameras, minPrice: getInitalMinPrice(fakeCameras), maxPrice: getInitalMaxPrice(fakeCameras),
-        filteredCamerasData: fakeCameras, isCamerasDataLoading: false });
+        filteredCamerasData: fakeCameras, isCamerasDataLoading: false, filteredByPriceCamerasData: fakeCameras});
   });
   it('should change isCamerasDataLoading to true if camerasData loading', () => {
     expect(camerasData.reducer(initialCamerasDataState, {type: fetchCamerasDataAction.pending.type}))
@@ -41,7 +41,7 @@ describe('Reducer: camerasData', () => {
     const arrFakeCameras = [...fakeCameras];
     const sortedCameras = arrFakeCameras.sort(sortCamerasDataByPriceUp);
 
-    expect(camerasData.reducer({...initialCamerasDataState, currentSortType: SortTypes.SortByPrice, currentSortOrder: SortOrders.Up, filteredCamerasData: fakeCameras}, sortCamerasData()))
-      .toEqual({...initialCamerasDataState, filteredCamerasData: sortedCameras, currentSortType: SortTypes.SortByPrice, currentSortOrder: SortOrders.Up});
+    expect(camerasData.reducer({...initialCamerasDataState, currentSortType: SortTypes.SortByPrice, currentSortOrder: SortOrders.Up, filteredByPriceCamerasData: fakeCameras}, sortCamerasData()))
+      .toEqual({...initialCamerasDataState, filteredByPriceCamerasData: sortedCameras, currentSortType: SortTypes.SortByPrice, currentSortOrder: SortOrders.Up});
   });
 });

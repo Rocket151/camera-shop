@@ -13,7 +13,9 @@ import { SlicesNames } from '../const';
 import { initialCamerasDataState } from '../store/cameras-data/cameras-data';
 import { initialProductDataState } from '../store/product-data/product-data';
 import { initialPromoDataState } from '../store/promo-data/promo-data';
+import { initialBasketDataState } from '../store/basket-data/basket-data';
 import { initialSimilarCamerasDataState } from '../store/similar-cameras-data/similar-cameras-data';
+import { BasketCamerasData } from '../types/basket-cameras-data';
 
 export const makeFakeReview = (): ReviewData => ({
   id: datatype.string(),
@@ -44,8 +46,30 @@ export const makeFakeCamera = (): CamerasData => ({
   reviewCount: datatype.number(),
   rating: datatype.number(),
 });
+
+export const makeFakeBasketCamera = (): BasketCamerasData => ({
+  id: datatype.number(),
+  name: commerce.productName(),
+  vendorCode: datatype.string(),
+  type: commerce.product(),
+  category: datatype.string(),
+  description: lorem.paragraph(),
+  level: datatype.string(),
+  price: datatype.number(),
+  previewImg: image.imageUrl(),
+  previewImg2x: image.imageUrl(),
+  previewImgWebp: image.imageUrl(),
+  previewImgWebp2x: image.imageUrl(),
+  reviewCount: datatype.number(),
+  rating: datatype.number(),
+  basketItemCount: datatype.number(),
+});
+
 export const fakeCameras = Array.from({length: 20}, makeFakeCamera);
 export const fakeCamera = fakeCameras[0];
+
+export const basketFakeCameras = Array.from({length: 20}, makeFakeBasketCamera);
+export const basketFakeCamera = basketFakeCameras[0];
 
 export const makeFakePromo = (): PromoData => ({
   id: datatype.number(),
@@ -87,6 +111,9 @@ export const UNKNOWN_ACTION = {type: 'UNKNOWN_ACTION'};
 export const makeMockState = () => ({
   [SlicesNames.CamerasData]: {
     ...initialCamerasDataState,
+  },
+  [SlicesNames.BasketData]: {
+    ...initialBasketDataState,
   },
   [SlicesNames.ProductData]: {
     ...initialProductDataState,

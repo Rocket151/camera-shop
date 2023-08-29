@@ -27,7 +27,7 @@ export default function ModalAddItemSuccess({setModalAddItemSuccess, isModalAddI
   return (
     <FocusLock disabled={!isModalAddItemSuccess}>
       <Modal onClose={handleModalClose}>
-        <div className={`modal ${isModalAddItemSuccess ? 'is-active' : ''}`} data-testid="add-item-success">
+        <div className={`modal ${isModalAddItemSuccess ? 'is-active' : ''}`} data-testid="add-item-modal-success">
           <div className="modal__wrapper">
             <div className="modal__overlay" onClick={handleModalCloseOnOverlay}></div>
             <div className="modal__content">

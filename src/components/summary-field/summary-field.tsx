@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkCouponAction, setOrderAction } from '../../store/api-actions';
 import { resetCouponDiscount } from '../../store/basket-data/basket-data';
 import { getBasketCamerasData, getCouponDiscount, getOrderStatus } from '../../store/basket-data/selectors';
+import { humanizePrice } from '../../utils';
 
 export default function SummaryField(): JSX.Element {
   const couponDiscount = useAppSelector(getCouponDiscount);
@@ -92,9 +93,9 @@ export default function SummaryField(): JSX.Element {
         </div>
       </div>
       <div className="basket__summary-order">
-        <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{basketSummaryValue} ₽</span></p>
-        <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${basketSummaryValueDiscount > 0 ? 'basket__summary-value--bonus' : ''}`}>{basketSummaryValueDiscount} ₽</span></p>
-        <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{basketSummaryValue - basketSummaryValueDiscount} ₽</span></p>
+        <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">{humanizePrice(basketSummaryValue)} ₽</span></p>
+        <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${basketSummaryValueDiscount > 0 ? 'basket__summary-value--bonus' : ''}`}>{humanizePrice(basketSummaryValueDiscount)} ₽</span></p>
+        <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{humanizePrice(basketSummaryValue - basketSummaryValueDiscount)} ₽</span></p>
         <button className="btn btn--purple" type="submit" onClick={handleSetOrderClick} disabled={!basketCamerasData.length}>Оформить заказ</button>
       </div>
     </div>
