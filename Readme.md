@@ -1,12 +1,9 @@
-Description:
+#Учебный проект
+CAMERA SHOP - это магазин фото и видео техники.
+В этом проекте я отвечал за всю бизнес-логику, включая: API, фильтрацию, сортировку, поиск, корзину и т.д.
 
-Camera shop is an online supermarket where users can buy various cameras. This web application has an easy and intuitive user-friendly interface that makes shopping even faster and more enjoyable!
+#Стек 
+ReactJS, TypeScript, Redux Toolkit
 
-Stack:
-
-ReactJS,
-Typescript,
-React Router Dom,
-Redux Toolkit,
-Axios,
-Jest.
+#Production Deployment 
+https://camera-shop-strizhov.vercel.app/
