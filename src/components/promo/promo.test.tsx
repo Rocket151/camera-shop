@@ -2,12 +2,12 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Provider} from 'react-redux';
 import { SlicesNames } from '../../const';
-import { fakeCamera, getMockStore, mockState } from '../../mocks/mocks';
+import { fakeCameras, getMockStore, mockState } from '../../mocks/mocks';
 import Promo from './promo';
 
 const store = getMockStore({...mockState,
   [SlicesNames.PromoData]: {
-    promoData: fakeCamera,
+    promoData: fakeCameras,
   }
 });
 
@@ -21,7 +21,7 @@ describe('Component: Promo', () => {
         </MemoryRouter>
       </Provider>
     );
-    expect(screen.getByText(fakeCamera.name)).toBeInTheDocument();
+    expect(screen.getByText(fakeCameras[1].name)).toBeInTheDocument();
     expect(screen.getByText(/Профессиональная камера/i)).toBeInTheDocument();
   });
 });

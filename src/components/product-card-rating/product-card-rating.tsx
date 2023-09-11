@@ -10,7 +10,7 @@ type ProductCardRatingProps = {
 export default function ProductCardRating({reviewsCount, cameraData}: ProductCardRatingProps): JSX.Element | null {
   const rating = cameraData.rating;
 
-  if(rating) {
+  if(rating !== undefined) {
     return (
       <div className="rate product-card__rate">
         <svg width="17" height="16" aria-hidden="true">

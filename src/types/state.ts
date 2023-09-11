@@ -23,7 +23,7 @@ export type CamerasDataState = {
 
 export type PromoDataState = {
   isPromoDataLoading: boolean;
-  promoData: PromoData | null;
+  promoData: PromoData[] | null;
 }
 
 export type BasketDataState = {

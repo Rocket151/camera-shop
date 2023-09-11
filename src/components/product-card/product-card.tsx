@@ -20,9 +20,9 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
   const {id, name, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, reviewCount} = cameraData;
 
   const handleRedirectToProductPage = () => {
-    dispatch(fetchProductDataAction(id.toString()));
-    dispatch(fetchSimilarCamerasDataAction(id.toString()));
-    dispatch(fetchReviewsDataAction(id.toString()));
+    dispatch(fetchProductDataAction(`${id}`));
+    dispatch(fetchSimilarCamerasDataAction(`${id}`));
+    dispatch(fetchReviewsDataAction(`${id}`));
   };
 
   const handleModalOpen = () => {
@@ -55,7 +55,7 @@ export default function ProductCard({cameraData, carouselClass, setModalAddItem}
             </Link> :
             <button className="btn btn--purple product-card__btn" type="button" onClick={handleModalOpen}>Купить</button>
         }
-        <Link className="btn btn--transparent" to={AppRoute.Product + id.toString() + TabsHash.Description} onClick={handleRedirectToProductPage}>Подробнее
+        <Link className="btn btn--transparent" to={`${AppRoute.Product}${id}${TabsHash.Description}`} onClick={handleRedirectToProductPage}>Подробнее
         </Link>
       </div>
     </div>
