@@ -20,8 +20,6 @@ const initialState = {
   name: '',
 };
 
-const inpArr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,25,24,42,42,2,42,42,24,2,4];
-
 export default function Header(): JSX.Element {
   const { markRef } = useKeyboardNavigator({
     eventCallback: (evt) => evt.preventDefault()
@@ -32,12 +30,12 @@ export default function Header(): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [highlightBlockIndex, setHighlightBockIndex] = useState(-1);
   const [data, setData] = useState<SearchItemState[] | never[]>([initialState]);
-  const refs: MutableRefObject<RefObject<HTMLLIElement>[]> = useRef(inpArr.map(() => React.createRef()));
+  const refs: MutableRefObject<RefObject<HTMLLIElement>[]> = useRef(camerasData.map(() => React.createRef()));
   const inpRef: LegacyRef<HTMLInputElement> | undefined = useRef(null);
   const closeBtnRef: LegacyRef<HTMLButtonElement> | undefined = useRef(null);
 
   useEffect(() => {
-    if(highlightBlockIndex === -1) {
+    if(highlightBlockIndex === -1 && data[0].name !== '') {
       inpRef.current?.focus();
 
       return;
@@ -51,7 +49,7 @@ export default function Header(): JSX.Element {
 
     refs?.current[highlightBlockIndex]?.current?.focus();
 
-  }, [highlightBlockIndex]);
+  }, [highlightBlockIndex, data]);
 
   const onKeydown = (evt: KeyboardEvent) => {
     if (evt.key === 'Enter' && refs?.current[highlightBlockIndex]?.current !== undefined && data[0].name !== '') {
